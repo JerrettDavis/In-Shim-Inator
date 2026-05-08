@@ -11,8 +11,8 @@
 #pragma warning disable CA2243
 
 [assembly: global::System.Reflection.AssemblyVersionAttribute("0.1.0.0")]
-[assembly: global::System.Reflection.AssemblyFileVersionAttribute("0.1.2.11864")]
-[assembly: global::System.Reflection.AssemblyInformationalVersionAttribute("0.1.2+2e58a4565a")]
+[assembly: global::System.Reflection.AssemblyFileVersionAttribute("0.1")]
+[assembly: global::System.Reflection.AssemblyInformationalVersionAttribute("0.1.0+c68446e29b")]
 #if NETSTANDARD || NETFRAMEWORK || NETCOREAPP
 [global::System.CodeDom.Compiler.GeneratedCode("Nerdbank.GitVersioning.Tasks","3.9.50.28654")]
 #endif
@@ -21,14 +21,12 @@
 #endif
 internal static partial class ThisAssembly {
     internal const string AssemblyConfiguration = "Debug";
-    internal const string AssemblyFileVersion = "0.1.2.11864";
-    internal const string AssemblyInformationalVersion = "0.1.2+2e58a4565a";
+    internal const string AssemblyFileVersion = "0.1";
+    internal const string AssemblyInformationalVersion = "0.1.0+c68446e29b";
     internal const string AssemblyName = "Inshiminator.Abstractions";
     internal const string AssemblyTitle = "Inshiminator.Abstractions";
     internal const string AssemblyVersion = "0.1.0.0";
-    internal static readonly global::System.DateTime GitCommitAuthorDate = new global::System.DateTime(639138599560000000L, global::System.DateTimeKind.Utc);
-    internal static readonly global::System.DateTime GitCommitDate = new global::System.DateTime(639138599560000000L, global::System.DateTimeKind.Utc);
-    internal const string GitCommitId = "2e58a4565a8558cbb77d4b912c0ddcb50b29665c";
+    internal const string GitCommitId = "c68446e29b4fa0531bbba577aef3d736756aa8ec";
     internal const bool IsPrerelease = false;
     internal const bool IsPublicRelease = false;
     internal const string RootNamespace = "Inshiminator.Abstractions";

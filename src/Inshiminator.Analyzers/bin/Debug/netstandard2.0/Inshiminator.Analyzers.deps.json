@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "Inshiminator.Analyzers/0.1.2-g2e58a4565a": {
+      "Inshiminator.Analyzers/0.1.0-gc68446e29b": {
         "dependencies": {
           "Microsoft.CodeAnalysis.CSharp": "4.12.0",
           "Microsoft.SourceLink.GitHub": "10.0.203"
@@ -239,7 +239,7 @@
     }
   },
   "libraries": {
-    "Inshiminator.Analyzers/0.1.2-g2e58a4565a": {
+    "Inshiminator.Analyzers/0.1.0-gc68446e29b": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

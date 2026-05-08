@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {
-      "Inshiminator.Cli/0.1.2-g2e58a4565a": {
+      "Inshiminator.Cli/0.1.0-gc68446e29b": {
         "dependencies": {
           "Inshiminator.Abstractions": "1.0.0",
           "Microsoft.Build.Locator": "1.11.2",
@@ -104,14 +104,14 @@
         "runtime": {
           "Inshiminator.Abstractions.dll": {
             "assemblyVersion": "0.1.0.0",
-            "fileVersion": "0.1.2.11864"
+            "fileVersion": "0.1.0.0"
           }
         }
       }
     }
   },
   "libraries": {
-    "Inshiminator.Cli/0.1.2-g2e58a4565a": {
+    "Inshiminator.Cli/0.1.0-gc68446e29b": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

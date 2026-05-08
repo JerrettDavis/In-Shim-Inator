@@ -1,20 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "BiyNuo5x6Y8=",
+  "dgSpecHash": "vNuGX9c1dZw=",
   "success": true,
-  "projectFilePath": "C:\\git\\InShimInator\\src\\Inshiminator.Abstractions\\Inshiminator.Abstractions.csproj",
+  "projectFilePath": "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.Abstractions/Inshiminator.Abstractions.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\jd\\.nuget\\packages\\microsoft.build.tasks.git\\10.0.203\\microsoft.build.tasks.git.10.0.203.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\microsoft.sourcelink.common\\10.0.203\\microsoft.sourcelink.common.10.0.203.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\microsoft.sourcelink.github\\10.0.203\\microsoft.sourcelink.github.10.0.203.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\nerdbank.gitversioning\\3.9.50\\nerdbank.gitversioning.3.9.50.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\system.buffers\\4.6.1\\system.buffers.4.6.1.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\system.io.hashing\\10.0.7\\system.io.hashing.10.0.7.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\system.memory\\4.6.3\\system.memory.4.6.3.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\system.numerics.vectors\\4.6.1\\system.numerics.vectors.4.6.1.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.1.2\\system.runtime.compilerservices.unsafe.6.1.2.nupkg.sha512"
+    "/home/runner/.nuget/packages/microsoft.build.tasks.git/10.0.203/microsoft.build.tasks.git.10.0.203.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.sourcelink.common/10.0.203/microsoft.sourcelink.common.10.0.203.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.sourcelink.github/10.0.203/microsoft.sourcelink.github.10.0.203.nupkg.sha512",
+    "/home/runner/.nuget/packages/nerdbank.gitversioning/3.9.50/nerdbank.gitversioning.3.9.50.nupkg.sha512",
+    "/home/runner/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.buffers/4.6.1/system.buffers.4.6.1.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.io.hashing/10.0.7/system.io.hashing.10.0.7.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.memory/4.6.3/system.memory.4.6.3.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.numerics.vectors/4.6.1/system.numerics.vectors.4.6.1.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.runtime.compilerservices.unsafe/6.1.2/system.runtime.compilerservices.unsafe.6.1.2.nupkg.sha512"
   ],
   "logs": []
 }
