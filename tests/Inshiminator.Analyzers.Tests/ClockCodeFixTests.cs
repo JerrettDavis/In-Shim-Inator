@@ -10,6 +10,16 @@ namespace Inshiminator.Analyzers.Tests;
 public class ClockCodeFixTests
 {
     private const string TimeProviderCodeFixEquivalenceKey = "ClockCodeFixProvider_TimeProvider";
+    private const string TimeProviderStub = """
+namespace System
+{
+    public abstract class TimeProvider
+    {
+        public abstract DateTimeOffset GetUtcNow();
+        public virtual DateTimeOffset GetLocalNow() => GetUtcNow().ToLocalTime();
+    }
+}
+""";
 
     [Fact]
     public async Task DateTimeUtcNow_AppliesCodeFix()
@@ -109,23 +119,155 @@ class Test
         await VerifyTimeProviderFixAsync("DateTimeOffset", "DateTimeOffset", "Now", "_timeProvider.GetLocalNow()");
     }
 
-    private static async Task VerifyTimeProviderFixAsync(string targetTypeName, string sourceTypeName, string memberName, string replacement)
+    [Fact]
+    public async Task TimeProviderCodeFix_UpdatesThisConstructorInitializer()
     {
-        const string timeProviderStub = """
-namespace System
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
 {
-    public abstract class TimeProvider
+    public Test() : this(1)
     {
-        public abstract DateTimeOffset GetUtcNow();
-        public virtual DateTimeOffset GetLocalNow() => GetUtcNow().ToLocalTime();
+    }
+
+    public Test(int value)
+    {
+    }
+
+    void Method()
+    {
+        DateTime now = [|DateTime.UtcNow|];
     }
 }
 """;
 
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(global::System.TimeProvider timeProvider) : this(1, timeProvider)
+    {
+    }
+
+    public Test(int value, global::System.TimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+    }
+
+    void Method()
+    {
+        DateTime now = _timeProvider.GetUtcNow().UtcDateTime;
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
+    public async Task TimeProviderCodeFix_PreservesExpressionBodiedConstructor()
+    {
         var test = $$"""
 using System;
 
-{{timeProviderStub}}
+{{TimeProviderStub}}
+
+class Test
+{
+    private int _value;
+    public Test() => _value = 1;
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.Now|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+    private int _value;
+    public Test(global::System.TimeProvider timeProvider)
+    {
+        _value = 1;
+        _timeProvider = timeProvider;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetLocalNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
+    public async Task TimeProviderCodeFix_UsesUniqueParameterNameWhenColliding()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    public Test(string timeProvider)
+    {
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(string timeProvider, global::System.TimeProvider timeProvider1)
+    {
+        _timeProvider = timeProvider1;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    private static async Task VerifyTimeProviderFixAsync(string targetTypeName, string sourceTypeName, string memberName, string replacement)
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
 
 class Test
 {
@@ -143,7 +285,7 @@ class Test
         var fixedCode = $$"""
 using System;
 
-{{timeProviderStub}}
+{{TimeProviderStub}}
 
 class Test
 {
@@ -164,6 +306,18 @@ class Test
         var testCase = new VerifyCS.Test
         {
             TestCode = test,
+            FixedCode = fixedCode,
+            CodeActionEquivalenceKey = TimeProviderCodeFixEquivalenceKey,
+        };
+
+        await testCase.RunAsync();
+    }
+
+    private static async Task VerifyTimeProviderCodeFixAsync(string testCode, string fixedCode)
+    {
+        var testCase = new VerifyCS.Test
+        {
+            TestCode = testCode,
             FixedCode = fixedCode,
             CodeActionEquivalenceKey = TimeProviderCodeFixEquivalenceKey,
         };

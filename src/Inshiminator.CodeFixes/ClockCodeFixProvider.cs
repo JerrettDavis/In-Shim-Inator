@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
@@ -183,7 +184,7 @@ public class ClockCodeFixProvider : CodeFixProvider
                 var existingParameter = constructor.ParameterList.Parameters.FirstOrDefault(
                     p => p.Type is not null && IsSystemTimeProviderType(semanticModel.GetTypeInfo(p.Type, cancellationToken).Type, timeProviderType));
 
-                var parameterName = existingParameter?.Identifier.ValueText ?? "timeProvider";
+                var parameterName = existingParameter?.Identifier.ValueText ?? GetUniqueParameterName(constructor, "timeProvider");
                 if (existingParameter is null)
                 {
                     var parameter = (ParameterSyntax)editor.Generator.ParameterDeclaration(
@@ -192,15 +193,21 @@ public class ClockCodeFixProvider : CodeFixProvider
                     updatedConstructor = updatedConstructor.AddParameterListParameters(parameter);
                 }
 
+                updatedConstructor = EnsureThisInitializerHasArgument(updatedConstructor, parameterName);
+
                 if (updatedConstructor.Body is null)
                 {
+                    var body = updatedConstructor.ExpressionBody is null
+                        ? SyntaxFactory.Block()
+                        : SyntaxFactory.Block(ExpressionToStatement(updatedConstructor.ExpressionBody.Expression));
                     updatedConstructor = updatedConstructor
                         .WithExpressionBody(null)
                         .WithSemicolonToken(default)
-                        .WithBody(SyntaxFactory.Block());
+                        .WithBody(body);
                 }
 
-                if (!HasFieldAssignment(updatedConstructor, fieldName))
+                var delegatesToThisConstructor = updatedConstructor.Initializer?.IsKind(SyntaxKind.ThisConstructorInitializer) == true;
+                if (!delegatesToThisConstructor && !HasFieldAssignment(updatedConstructor, fieldName))
                 {
                     var assignment = CreateFieldAssignmentStatement(editor, fieldName, parameterName);
                     updatedConstructor = updatedConstructor.AddBodyStatements(assignment);
@@ -242,6 +249,51 @@ public class ClockCodeFixProvider : CodeFixProvider
 
     private static bool IsSystemTimeProviderType(ITypeSymbol? typeSymbol, INamedTypeSymbol timeProviderType) =>
         typeSymbol is not null && SymbolEqualityComparer.Default.Equals(typeSymbol, timeProviderType);
+
+    private static string GetUniqueParameterName(ConstructorDeclarationSyntax constructor, string baseName)
+    {
+        var usedNames = constructor.ParameterList.Parameters
+            .Select(parameter => parameter.Identifier.ValueText);
+        var usedNameSet = new HashSet<string>(usedNames);
+        if (!usedNameSet.Contains(baseName))
+        {
+            return baseName;
+        }
+
+        var suffix = 1;
+        while (usedNameSet.Contains($"{baseName}{suffix}"))
+        {
+            suffix++;
+        }
+
+        return $"{baseName}{suffix}";
+    }
+
+    private static ConstructorDeclarationSyntax EnsureThisInitializerHasArgument(ConstructorDeclarationSyntax constructor, string parameterName)
+    {
+        var initializer = constructor.Initializer;
+        if (initializer is null || !initializer.IsKind(SyntaxKind.ThisConstructorInitializer))
+        {
+            return constructor;
+        }
+
+        var alreadyPassed = initializer.ArgumentList.Arguments.Any(
+            argument => argument.Expression is IdentifierNameSyntax identifier
+                && identifier.Identifier.ValueText == parameterName);
+        if (alreadyPassed)
+        {
+            return constructor;
+        }
+
+        return constructor.WithInitializer(
+            initializer.WithArgumentList(
+                initializer.ArgumentList.AddArguments(SyntaxFactory.Argument(SyntaxFactory.IdentifierName(parameterName)))));
+    }
+
+    private static StatementSyntax ExpressionToStatement(ExpressionSyntax expression) =>
+        expression is ThrowExpressionSyntax throwExpression
+            ? SyntaxFactory.ThrowStatement(throwExpression.Expression)
+            : SyntaxFactory.ExpressionStatement(expression);
 
     private static ExpressionStatementSyntax CreateFieldAssignmentStatement(DocumentEditor editor, string fieldName, string parameterName)
     {
