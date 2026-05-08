@@ -200,7 +200,7 @@ public class ClockCodeFixProvider : CodeFixProvider
                         .WithBody(SyntaxFactory.Block());
                 }
 
-                if (!HasFieldAssignment(updatedConstructor, fieldName, parameterName))
+                if (!HasFieldAssignment(updatedConstructor, fieldName))
                 {
                     var assignment = CreateFieldAssignmentStatement(editor, fieldName, parameterName);
                     updatedConstructor = updatedConstructor.AddBodyStatements(assignment);
@@ -243,13 +243,19 @@ public class ClockCodeFixProvider : CodeFixProvider
     private static bool IsSystemTimeProviderType(ITypeSymbol? typeSymbol, INamedTypeSymbol timeProviderType) =>
         typeSymbol is not null && SymbolEqualityComparer.Default.Equals(typeSymbol, timeProviderType);
 
-    private static ExpressionStatementSyntax CreateFieldAssignmentStatement(DocumentEditor editor, string fieldName, string parameterName) =>
-        (ExpressionStatementSyntax)editor.Generator.ExpressionStatement(
-            editor.Generator.AssignmentStatement(
-                editor.Generator.MemberAccessExpression(editor.Generator.ThisExpression(), editor.Generator.IdentifierName(fieldName)),
-                editor.Generator.IdentifierName(parameterName)));
+    private static ExpressionStatementSyntax CreateFieldAssignmentStatement(DocumentEditor editor, string fieldName, string parameterName)
+    {
+        var assignmentTarget = fieldName == parameterName
+            ? editor.Generator.MemberAccessExpression(editor.Generator.ThisExpression(), editor.Generator.IdentifierName(fieldName))
+            : editor.Generator.IdentifierName(fieldName);
 
-    private static bool HasFieldAssignment(ConstructorDeclarationSyntax constructor, string fieldName, string parameterName)
+        return (ExpressionStatementSyntax)editor.Generator.ExpressionStatement(
+            editor.Generator.AssignmentStatement(
+                assignmentTarget,
+                editor.Generator.IdentifierName(parameterName)));
+    }
+
+    private static bool HasFieldAssignment(ConstructorDeclarationSyntax constructor, string fieldName)
     {
         if (constructor.Body is null)
         {
@@ -259,7 +265,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         return constructor.Body.Statements.OfType<ExpressionStatementSyntax>()
             .Select(statement => statement.Expression)
             .OfType<AssignmentExpressionSyntax>()
-            .Any(assignment => IsFieldAssignmentTarget(assignment.Left, fieldName) && IsParameterReference(assignment.Right, parameterName));
+            .Any(assignment => IsFieldAssignmentTarget(assignment.Left, fieldName) && assignment.Right is IdentifierNameSyntax);
     }
 
     private static bool IsFieldAssignmentTarget(ExpressionSyntax expression, string fieldName) =>
@@ -272,6 +278,4 @@ public class ClockCodeFixProvider : CodeFixProvider
             _ => false,
         };
 
-    private static bool IsParameterReference(ExpressionSyntax expression, string parameterName) =>
-        expression is IdentifierNameSyntax identifier && identifier.Identifier.ValueText == parameterName;
 }
