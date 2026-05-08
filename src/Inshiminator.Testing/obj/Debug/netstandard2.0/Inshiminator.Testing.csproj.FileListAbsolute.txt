@@ -1,0 +1,13 @@
+C:\git\InShimInator\src\Inshiminator.Testing\bin\Debug\netstandard2.0\Inshiminator.Testing.deps.json
+C:\git\InShimInator\src\Inshiminator.Testing\bin\Debug\netstandard2.0\Inshiminator.Testing.dll
+C:\git\InShimInator\src\Inshiminator.Testing\bin\Debug\netstandard2.0\Inshiminator.Testing.pdb
+C:\git\InShimInator\src\Inshiminator.Testing\bin\Debug\netstandard2.0\Inshiminator.Abstractions.dll
+C:\git\InShimInator\src\Inshiminator.Testing\bin\Debug\netstandard2.0\Inshiminator.Abstractions.pdb
+C:\git\InShimInator\src\Inshiminator.Testing\obj\Debug\netstandard2.0\Inshiminator.Testing.csproj.AssemblyReference.cache
+C:\git\InShimInator\src\Inshiminator.Testing\obj\Debug\netstandard2.0\Inshiminator.Testing.GeneratedMSBuildEditorConfig.editorconfig
+C:\git\InShimInator\src\Inshiminator.Testing\obj\Debug\netstandard2.0\Inshiminator.Testing.AssemblyInfoInputs.cache
+C:\git\InShimInator\src\Inshiminator.Testing\obj\Debug\netstandard2.0\Inshiminator.Testing.AssemblyInfo.cs
+C:\git\InShimInator\src\Inshiminator.Testing\obj\Debug\netstandard2.0\Inshiminator.Testing.csproj.CoreCompileInputs.cache
+C:\git\InShimInator\src\Inshiminator.Testing\obj\Debug\netstandard2.0\Inshimin.DC082E5C.Up2Date
+C:\git\InShimInator\src\Inshiminator.Testing\obj\Debug\netstandard2.0\Inshiminator.Testing.dll
+C:\git\InShimInator\src\Inshiminator.Testing\obj\Debug\netstandard2.0\Inshiminator.Testing.pdb

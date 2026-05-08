@@ -1,0 +1,10 @@
+C:\git\InShimInator\src\Inshiminator.Analyzers\obj\Debug\netstandard2.0\Inshiminator.Analyzers.csproj.AssemblyReference.cache
+C:\git\InShimInator\src\Inshiminator.Analyzers\obj\Debug\netstandard2.0\Inshiminator.Analyzers.GeneratedMSBuildEditorConfig.editorconfig
+C:\git\InShimInator\src\Inshiminator.Analyzers\obj\Debug\netstandard2.0\Inshiminator.Analyzers.AssemblyInfoInputs.cache
+C:\git\InShimInator\src\Inshiminator.Analyzers\obj\Debug\netstandard2.0\Inshiminator.Analyzers.AssemblyInfo.cs
+C:\git\InShimInator\src\Inshiminator.Analyzers\obj\Debug\netstandard2.0\Inshiminator.Analyzers.csproj.CoreCompileInputs.cache
+C:\git\InShimInator\src\Inshiminator.Analyzers\bin\Debug\netstandard2.0\Inshiminator.Analyzers.deps.json
+C:\git\InShimInator\src\Inshiminator.Analyzers\bin\Debug\netstandard2.0\Inshiminator.Analyzers.dll
+C:\git\InShimInator\src\Inshiminator.Analyzers\bin\Debug\netstandard2.0\Inshiminator.Analyzers.pdb
+C:\git\InShimInator\src\Inshiminator.Analyzers\obj\Debug\netstandard2.0\Inshiminator.Analyzers.dll
+C:\git\InShimInator\src\Inshiminator.Analyzers\obj\Debug\netstandard2.0\Inshiminator.Analyzers.pdb

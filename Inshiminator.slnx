@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/InshiminatorSample/InshiminatorSample.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Inshiminator.Abstractions/Inshiminator.Abstractions.csproj" />
+    <Project Path="src/Inshiminator.Analyzers/Inshiminator.Analyzers.csproj" />
+    <Project Path="src/Inshiminator.Cli/Inshiminator.Cli.csproj" />
+    <Project Path="src/Inshiminator.CodeFixes/Inshiminator.CodeFixes.csproj" />
+    <Project Path="src/Inshiminator.DependencyInjection/Inshiminator.DependencyInjection.csproj" />
+    <Project Path="src/Inshiminator.Generators/Inshiminator.Generators.csproj" />
+    <Project Path="src/Inshiminator.Testing/Inshiminator.Testing.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Inshiminator.Analyzers.Tests/Inshiminator.Analyzers.Tests.csproj" />
+  </Folder>
+</Solution>

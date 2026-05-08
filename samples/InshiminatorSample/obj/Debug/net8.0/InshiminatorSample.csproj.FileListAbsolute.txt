@@ -1,0 +1,14 @@
+C:\git\InShimInator\samples\InshiminatorSample\bin\Debug\net8.0\InshiminatorSample.exe
+C:\git\InShimInator\samples\InshiminatorSample\bin\Debug\net8.0\InshiminatorSample.deps.json
+C:\git\InShimInator\samples\InshiminatorSample\bin\Debug\net8.0\InshiminatorSample.runtimeconfig.json
+C:\git\InShimInator\samples\InshiminatorSample\bin\Debug\net8.0\InshiminatorSample.dll
+C:\git\InShimInator\samples\InshiminatorSample\bin\Debug\net8.0\InshiminatorSample.pdb
+C:\git\InShimInator\samples\InshiminatorSample\obj\Debug\net8.0\InshiminatorSample.GeneratedMSBuildEditorConfig.editorconfig
+C:\git\InShimInator\samples\InshiminatorSample\obj\Debug\net8.0\InshiminatorSample.AssemblyInfoInputs.cache
+C:\git\InShimInator\samples\InshiminatorSample\obj\Debug\net8.0\InshiminatorSample.AssemblyInfo.cs
+C:\git\InShimInator\samples\InshiminatorSample\obj\Debug\net8.0\InshiminatorSample.csproj.CoreCompileInputs.cache
+C:\git\InShimInator\samples\InshiminatorSample\obj\Debug\net8.0\InshiminatorSample.dll
+C:\git\InShimInator\samples\InshiminatorSample\obj\Debug\net8.0\refint\InshiminatorSample.dll
+C:\git\InShimInator\samples\InshiminatorSample\obj\Debug\net8.0\InshiminatorSample.pdb
+C:\git\InShimInator\samples\InshiminatorSample\obj\Debug\net8.0\InshiminatorSample.genruntimeconfig.cache
+C:\git\InShimInator\samples\InshiminatorSample\obj\Debug\net8.0\ref\InshiminatorSample.dll

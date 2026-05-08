@@ -1,0 +1,10 @@
+C:\git\InShimInator\src\Inshiminator.Abstractions\obj\Debug\netstandard2.0\Inshiminator.Abstractions.csproj.AssemblyReference.cache
+C:\git\InShimInator\src\Inshiminator.Abstractions\obj\Debug\netstandard2.0\Inshiminator.Abstractions.GeneratedMSBuildEditorConfig.editorconfig
+C:\git\InShimInator\src\Inshiminator.Abstractions\obj\Debug\netstandard2.0\Inshiminator.Abstractions.AssemblyInfoInputs.cache
+C:\git\InShimInator\src\Inshiminator.Abstractions\obj\Debug\netstandard2.0\Inshiminator.Abstractions.AssemblyInfo.cs
+C:\git\InShimInator\src\Inshiminator.Abstractions\obj\Debug\netstandard2.0\Inshiminator.Abstractions.csproj.CoreCompileInputs.cache
+C:\git\InShimInator\src\Inshiminator.Abstractions\bin\Debug\netstandard2.0\Inshiminator.Abstractions.deps.json
+C:\git\InShimInator\src\Inshiminator.Abstractions\bin\Debug\netstandard2.0\Inshiminator.Abstractions.dll
+C:\git\InShimInator\src\Inshiminator.Abstractions\bin\Debug\netstandard2.0\Inshiminator.Abstractions.pdb
+C:\git\InShimInator\src\Inshiminator.Abstractions\obj\Debug\netstandard2.0\Inshiminator.Abstractions.dll
+C:\git\InShimInator\src\Inshiminator.Abstractions\obj\Debug\netstandard2.0\Inshiminator.Abstractions.pdb

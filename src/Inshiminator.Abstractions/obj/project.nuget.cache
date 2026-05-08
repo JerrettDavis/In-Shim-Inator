@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "tZG3m13GmF8=",
+  "success": true,
+  "projectFilePath": "C:\\git\\InShimInator\\src\\Inshiminator.Abstractions\\Inshiminator.Abstractions.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jd\\.nuget\\packages\\microsoft.build.tasks.git\\8.0.0\\microsoft.build.tasks.git.8.0.0.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\microsoft.sourcelink.common\\8.0.0\\microsoft.sourcelink.common.8.0.0.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\microsoft.sourcelink.github\\8.0.0\\microsoft.sourcelink.github.8.0.0.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\nerdbank.gitversioning\\3.7.115\\nerdbank.gitversioning.3.7.115.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

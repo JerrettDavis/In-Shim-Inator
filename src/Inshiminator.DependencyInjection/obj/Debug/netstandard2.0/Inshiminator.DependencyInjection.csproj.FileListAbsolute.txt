@@ -1,0 +1,13 @@
+C:\git\InShimInator\src\Inshiminator.DependencyInjection\bin\Debug\netstandard2.0\Inshiminator.DependencyInjection.deps.json
+C:\git\InShimInator\src\Inshiminator.DependencyInjection\bin\Debug\netstandard2.0\Inshiminator.DependencyInjection.dll
+C:\git\InShimInator\src\Inshiminator.DependencyInjection\bin\Debug\netstandard2.0\Inshiminator.DependencyInjection.pdb
+C:\git\InShimInator\src\Inshiminator.DependencyInjection\bin\Debug\netstandard2.0\Inshiminator.Abstractions.dll
+C:\git\InShimInator\src\Inshiminator.DependencyInjection\bin\Debug\netstandard2.0\Inshiminator.Abstractions.pdb
+C:\git\InShimInator\src\Inshiminator.DependencyInjection\obj\Debug\netstandard2.0\Inshiminator.DependencyInjection.csproj.AssemblyReference.cache
+C:\git\InShimInator\src\Inshiminator.DependencyInjection\obj\Debug\netstandard2.0\Inshiminator.DependencyInjection.GeneratedMSBuildEditorConfig.editorconfig
+C:\git\InShimInator\src\Inshiminator.DependencyInjection\obj\Debug\netstandard2.0\Inshiminator.DependencyInjection.AssemblyInfoInputs.cache
+C:\git\InShimInator\src\Inshiminator.DependencyInjection\obj\Debug\netstandard2.0\Inshiminator.DependencyInjection.AssemblyInfo.cs
+C:\git\InShimInator\src\Inshiminator.DependencyInjection\obj\Debug\netstandard2.0\Inshiminator.DependencyInjection.csproj.CoreCompileInputs.cache
+C:\git\InShimInator\src\Inshiminator.DependencyInjection\obj\Debug\netstandard2.0\Inshimin.B0C96DED.Up2Date
+C:\git\InShimInator\src\Inshiminator.DependencyInjection\obj\Debug\netstandard2.0\Inshiminator.DependencyInjection.dll
+C:\git\InShimInator\src\Inshiminator.DependencyInjection\obj\Debug\netstandard2.0\Inshiminator.DependencyInjection.pdb

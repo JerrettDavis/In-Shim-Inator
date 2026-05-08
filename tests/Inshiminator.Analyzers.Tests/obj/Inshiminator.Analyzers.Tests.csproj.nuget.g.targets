@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Condition=" '$(TargetFramework)' == '' AND '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)xunit.core\2.9.3\buildMultiTargeting\xunit.core.targets" Condition="Exists('$(NuGetPackageRoot)xunit.core\2.9.3\buildMultiTargeting\xunit.core.targets')" />
+    <Import Project="$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\buildCrossTargeting\Nerdbank.GitVersioning.targets" Condition="Exists('$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\buildCrossTargeting\Nerdbank.GitVersioning.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\buildMultiTargeting\Microsoft.SourceLink.Common.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\buildMultiTargeting\Microsoft.SourceLink.Common.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\buildMultiTargeting\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\buildMultiTargeting\Microsoft.Build.Tasks.Git.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\buildMultiTargeting\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\buildMultiTargeting\Microsoft.SourceLink.GitHub.targets')" />
+  </ImportGroup>
+  <ImportGroup Condition=" '$(TargetFramework)' == 'net10.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)xunit.core\2.9.3\build\xunit.core.targets" Condition="Exists('$(NuGetPackageRoot)xunit.core\2.9.3\build\xunit.core.targets')" />
+    <Import Project="$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.targets" Condition="Exists('$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.codecoverage\17.13.0\build\netstandard2.0\Microsoft.CodeCoverage.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.codecoverage\17.13.0\build\netstandard2.0\Microsoft.CodeCoverage.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.net.test.sdk\17.13.0\build\netcoreapp3.1\Microsoft.NET.Test.Sdk.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.net.test.sdk\17.13.0\build\netcoreapp3.1\Microsoft.NET.Test.Sdk.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.3.4\buildTransitive\Microsoft.CodeAnalysis.Analyzers.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.3.4\buildTransitive\Microsoft.CodeAnalysis.Analyzers.targets')" />
+    <Import Project="$(NuGetPackageRoot)coverlet.collector\6.0.4\build\netstandard2.0\coverlet.collector.targets" Condition="Exists('$(NuGetPackageRoot)coverlet.collector\6.0.4\build\netstandard2.0\coverlet.collector.targets')" />
+  </ImportGroup>
+  <ImportGroup Condition=" '$(TargetFramework)' == 'net8.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)xunit.core\2.9.3\build\xunit.core.targets" Condition="Exists('$(NuGetPackageRoot)xunit.core\2.9.3\build\xunit.core.targets')" />
+    <Import Project="$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.targets" Condition="Exists('$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.codecoverage\17.13.0\build\netstandard2.0\Microsoft.CodeCoverage.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.codecoverage\17.13.0\build\netstandard2.0\Microsoft.CodeCoverage.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.net.test.sdk\17.13.0\build\netcoreapp3.1\Microsoft.NET.Test.Sdk.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.net.test.sdk\17.13.0\build\netcoreapp3.1\Microsoft.NET.Test.Sdk.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.3.4\buildTransitive\Microsoft.CodeAnalysis.Analyzers.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.3.4\buildTransitive\Microsoft.CodeAnalysis.Analyzers.targets')" />
+    <Import Project="$(NuGetPackageRoot)coverlet.collector\6.0.4\build\netstandard2.0\coverlet.collector.targets" Condition="Exists('$(NuGetPackageRoot)coverlet.collector\6.0.4\build\netstandard2.0\coverlet.collector.targets')" />
+  </ImportGroup>
+  <ImportGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)xunit.core\2.9.3\build\xunit.core.targets" Condition="Exists('$(NuGetPackageRoot)xunit.core\2.9.3\build\xunit.core.targets')" />
+    <Import Project="$(NuGetPackageRoot)netstandard.library\2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('$(NuGetPackageRoot)netstandard.library\2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
+    <Import Project="$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.targets" Condition="Exists('$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.codecoverage\17.13.0\build\netstandard2.0\Microsoft.CodeCoverage.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.codecoverage\17.13.0\build\netstandard2.0\Microsoft.CodeCoverage.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.3.4\buildTransitive\Microsoft.CodeAnalysis.Analyzers.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.3.4\buildTransitive\Microsoft.CodeAnalysis.Analyzers.targets')" />
+    <Import Project="$(NuGetPackageRoot)coverlet.collector\6.0.4\build\netstandard2.0\coverlet.collector.targets" Condition="Exists('$(NuGetPackageRoot)coverlet.collector\6.0.4\build\netstandard2.0\coverlet.collector.targets')" />
+  </ImportGroup>
+</Project>

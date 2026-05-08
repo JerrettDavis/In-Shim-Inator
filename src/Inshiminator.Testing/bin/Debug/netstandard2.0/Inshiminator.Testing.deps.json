@@ -1,0 +1,40 @@
+{
+  "runtimeTarget": {
+    "name": ".NETStandard,Version=v2.0/",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETStandard,Version=v2.0": {},
+    ".NETStandard,Version=v2.0/": {
+      "Inshiminator.Testing/0.1.0-g": {
+        "dependencies": {
+          "Inshiminator.Abstractions": "1.0.0"
+        },
+        "runtime": {
+          "Inshiminator.Testing.dll": {}
+        }
+      },
+      "Inshiminator.Abstractions/1.0.0": {
+        "runtime": {
+          "Inshiminator.Abstractions.dll": {
+            "assemblyVersion": "0.1.0.0",
+            "fileVersion": "0.1.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Inshiminator.Testing/0.1.0-g": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Inshiminator.Abstractions/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "InshiminatorSample/0.1.0-g": {
+        "runtime": {
+          "InshiminatorSample.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "InshiminatorSample/0.1.0-g": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

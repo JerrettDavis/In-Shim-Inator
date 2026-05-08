@@ -1,0 +1,10 @@
+C:\git\InShimInator\src\Inshiminator.Generators\bin\Debug\netstandard2.0\Inshiminator.Generators.deps.json
+C:\git\InShimInator\src\Inshiminator.Generators\bin\Debug\netstandard2.0\Inshiminator.Generators.dll
+C:\git\InShimInator\src\Inshiminator.Generators\bin\Debug\netstandard2.0\Inshiminator.Generators.pdb
+C:\git\InShimInator\src\Inshiminator.Generators\obj\Debug\netstandard2.0\Inshiminator.Generators.csproj.AssemblyReference.cache
+C:\git\InShimInator\src\Inshiminator.Generators\obj\Debug\netstandard2.0\Inshiminator.Generators.GeneratedMSBuildEditorConfig.editorconfig
+C:\git\InShimInator\src\Inshiminator.Generators\obj\Debug\netstandard2.0\Inshiminator.Generators.AssemblyInfoInputs.cache
+C:\git\InShimInator\src\Inshiminator.Generators\obj\Debug\netstandard2.0\Inshiminator.Generators.AssemblyInfo.cs
+C:\git\InShimInator\src\Inshiminator.Generators\obj\Debug\netstandard2.0\Inshiminator.Generators.csproj.CoreCompileInputs.cache
+C:\git\InShimInator\src\Inshiminator.Generators\obj\Debug\netstandard2.0\Inshiminator.Generators.dll
+C:\git\InShimInator\src\Inshiminator.Generators\obj\Debug\netstandard2.0\Inshiminator.Generators.pdb

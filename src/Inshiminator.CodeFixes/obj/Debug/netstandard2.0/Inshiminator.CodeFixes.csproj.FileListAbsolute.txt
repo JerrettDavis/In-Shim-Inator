@@ -1,0 +1,13 @@
+C:\git\InShimInator\src\Inshiminator.CodeFixes\obj\Debug\netstandard2.0\Inshiminator.CodeFixes.csproj.AssemblyReference.cache
+C:\git\InShimInator\src\Inshiminator.CodeFixes\obj\Debug\netstandard2.0\Inshiminator.CodeFixes.GeneratedMSBuildEditorConfig.editorconfig
+C:\git\InShimInator\src\Inshiminator.CodeFixes\obj\Debug\netstandard2.0\Inshiminator.CodeFixes.AssemblyInfoInputs.cache
+C:\git\InShimInator\src\Inshiminator.CodeFixes\obj\Debug\netstandard2.0\Inshiminator.CodeFixes.AssemblyInfo.cs
+C:\git\InShimInator\src\Inshiminator.CodeFixes\obj\Debug\netstandard2.0\Inshiminator.CodeFixes.csproj.CoreCompileInputs.cache
+C:\git\InShimInator\src\Inshiminator.CodeFixes\bin\Debug\netstandard2.0\Inshiminator.CodeFixes.deps.json
+C:\git\InShimInator\src\Inshiminator.CodeFixes\bin\Debug\netstandard2.0\Inshiminator.CodeFixes.dll
+C:\git\InShimInator\src\Inshiminator.CodeFixes\bin\Debug\netstandard2.0\Inshiminator.CodeFixes.pdb
+C:\git\InShimInator\src\Inshiminator.CodeFixes\bin\Debug\netstandard2.0\Inshiminator.Analyzers.dll
+C:\git\InShimInator\src\Inshiminator.CodeFixes\bin\Debug\netstandard2.0\Inshiminator.Analyzers.pdb
+C:\git\InShimInator\src\Inshiminator.CodeFixes\obj\Debug\netstandard2.0\Inshimin.3482346B.Up2Date
+C:\git\InShimInator\src\Inshiminator.CodeFixes\obj\Debug\netstandard2.0\Inshiminator.CodeFixes.dll
+C:\git\InShimInator\src\Inshiminator.CodeFixes\obj\Debug\netstandard2.0\Inshiminator.CodeFixes.pdb

@@ -1,0 +1,31 @@
+<Project>
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    
+    <!-- NuGet Metadata -->
+    <Authors>Jerrett Davis</Authors>
+    <Company>Jerrett Davis</Company>
+    <PackageProjectUrl>https://github.com/JerrettDavis/InShimInator</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JerrettDavis/InShimInator</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>Analyzer-guided shim generation for .NET applications.</Description>
+    <PackageTags>analyzer;sourcegenerator;shim;testing;fake;abstraction</PackageTags>
+    <Copyright>Copyright (c) 2026 Jerrett Davis</Copyright>
+    
+    <!-- Release features -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All"/>
+    <PackageReference Include="Nerdbank.GitVersioning" PrivateAssets="All" />
+  </ItemGroup>
+</Project>
