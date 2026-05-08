@@ -1,17 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "DrfKEtXrF+M=",
+  "dgSpecHash": "pgxkJ6jkZ4Y=",
   "success": true,
   "projectFilePath": "C:\\git\\InShimInator\\src\\Inshiminator.Cli\\Inshiminator.Cli.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jd\\.nuget\\packages\\microsoft.build.locator\\1.11.2\\microsoft.build.locator.1.11.2.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\microsoft.build.tasks.git\\8.0.0\\microsoft.build.tasks.git.8.0.0.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\microsoft.sourcelink.common\\8.0.0\\microsoft.sourcelink.common.8.0.0.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\microsoft.sourcelink.github\\8.0.0\\microsoft.sourcelink.github.8.0.0.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\nerdbank.gitversioning\\3.7.115\\nerdbank.gitversioning.3.7.115.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\microsoft.build.tasks.git\\10.0.203\\microsoft.build.tasks.git.10.0.203.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\microsoft.sourcelink.common\\10.0.203\\microsoft.sourcelink.common.10.0.203.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\microsoft.sourcelink.github\\10.0.203\\microsoft.sourcelink.github.10.0.203.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\nerdbank.gitversioning\\3.9.50\\nerdbank.gitversioning.3.9.50.nupkg.sha512",
     "C:\\Users\\jd\\.nuget\\packages\\spectre.console\\0.55.0\\spectre.console.0.55.0.nupkg.sha512",
     "C:\\Users\\jd\\.nuget\\packages\\spectre.console.ansi\\0.55.0\\spectre.console.ansi.0.55.0.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\spectre.console.cli\\0.55.0\\spectre.console.cli.0.55.0.nupkg.sha512"
+    "C:\\Users\\jd\\.nuget\\packages\\spectre.console.cli\\0.55.0\\spectre.console.cli.0.55.0.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\system.io.hashing\\10.0.7\\system.io.hashing.10.0.7.nupkg.sha512"
   ],
   "logs": []
 }

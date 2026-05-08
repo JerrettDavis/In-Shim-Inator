@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Condition=" '$(TargetFramework)' == '' AND '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\buildCrossTargeting\Nerdbank.GitVersioning.targets" Condition="Exists('$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\buildCrossTargeting\Nerdbank.GitVersioning.targets')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\buildMultiTargeting\Microsoft.SourceLink.Common.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\buildMultiTargeting\Microsoft.SourceLink.Common.targets')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\buildMultiTargeting\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\buildMultiTargeting\Microsoft.Build.Tasks.Git.targets')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\buildMultiTargeting\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\buildMultiTargeting\Microsoft.SourceLink.GitHub.targets')" />
+    <Import Project="$(NuGetPackageRoot)nerdbank.gitversioning\3.9.50\buildCrossTargeting\Nerdbank.GitVersioning.targets" Condition="Exists('$(NuGetPackageRoot)nerdbank.gitversioning\3.9.50\buildCrossTargeting\Nerdbank.GitVersioning.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.common\10.0.203\buildMultiTargeting\Microsoft.SourceLink.Common.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.common\10.0.203\buildMultiTargeting\Microsoft.SourceLink.Common.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.build.tasks.git\10.0.203\buildMultiTargeting\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.tasks.git\10.0.203\buildMultiTargeting\Microsoft.Build.Tasks.Git.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.github\10.0.203\buildMultiTargeting\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.github\10.0.203\buildMultiTargeting\Microsoft.SourceLink.GitHub.targets')" />
   </ImportGroup>
   <ImportGroup Condition=" '$(TargetFramework)' == 'net10.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.targets" Condition="Exists('$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.targets')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
+    <Import Project="$(NuGetPackageRoot)nerdbank.gitversioning\3.9.50\build\Nerdbank.GitVersioning.targets" Condition="Exists('$(NuGetPackageRoot)nerdbank.gitversioning\3.9.50\build\Nerdbank.GitVersioning.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.common\10.0.203\buildTransitive\Microsoft.SourceLink.Common.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.common\10.0.203\buildTransitive\Microsoft.SourceLink.Common.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.build.tasks.git\10.0.203\buildTransitive\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.tasks.git\10.0.203\buildTransitive\Microsoft.Build.Tasks.Git.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.github\10.0.203\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.github\10.0.203\build\Microsoft.SourceLink.GitHub.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.build.locator\1.11.2\buildTransitive\Microsoft.Build.Locator.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.locator\1.11.2\buildTransitive\Microsoft.Build.Locator.targets')" />
   </ImportGroup>
   <ImportGroup Condition=" '$(TargetFramework)' == 'net8.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.targets" Condition="Exists('$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.targets')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
+    <Import Project="$(NuGetPackageRoot)nerdbank.gitversioning\3.9.50\build\Nerdbank.GitVersioning.targets" Condition="Exists('$(NuGetPackageRoot)nerdbank.gitversioning\3.9.50\build\Nerdbank.GitVersioning.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.common\10.0.203\buildTransitive\Microsoft.SourceLink.Common.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.common\10.0.203\buildTransitive\Microsoft.SourceLink.Common.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.build.tasks.git\10.0.203\buildTransitive\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.tasks.git\10.0.203\buildTransitive\Microsoft.Build.Tasks.Git.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.github\10.0.203\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.github\10.0.203\build\Microsoft.SourceLink.GitHub.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.build.locator\1.11.2\buildTransitive\Microsoft.Build.Locator.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.locator\1.11.2\buildTransitive\Microsoft.Build.Locator.targets')" />
   </ImportGroup>
 </Project>

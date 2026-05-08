@@ -6,10 +6,11 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v10.0": {
-      "Inshiminator.Cli/0.1.1-gabc60648c2": {
+      "Inshiminator.Cli/0.1.2-g2e58a4565a": {
         "dependencies": {
           "Inshiminator.Abstractions": "1.0.0",
           "Microsoft.Build.Locator": "1.11.2",
+          "Microsoft.SourceLink.GitHub": "10.0.203",
           "Spectre.Console.Cli": "0.55.0"
         },
         "runtime": {
@@ -22,6 +23,11 @@
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.11.2.35241"
           }
+        }
+      },
+      "Microsoft.SourceLink.GitHub/10.0.203": {
+        "dependencies": {
+          "System.IO.Hashing": "10.0.7"
         }
       },
       "Spectre.Console/0.55.0": {
@@ -86,18 +92,26 @@
           }
         }
       },
+      "System.IO.Hashing/10.0.7": {
+        "runtime": {
+          "lib/net10.0/System.IO.Hashing.dll": {
+            "assemblyVersion": "10.0.0.7",
+            "fileVersion": "10.0.726.21808"
+          }
+        }
+      },
       "Inshiminator.Abstractions/1.0.0": {
         "runtime": {
           "Inshiminator.Abstractions.dll": {
             "assemblyVersion": "0.1.0.0",
-            "fileVersion": "0.1.1.43974"
+            "fileVersion": "0.1.2.11864"
           }
         }
       }
     }
   },
   "libraries": {
-    "Inshiminator.Cli/0.1.1-gabc60648c2": {
+    "Inshiminator.Cli/0.1.2-g2e58a4565a": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -108,6 +122,13 @@
       "sha512": "sha512-tY+/S54G29CGsbL3slVu4vqtpciwVnb3fKOmrhgzEQmu/VziFaWmD/E1e/2KH7cDucuycGSkWsSXndBs5Uawow==",
       "path": "microsoft.build.locator/1.11.2",
       "hashPath": "microsoft.build.locator.1.11.2.nupkg.sha512"
+    },
+    "Microsoft.SourceLink.GitHub/10.0.203": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-R4Tvr1oACImMS+Y5M7NM07ll9QyJSKnki3Dvz8QwG1W6FEmd+9fmZXAF6BE6UPswHF6n0v41wgMQGlaudOspqA==",
+      "path": "microsoft.sourcelink.github/10.0.203",
+      "hashPath": "microsoft.sourcelink.github.10.0.203.nupkg.sha512"
     },
     "Spectre.Console/0.55.0": {
       "type": "package",
@@ -129,6 +150,13 @@
       "sha512": "sha512-cFJTB1te4eaAICd4Zp+8T/kiRn1ikQxgGqmoNarb1qoQ/7LzHAvVQ62x5U9GW3E0QI7sZLcXIIoq4CpqgTx42Q==",
       "path": "spectre.console.cli/0.55.0",
       "hashPath": "spectre.console.cli.0.55.0.nupkg.sha512"
+    },
+    "System.IO.Hashing/10.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6hsjdSr4VOXSOnhALkYplHpAxnTG1J33YN42IB6nH2fEg4QnJqrZ4Ft+qn7mkrKAOYC8pCSFYwVWw6rQbmwgLQ==",
+      "path": "system.io.hashing/10.0.7",
+      "hashPath": "system.io.hashing.10.0.7.nupkg.sha512"
     },
     "Inshiminator.Abstractions/1.0.0": {
       "type": "project",

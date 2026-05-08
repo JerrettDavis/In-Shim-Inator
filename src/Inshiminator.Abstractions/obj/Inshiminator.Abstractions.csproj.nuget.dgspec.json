@@ -66,18 +66,18 @@
             "Microsoft.SourceLink.GitHub": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.0, )",
+              "version": "[10.0.203, )",
               "versionCentrallyManaged": true
             },
             "Nerdbank.GitVersioning": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.7.115, )",
+              "version": "[3.9.50, )",
               "versionCentrallyManaged": true
             }
           },
           "centralPackageVersions": {
-            "coverlet.collector": "6.0.4",
+            "coverlet.collector": "10.0.0",
             "Microsoft.Build.Locator": "1.11.2",
             "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
             "Microsoft.CodeAnalysis.CSharp": "4.12.0",
@@ -88,13 +88,13 @@
             "Microsoft.CodeAnalysis.VisualBasic.Analyzer.Testing.XUnit": "1.1.2",
             "Microsoft.CodeAnalysis.VisualBasic.CodeFix.Testing.XUnit": "1.1.2",
             "Microsoft.CodeAnalysis.VisualBasic.CodeRefactoring.Testing.XUnit": "1.1.2",
-            "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
-            "Microsoft.NET.Test.Sdk": "17.13.0",
-            "Microsoft.SourceLink.GitHub": "8.0.0",
-            "Nerdbank.GitVersioning": "3.7.115",
+            "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.7",
+            "Microsoft.NET.Test.Sdk": "18.5.1",
+            "Microsoft.SourceLink.GitHub": "10.0.203",
+            "Nerdbank.GitVersioning": "3.9.50",
             "Spectre.Console.Cli": "0.55.0",
             "xunit": "2.9.3",
-            "xunit.runner.visualstudio": "3.0.2"
+            "xunit.runner.visualstudio": "3.1.5"
           },
           "imports": [
             "net461",
@@ -402,18 +402,18 @@
             "Microsoft.SourceLink.GitHub": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.0, )",
+              "version": "[10.0.203, )",
               "versionCentrallyManaged": true
             },
             "Nerdbank.GitVersioning": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.7.115, )",
+              "version": "[3.9.50, )",
               "versionCentrallyManaged": true
             }
           },
           "centralPackageVersions": {
-            "coverlet.collector": "6.0.4",
+            "coverlet.collector": "10.0.0",
             "Microsoft.Build.Locator": "1.11.2",
             "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
             "Microsoft.CodeAnalysis.CSharp": "4.12.0",
@@ -424,13 +424,13 @@
             "Microsoft.CodeAnalysis.VisualBasic.Analyzer.Testing.XUnit": "1.1.2",
             "Microsoft.CodeAnalysis.VisualBasic.CodeFix.Testing.XUnit": "1.1.2",
             "Microsoft.CodeAnalysis.VisualBasic.CodeRefactoring.Testing.XUnit": "1.1.2",
-            "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
-            "Microsoft.NET.Test.Sdk": "17.13.0",
-            "Microsoft.SourceLink.GitHub": "8.0.0",
-            "Nerdbank.GitVersioning": "3.7.115",
+            "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.7",
+            "Microsoft.NET.Test.Sdk": "18.5.1",
+            "Microsoft.SourceLink.GitHub": "10.0.203",
+            "Nerdbank.GitVersioning": "3.9.50",
             "Spectre.Console.Cli": "0.55.0",
             "xunit": "2.9.3",
-            "xunit.runner.visualstudio": "3.0.2"
+            "xunit.runner.visualstudio": "3.1.5"
           },
           "imports": [
             "net461",
@@ -730,7 +730,7 @@
             "Microsoft.SourceLink.GitHub": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.0, )",
+              "version": "[10.0.203, )",
               "versionCentrallyManaged": true
             },
             "NETStandard.Library": {
@@ -742,12 +742,12 @@
             "Nerdbank.GitVersioning": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.7.115, )",
+              "version": "[3.9.50, )",
               "versionCentrallyManaged": true
             }
           },
           "centralPackageVersions": {
-            "coverlet.collector": "6.0.4",
+            "coverlet.collector": "10.0.0",
             "Microsoft.Build.Locator": "1.11.2",
             "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
             "Microsoft.CodeAnalysis.CSharp": "4.12.0",
@@ -758,13 +758,13 @@
             "Microsoft.CodeAnalysis.VisualBasic.Analyzer.Testing.XUnit": "1.1.2",
             "Microsoft.CodeAnalysis.VisualBasic.CodeFix.Testing.XUnit": "1.1.2",
             "Microsoft.CodeAnalysis.VisualBasic.CodeRefactoring.Testing.XUnit": "1.1.2",
-            "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
-            "Microsoft.NET.Test.Sdk": "17.13.0",
-            "Microsoft.SourceLink.GitHub": "8.0.0",
-            "Nerdbank.GitVersioning": "3.7.115",
+            "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.7",
+            "Microsoft.NET.Test.Sdk": "18.5.1",
+            "Microsoft.SourceLink.GitHub": "10.0.203",
+            "Nerdbank.GitVersioning": "3.9.50",
             "Spectre.Console.Cli": "0.55.0",
             "xunit": "2.9.3",
-            "xunit.runner.visualstudio": "3.0.2"
+            "xunit.runner.visualstudio": "3.1.5"
           },
           "imports": [
             "net461",

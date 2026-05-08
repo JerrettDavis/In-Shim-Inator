@@ -30,3 +30,4 @@ C:\git\InShimInator\src\Inshiminator.Cli\bin\Debug\net8.0\pt\Spectre.Console.Cli
 C:\git\InShimInator\src\Inshiminator.Cli\bin\Debug\net8.0\ru\Spectre.Console.Cli.resources.dll
 C:\git\InShimInator\src\Inshiminator.Cli\bin\Debug\net8.0\sv\Spectre.Console.Cli.resources.dll
 C:\git\InShimInator\src\Inshiminator.Cli\bin\Debug\net8.0\zh-Hans\Spectre.Console.Cli.resources.dll
+C:\git\InShimInator\src\Inshiminator.Cli\bin\Debug\net8.0\System.IO.Hashing.dll

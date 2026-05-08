@@ -17,3 +17,4 @@ C:\git\InShimInator\samples\InshiminatorSample\bin\Debug\net8.0\Microsoft.Extens
 C:\git\InShimInator\samples\InshiminatorSample\bin\Debug\net8.0\Inshiminator.Abstractions.dll
 C:\git\InShimInator\samples\InshiminatorSample\bin\Debug\net8.0\Inshiminator.Abstractions.pdb
 C:\git\InShimInator\samples\InshiminatorSample\obj\Debug\net8.0\Inshimin.AE54CAE0.Up2Date
+C:\git\InShimInator\samples\InshiminatorSample\bin\Debug\net8.0\System.IO.Hashing.dll

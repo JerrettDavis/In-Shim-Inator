@@ -223,3 +223,4 @@ C:\git\InShimInator\tests\Inshiminator.Analyzers.Tests\bin\Debug\net10.0\Inshimi
 C:\git\InShimInator\tests\Inshiminator.Analyzers.Tests\bin\Debug\net10.0\Inshiminator.CodeFixes.pdb
 C:\git\InShimInator\tests\Inshiminator.Analyzers.Tests\bin\Debug\net10.0\testhost.exe
 C:\git\InShimInator\tests\Inshiminator.Analyzers.Tests\bin\Debug\net10.0\xunit.runner.visualstudio.testadapter.dll
+C:\git\InShimInator\tests\Inshiminator.Analyzers.Tests\bin\Debug\net10.0\System.IO.Hashing.dll
