@@ -126,7 +126,14 @@ public class ClockCodeFixProvider : CodeFixProvider
                         SyntaxFactory.ParseTypeName("global::System.TimeProvider"),
                         SyntaxFactory.SingletonSeparatedList(SyntaxFactory.VariableDeclarator(fieldName))))
                 .AddModifiers(SyntaxFactory.Token(SyntaxKind.PrivateKeyword), SyntaxFactory.Token(SyntaxKind.ReadOnlyKeyword));
-            editor.InsertBefore(classDeclaration.Members.First(), field);
+            if (classDeclaration.Members.Count > 0)
+            {
+                editor.InsertBefore(classDeclaration.Members.First(), field);
+            }
+            else
+            {
+                editor.AddMember(classDeclaration, field);
+            }
         }
         else
         {
@@ -166,7 +173,7 @@ public class ClockCodeFixProvider : CodeFixProvider
                 editor.Generator.MemberAccessExpression(editor.Generator.IdentifierName(fieldName), "GetUtcNow")),
             "Now" => editor.Generator.InvocationExpression(
                 editor.Generator.MemberAccessExpression(editor.Generator.IdentifierName(fieldName), "GetLocalNow")),
-            _ => editor.Generator.IdentifierName(fieldName),
+            _ => memberAccess,
         };
 
         editor.ReplaceNode(memberAccess, replacement);
