@@ -9,6 +9,8 @@ namespace Inshiminator.Analyzers.Tests;
 
 public class ClockCodeFixTests
 {
+    private const string TimeProviderCodeFixEquivalenceKey = "ClockCodeFixProvider_TimeProvider";
+
     [Fact]
     public async Task DateTimeUtcNow_AppliesCodeFix()
     {
@@ -81,5 +83,91 @@ class Test
 }";
 
         await VerifyCS.VerifyCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
+    public async Task DateTimeUtcNow_AppliesTimeProviderCodeFix()
+    {
+        await VerifyTimeProviderFixAsync("DateTime", "DateTime", "UtcNow", "_timeProvider.GetUtcNow().UtcDateTime");
+    }
+
+    [Fact]
+    public async Task DateTimeNow_AppliesTimeProviderCodeFix()
+    {
+        await VerifyTimeProviderFixAsync("DateTime", "DateTime", "Now", "_timeProvider.GetLocalNow().LocalDateTime");
+    }
+
+    [Fact]
+    public async Task DateTimeOffsetUtcNow_AppliesTimeProviderCodeFix()
+    {
+        await VerifyTimeProviderFixAsync("DateTimeOffset", "DateTimeOffset", "UtcNow", "_timeProvider.GetUtcNow()");
+    }
+
+    [Fact]
+    public async Task DateTimeOffsetNow_AppliesTimeProviderCodeFix()
+    {
+        await VerifyTimeProviderFixAsync("DateTimeOffset", "DateTimeOffset", "Now", "_timeProvider.GetLocalNow()");
+    }
+
+    private static async Task VerifyTimeProviderFixAsync(string typeName, string sourceTypeName, string memberName, string replacement)
+    {
+        const string timeProviderStub = """
+namespace System
+{
+    public abstract class TimeProvider
+    {
+        public abstract DateTimeOffset GetUtcNow();
+        public virtual DateTimeOffset GetLocalNow() => GetUtcNow().ToLocalTime();
+    }
+}
+""";
+
+        var test = $$"""
+using System;
+
+{{timeProviderStub}}
+
+class Test
+{
+    public Test()
+    {
+    }
+
+    void Method()
+    {
+        {{typeName}} now = [|{{sourceTypeName}}.{{memberName}}|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{timeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(global::System.TimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+    }
+
+    void Method()
+    {
+        {{typeName}} now = {{replacement}};
+    }
+}
+""";
+
+        var testCase = new VerifyCS.Test
+        {
+            TestCode = test,
+            FixedCode = fixedCode,
+            CodeActionEquivalenceKey = TimeProviderCodeFixEquivalenceKey,
+        };
+
+        await testCase.RunAsync();
     }
 }
