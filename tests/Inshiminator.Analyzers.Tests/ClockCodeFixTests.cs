@@ -109,7 +109,7 @@ class Test
         await VerifyTimeProviderFixAsync("DateTimeOffset", "DateTimeOffset", "Now", "_timeProvider.GetLocalNow()");
     }
 
-    private static async Task VerifyTimeProviderFixAsync(string typeName, string sourceTypeName, string memberName, string replacement)
+    private static async Task VerifyTimeProviderFixAsync(string targetTypeName, string sourceTypeName, string memberName, string replacement)
     {
         const string timeProviderStub = """
 namespace System
@@ -135,7 +135,7 @@ class Test
 
     void Method()
     {
-        {{typeName}} now = [|{{sourceTypeName}}.{{memberName}}|];
+        {{targetTypeName}} now = [|{{sourceTypeName}}.{{memberName}}|];
     }
 }
 """;
@@ -156,7 +156,7 @@ class Test
 
     void Method()
     {
-        {{typeName}} now = {{replacement}};
+        {{targetTypeName}} now = {{replacement}};
     }
 }
 """;

@@ -245,7 +245,8 @@ public class ClockCodeFixProvider : CodeFixProvider
 
     private static ExpressionStatementSyntax CreateFieldAssignmentStatement(DocumentEditor editor, string fieldName, string parameterName)
     {
-        var assignmentTarget = fieldName == parameterName
+        var needsQualifiedFieldAccess = string.Equals(fieldName.TrimStart('_'), parameterName, System.StringComparison.Ordinal);
+        var assignmentTarget = needsQualifiedFieldAccess
             ? editor.Generator.MemberAccessExpression(editor.Generator.ThisExpression(), editor.Generator.IdentifierName(fieldName))
             : editor.Generator.IdentifierName(fieldName);
 
