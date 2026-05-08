@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v10.0": {
-      "Inshiminator.Analyzers.Tests/0.1.0-gc68446e29b": {
+      "Inshiminator.Analyzers.Tests/0.1.2-g2e58a4565a": {
         "dependencies": {
           "Inshiminator.Analyzers": "1.0.0",
           "Inshiminator.CodeFixes": "1.0.0",
@@ -1075,7 +1075,7 @@
         "runtime": {
           "lib/netstandard2.0/xunit.abstractions.dll": {
             "assemblyVersion": "2.0.0.0",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.0.0.0"
           }
         }
       },
@@ -1122,7 +1122,7 @@
         "runtime": {
           "Inshiminator.Analyzers.dll": {
             "assemblyVersion": "0.1.0.0",
-            "fileVersion": "0.1.0.0"
+            "fileVersion": "0.1.2.11864"
           }
         }
       },
@@ -1134,14 +1134,14 @@
         "runtime": {
           "Inshiminator.CodeFixes.dll": {
             "assemblyVersion": "0.1.0.0",
-            "fileVersion": "0.1.0.0"
+            "fileVersion": "0.1.2.11864"
           }
         }
       }
     }
   },
   "libraries": {
-    "Inshiminator.Analyzers.Tests/0.1.0-gc68446e29b": {
+    "Inshiminator.Analyzers.Tests/0.1.2-g2e58a4565a": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

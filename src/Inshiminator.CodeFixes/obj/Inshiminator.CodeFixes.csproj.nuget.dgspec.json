@@ -1,23 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.CodeFixes/Inshiminator.CodeFixes.csproj": {}
+    "C:\\git\\InShimInator\\src\\Inshiminator.CodeFixes\\Inshiminator.CodeFixes.csproj": {}
   },
   "projects": {
-    "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.Analyzers/Inshiminator.Analyzers.csproj": {
+    "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\Inshiminator.Analyzers.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.Analyzers/Inshiminator.Analyzers.csproj",
+        "projectUniqueName": "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\Inshiminator.Analyzers.csproj",
         "projectName": "Inshiminator.Analyzers",
-        "projectPath": "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.Analyzers/Inshiminator.Analyzers.csproj",
-        "packagesPath": "/home/runner/.nuget/packages/",
-        "outputPath": "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.Analyzers/obj/",
+        "projectPath": "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\Inshiminator.Analyzers.csproj",
+        "packagesPath": "C:\\Users\\jd\\.nuget\\packages\\",
+        "outputPath": "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "centralPackageVersionsManagementEnabled": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/runner/work/In-Shim-Inator/In-Shim-Inator/NuGet.Config",
-          "/home/runner/.nuget/NuGet/NuGet.Config"
+          "C:\\git\\InShimInator\\NuGet.Config",
+          "C:\\Users\\jd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0",
@@ -25,6 +30,7 @@
           "netstandard2.0"
         ],
         "sources": {
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -51,7 +57,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -118,7 +124,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.107/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.3.32767]",
@@ -466,7 +472,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.107/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -807,7 +813,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.201/RuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.107\\RuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.Win32.Primitives": "(,4.3.0]",
             "System.AppContext": "(,4.3.0]",
@@ -905,20 +911,25 @@
         }
       }
     },
-    "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.CodeFixes/Inshiminator.CodeFixes.csproj": {
+    "C:\\git\\InShimInator\\src\\Inshiminator.CodeFixes\\Inshiminator.CodeFixes.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.CodeFixes/Inshiminator.CodeFixes.csproj",
+        "projectUniqueName": "C:\\git\\InShimInator\\src\\Inshiminator.CodeFixes\\Inshiminator.CodeFixes.csproj",
         "projectName": "Inshiminator.CodeFixes",
-        "projectPath": "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.CodeFixes/Inshiminator.CodeFixes.csproj",
-        "packagesPath": "/home/runner/.nuget/packages/",
-        "outputPath": "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.CodeFixes/obj/",
+        "projectPath": "C:\\git\\InShimInator\\src\\Inshiminator.CodeFixes\\Inshiminator.CodeFixes.csproj",
+        "packagesPath": "C:\\Users\\jd\\.nuget\\packages\\",
+        "outputPath": "C:\\git\\InShimInator\\src\\Inshiminator.CodeFixes\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "centralPackageVersionsManagementEnabled": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/runner/work/In-Shim-Inator/In-Shim-Inator/NuGet.Config",
-          "/home/runner/.nuget/NuGet/NuGet.Config"
+          "C:\\git\\InShimInator\\NuGet.Config",
+          "C:\\Users\\jd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0",
@@ -926,30 +937,31 @@
           "netstandard2.0"
         ],
         "sources": {
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.Analyzers/Inshiminator.Analyzers.csproj": {
-                "projectPath": "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.Analyzers/Inshiminator.Analyzers.csproj"
+              "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\Inshiminator.Analyzers.csproj": {
+                "projectPath": "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\Inshiminator.Analyzers.csproj"
               }
             }
           },
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.Analyzers/Inshiminator.Analyzers.csproj": {
-                "projectPath": "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.Analyzers/Inshiminator.Analyzers.csproj"
+              "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\Inshiminator.Analyzers.csproj": {
+                "projectPath": "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\Inshiminator.Analyzers.csproj"
               }
             }
           },
           "netstandard2.0": {
             "targetAlias": "netstandard2.0",
             "projectReferences": {
-              "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.Analyzers/Inshiminator.Analyzers.csproj": {
-                "projectPath": "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.Analyzers/Inshiminator.Analyzers.csproj"
+              "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\Inshiminator.Analyzers.csproj": {
+                "projectPath": "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\Inshiminator.Analyzers.csproj"
               }
             }
           }
@@ -964,7 +976,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -1024,7 +1036,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.107/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.3.32767]",
@@ -1365,7 +1377,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.107/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1699,7 +1711,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.201/RuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.107\\RuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.Win32.Primitives": "(,4.3.0]",
             "System.AppContext": "(,4.3.0]",
