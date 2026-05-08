@@ -6,114 +6,83 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v10.0": {
-      "Inshiminator.Cli/0.1.0-g": {
+      "Inshiminator.Cli/0.1.1-gabc60648c2": {
         "dependencies": {
           "Inshiminator.Abstractions": "1.0.0",
-          "Inshiminator.Analyzers": "1.0.0",
-          "Inshiminator.Generators": "1.0.0"
+          "Microsoft.Build.Locator": "1.11.2",
+          "Spectre.Console.Cli": "0.55.0"
         },
         "runtime": {
           "Inshiminator.Cli.dll": {}
         }
       },
-      "Microsoft.CodeAnalysis.Common/4.12.0": {
+      "Microsoft.Build.Locator/1.11.2": {
         "runtime": {
-          "lib/net8.0/Microsoft.CodeAnalysis.dll": {
-            "assemblyVersion": "4.12.0.0",
-            "fileVersion": "4.1200.24.57207"
-          }
-        },
-        "resources": {
-          "lib/net8.0/cs/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "cs"
-          },
-          "lib/net8.0/de/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net8.0/es/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "es"
-          },
-          "lib/net8.0/fr/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "fr"
-          },
-          "lib/net8.0/it/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "it"
-          },
-          "lib/net8.0/ja/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net8.0/ko/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "ko"
-          },
-          "lib/net8.0/pl/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "pl"
-          },
-          "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "pt-BR"
-          },
-          "lib/net8.0/ru/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "ru"
-          },
-          "lib/net8.0/tr/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "tr"
-          },
-          "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "zh-Hans"
-          },
-          "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "zh-Hant"
+          "lib/net8.0/Microsoft.Build.Locator.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.11.2.35241"
           }
         }
       },
-      "Microsoft.CodeAnalysis.CSharp/4.12.0": {
+      "Spectre.Console/0.55.0": {
         "dependencies": {
-          "Microsoft.CodeAnalysis.Common": "4.12.0"
+          "Spectre.Console.Ansi": "0.55.0"
         },
         "runtime": {
-          "lib/net8.0/Microsoft.CodeAnalysis.CSharp.dll": {
-            "assemblyVersion": "4.12.0.0",
-            "fileVersion": "4.1200.24.57207"
+          "lib/net10.0/Spectre.Console.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.55.0.0"
+          }
+        }
+      },
+      "Spectre.Console.Ansi/0.55.0": {
+        "runtime": {
+          "lib/net10.0/Spectre.Console.Ansi.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.55.0.0"
+          }
+        }
+      },
+      "Spectre.Console.Cli/0.55.0": {
+        "dependencies": {
+          "Spectre.Console": "0.55.0"
+        },
+        "runtime": {
+          "lib/net10.0/Spectre.Console.Cli.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.55.0.0"
           }
         },
         "resources": {
-          "lib/net8.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "cs"
-          },
-          "lib/net8.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll": {
+          "lib/net10.0/de/Spectre.Console.Cli.resources.dll": {
             "locale": "de"
           },
-          "lib/net8.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll": {
+          "lib/net10.0/es/Spectre.Console.Cli.resources.dll": {
             "locale": "es"
           },
-          "lib/net8.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll": {
+          "lib/net10.0/fr/Spectre.Console.Cli.resources.dll": {
             "locale": "fr"
           },
-          "lib/net8.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll": {
+          "lib/net10.0/it/Spectre.Console.Cli.resources.dll": {
             "locale": "it"
           },
-          "lib/net8.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll": {
+          "lib/net10.0/ja/Spectre.Console.Cli.resources.dll": {
             "locale": "ja"
           },
-          "lib/net8.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll": {
+          "lib/net10.0/ko/Spectre.Console.Cli.resources.dll": {
             "locale": "ko"
           },
-          "lib/net8.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "pl"
+          "lib/net10.0/pt/Spectre.Console.Cli.resources.dll": {
+            "locale": "pt"
           },
-          "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "pt-BR"
-          },
-          "lib/net8.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll": {
+          "lib/net10.0/ru/Spectre.Console.Cli.resources.dll": {
             "locale": "ru"
           },
-          "lib/net8.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "tr"
+          "lib/net10.0/sv/Spectre.Console.Cli.resources.dll": {
+            "locale": "sv"
           },
-          "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll": {
+          "lib/net10.0/zh-Hans/Spectre.Console.Cli.resources.dll": {
             "locale": "zh-Hans"
-          },
-          "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "zh-Hant"
           }
         }
       },
@@ -121,65 +90,47 @@
         "runtime": {
           "Inshiminator.Abstractions.dll": {
             "assemblyVersion": "0.1.0.0",
-            "fileVersion": "0.1.0.0"
-          }
-        }
-      },
-      "Inshiminator.Analyzers/1.0.0": {
-        "dependencies": {
-          "Microsoft.CodeAnalysis.CSharp": "4.12.0"
-        },
-        "runtime": {
-          "Inshiminator.Analyzers.dll": {
-            "assemblyVersion": "0.1.0.0",
-            "fileVersion": "0.1.0.0"
-          }
-        }
-      },
-      "Inshiminator.Generators/1.0.0": {
-        "dependencies": {
-          "Microsoft.CodeAnalysis.CSharp": "4.12.0"
-        },
-        "runtime": {
-          "Inshiminator.Generators.dll": {
-            "assemblyVersion": "0.1.0.0",
-            "fileVersion": "0.1.0.0"
+            "fileVersion": "0.1.1.43974"
           }
         }
       }
     }
   },
   "libraries": {
-    "Inshiminator.Cli/0.1.0-g": {
+    "Inshiminator.Cli/0.1.1-gabc60648c2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.CodeAnalysis.Common/4.12.0": {
+    "Microsoft.Build.Locator/1.11.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-c1kNYihL2gdcuU1dqm8R8YeA4YkB43TpU3pa2r66Uooh6AAhRtENzj9A4Kj0a+H8JDDyuTjNZql9XlVUzV+UjA==",
-      "path": "microsoft.codeanalysis.common/4.12.0",
-      "hashPath": "microsoft.codeanalysis.common.4.12.0.nupkg.sha512"
+      "sha512": "sha512-tY+/S54G29CGsbL3slVu4vqtpciwVnb3fKOmrhgzEQmu/VziFaWmD/E1e/2KH7cDucuycGSkWsSXndBs5Uawow==",
+      "path": "microsoft.build.locator/1.11.2",
+      "hashPath": "microsoft.build.locator.1.11.2.nupkg.sha512"
     },
-    "Microsoft.CodeAnalysis.CSharp/4.12.0": {
+    "Spectre.Console/0.55.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-30vVQ1MizeC22iEdEvI2w0eTIYG43/L20yBzuQH01xKzJgHAoWehzI2F8u07o4mXh4DGMOjQF7aEm0zzvsG3Mg==",
-      "path": "microsoft.codeanalysis.csharp/4.12.0",
-      "hashPath": "microsoft.codeanalysis.csharp.4.12.0.nupkg.sha512"
+      "sha512": "sha512-2TVhUHFsDux0Z+y2Hv4bFsOMuON4SuotEEKkMparFkp5Rm259naaaEQrN4Sv6C1cbsiGKPjfkJDGgUp+hZPjTw==",
+      "path": "spectre.console/0.55.0",
+      "hashPath": "spectre.console.0.55.0.nupkg.sha512"
+    },
+    "Spectre.Console.Ansi/0.55.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GIfgOvuF8MpU52bprhwtDEtx0gmVIGOepM8bw0lH/TSMD0rg1Xp+5Y53kPG8rFVdcpbNANlhDQ5mEVVPO3/2Tg==",
+      "path": "spectre.console.ansi/0.55.0",
+      "hashPath": "spectre.console.ansi.0.55.0.nupkg.sha512"
+    },
+    "Spectre.Console.Cli/0.55.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cFJTB1te4eaAICd4Zp+8T/kiRn1ikQxgGqmoNarb1qoQ/7LzHAvVQ62x5U9GW3E0QI7sZLcXIIoq4CpqgTx42Q==",
+      "path": "spectre.console.cli/0.55.0",
+      "hashPath": "spectre.console.cli.0.55.0.nupkg.sha512"
     },
     "Inshiminator.Abstractions/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Inshiminator.Analyzers/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Inshiminator.Generators/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -45,16 +45,6 @@
     <Import Project="$(NuGetPackageRoot)microsoft.net.test.sdk\17.13.0\build\netcoreapp3.1\Microsoft.NET.Test.Sdk.props" Condition="Exists('$(NuGetPackageRoot)microsoft.net.test.sdk\17.13.0\build\netcoreapp3.1\Microsoft.NET.Test.Sdk.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.3.4\buildTransitive\Microsoft.CodeAnalysis.Analyzers.props" Condition="Exists('$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.3.4\buildTransitive\Microsoft.CodeAnalysis.Analyzers.props')" />
   </ImportGroup>
-  <ImportGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)xunit.runner.visualstudio\3.0.2\build\net472\xunit.runner.visualstudio.props" Condition="Exists('$(NuGetPackageRoot)xunit.runner.visualstudio\3.0.2\build\net472\xunit.runner.visualstudio.props')" />
-    <Import Project="$(NuGetPackageRoot)xunit.core\2.9.3\build\xunit.core.props" Condition="Exists('$(NuGetPackageRoot)xunit.core\2.9.3\build\xunit.core.props')" />
-    <Import Project="$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.props" Condition="Exists('$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.props" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.props" Condition="Exists('$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.props" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.codecoverage\17.13.0\build\netstandard2.0\Microsoft.CodeCoverage.props" Condition="Exists('$(NuGetPackageRoot)microsoft.codecoverage\17.13.0\build\netstandard2.0\Microsoft.CodeCoverage.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.3.4\buildTransitive\Microsoft.CodeAnalysis.Analyzers.props" Condition="Exists('$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.3.4\buildTransitive\Microsoft.CodeAnalysis.Analyzers.props')" />
-  </ImportGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net10.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
     <Pkgxunit_analyzers Condition=" '$(Pkgxunit_analyzers)' == '' ">C:\Users\jd\.nuget\packages\xunit.analyzers\1.18.0</Pkgxunit_analyzers>
     <PkgMicrosoft_VisualStudio_Validation Condition=" '$(PkgMicrosoft_VisualStudio_Validation)' == '' ">C:\Users\jd\.nuget\packages\microsoft.visualstudio.validation\15.0.82</PkgMicrosoft_VisualStudio_Validation>
@@ -64,14 +54,6 @@
     <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">C:\Users\jd\.nuget\packages\microsoft.codeanalysis.analyzers\3.3.4</PkgMicrosoft_CodeAnalysis_Analyzers>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net8.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Pkgxunit_analyzers Condition=" '$(Pkgxunit_analyzers)' == '' ">C:\Users\jd\.nuget\packages\xunit.analyzers\1.18.0</Pkgxunit_analyzers>
-    <PkgMicrosoft_VisualStudio_Validation Condition=" '$(PkgMicrosoft_VisualStudio_Validation)' == '' ">C:\Users\jd\.nuget\packages\microsoft.visualstudio.validation\15.0.82</PkgMicrosoft_VisualStudio_Validation>
-    <PkgMicrosoft_SourceLink_Common Condition=" '$(PkgMicrosoft_SourceLink_Common)' == '' ">C:\Users\jd\.nuget\packages\microsoft.sourcelink.common\8.0.0</PkgMicrosoft_SourceLink_Common>
-    <PkgMicrosoft_Build_Tasks_Git Condition=" '$(PkgMicrosoft_Build_Tasks_Git)' == '' ">C:\Users\jd\.nuget\packages\microsoft.build.tasks.git\8.0.0</PkgMicrosoft_Build_Tasks_Git>
-    <PkgMicrosoft_SourceLink_GitHub Condition=" '$(PkgMicrosoft_SourceLink_GitHub)' == '' ">C:\Users\jd\.nuget\packages\microsoft.sourcelink.github\8.0.0</PkgMicrosoft_SourceLink_GitHub>
-    <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">C:\Users\jd\.nuget\packages\microsoft.codeanalysis.analyzers\3.3.4</PkgMicrosoft_CodeAnalysis_Analyzers>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
     <Pkgxunit_analyzers Condition=" '$(Pkgxunit_analyzers)' == '' ">C:\Users\jd\.nuget\packages\xunit.analyzers\1.18.0</Pkgxunit_analyzers>
     <PkgMicrosoft_VisualStudio_Validation Condition=" '$(PkgMicrosoft_VisualStudio_Validation)' == '' ">C:\Users\jd\.nuget\packages\microsoft.visualstudio.validation\15.0.82</PkgMicrosoft_VisualStudio_Validation>
     <PkgMicrosoft_SourceLink_Common Condition=" '$(PkgMicrosoft_SourceLink_Common)' == '' ">C:\Users\jd\.nuget\packages\microsoft.sourcelink.common\8.0.0</PkgMicrosoft_SourceLink_Common>

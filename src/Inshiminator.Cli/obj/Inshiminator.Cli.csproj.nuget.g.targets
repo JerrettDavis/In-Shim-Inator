@@ -11,11 +11,13 @@
     <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.build.locator\1.11.2\buildTransitive\Microsoft.Build.Locator.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.locator\1.11.2\buildTransitive\Microsoft.Build.Locator.targets')" />
   </ImportGroup>
   <ImportGroup Condition=" '$(TargetFramework)' == 'net8.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.targets" Condition="Exists('$(NuGetPackageRoot)nerdbank.gitversioning\3.7.115\build\Nerdbank.GitVersioning.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.common\8.0.0\build\Microsoft.SourceLink.Common.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.tasks.git\8.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.sourcelink.github\8.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.build.locator\1.11.2\buildTransitive\Microsoft.Build.Locator.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.build.locator\1.11.2\buildTransitive\Microsoft.Build.Locator.targets')" />
   </ImportGroup>
 </Project>

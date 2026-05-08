@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     "net10.0": {
+      "Microsoft.Build.Locator/1.11.2": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Microsoft.Build.Locator.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Build.Locator.dll": {}
+        },
+        "build": {
+          "buildTransitive/Microsoft.Build.Locator.props": {},
+          "buildTransitive/Microsoft.Build.Locator.targets": {}
+        }
+      },
       "Microsoft.Build.Tasks.Git/8.0.0": {
         "type": "package",
         "build": {
@@ -11,121 +24,6 @@
         "buildMultiTargeting": {
           "buildMultiTargeting/Microsoft.Build.Tasks.Git.props": {},
           "buildMultiTargeting/Microsoft.Build.Tasks.Git.targets": {}
-        }
-      },
-      "Microsoft.CodeAnalysis.Common/4.12.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "3.3.4"
-        },
-        "compile": {
-          "lib/net8.0/Microsoft.CodeAnalysis.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/Microsoft.CodeAnalysis.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "resource": {
-          "lib/net8.0/cs/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "cs"
-          },
-          "lib/net8.0/de/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net8.0/es/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "es"
-          },
-          "lib/net8.0/fr/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "fr"
-          },
-          "lib/net8.0/it/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "it"
-          },
-          "lib/net8.0/ja/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net8.0/ko/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "ko"
-          },
-          "lib/net8.0/pl/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "pl"
-          },
-          "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "pt-BR"
-          },
-          "lib/net8.0/ru/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "ru"
-          },
-          "lib/net8.0/tr/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "tr"
-          },
-          "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "zh-Hans"
-          },
-          "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "zh-Hant"
-          }
-        }
-      },
-      "Microsoft.CodeAnalysis.CSharp/4.12.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "3.3.4",
-          "Microsoft.CodeAnalysis.Common": "[4.12.0]"
-        },
-        "compile": {
-          "lib/net8.0/Microsoft.CodeAnalysis.CSharp.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/Microsoft.CodeAnalysis.CSharp.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "resource": {
-          "lib/net8.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "cs"
-          },
-          "lib/net8.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net8.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "es"
-          },
-          "lib/net8.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "fr"
-          },
-          "lib/net8.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "it"
-          },
-          "lib/net8.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net8.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "ko"
-          },
-          "lib/net8.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "pl"
-          },
-          "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "pt-BR"
-          },
-          "lib/net8.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "ru"
-          },
-          "lib/net8.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "tr"
-          },
-          "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "zh-Hans"
-          },
-          "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "zh-Hant"
-          }
         }
       },
       "Microsoft.SourceLink.Common/8.0.0": {
@@ -165,6 +63,83 @@
           "buildCrossTargeting/Nerdbank.GitVersioning.targets": {}
         }
       },
+      "Spectre.Console/0.55.0": {
+        "type": "package",
+        "dependencies": {
+          "Spectre.Console.Ansi": "0.55.0"
+        },
+        "compile": {
+          "lib/net10.0/Spectre.Console.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Spectre.Console.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Spectre.Console.Ansi/0.55.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/Spectre.Console.Ansi.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Spectre.Console.Ansi.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Spectre.Console.Cli/0.55.0": {
+        "type": "package",
+        "dependencies": {
+          "Spectre.Console": "0.55.0"
+        },
+        "compile": {
+          "lib/net10.0/Spectre.Console.Cli.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Spectre.Console.Cli.dll": {
+            "related": ".xml"
+          }
+        },
+        "resource": {
+          "lib/net10.0/de/Spectre.Console.Cli.resources.dll": {
+            "locale": "de"
+          },
+          "lib/net10.0/es/Spectre.Console.Cli.resources.dll": {
+            "locale": "es"
+          },
+          "lib/net10.0/fr/Spectre.Console.Cli.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/net10.0/it/Spectre.Console.Cli.resources.dll": {
+            "locale": "it"
+          },
+          "lib/net10.0/ja/Spectre.Console.Cli.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/net10.0/ko/Spectre.Console.Cli.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/net10.0/pt/Spectre.Console.Cli.resources.dll": {
+            "locale": "pt"
+          },
+          "lib/net10.0/ru/Spectre.Console.Cli.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/net10.0/sv/Spectre.Console.Cli.resources.dll": {
+            "locale": "sv"
+          },
+          "lib/net10.0/zh-Hans/Spectre.Console.Cli.resources.dll": {
+            "locale": "zh-Hans"
+          }
+        }
+      },
       "Inshiminator.Abstractions/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
@@ -173,36 +148,23 @@
         },
         "runtime": {
           "bin/placeholder/Inshiminator.Abstractions.dll": {}
-        }
-      },
-      "Inshiminator.Analyzers/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v10.0",
-        "dependencies": {
-          "Microsoft.CodeAnalysis.CSharp": "4.12.0"
-        },
-        "compile": {
-          "bin/placeholder/Inshiminator.Analyzers.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Inshiminator.Analyzers.dll": {}
-        }
-      },
-      "Inshiminator.Generators/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v10.0",
-        "dependencies": {
-          "Microsoft.CodeAnalysis.CSharp": "4.12.0"
-        },
-        "compile": {
-          "bin/placeholder/Inshiminator.Generators.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Inshiminator.Generators.dll": {}
         }
       }
     },
     "net8.0": {
+      "Microsoft.Build.Locator/1.11.2": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Microsoft.Build.Locator.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Build.Locator.dll": {}
+        },
+        "build": {
+          "buildTransitive/Microsoft.Build.Locator.props": {},
+          "buildTransitive/Microsoft.Build.Locator.targets": {}
+        }
+      },
       "Microsoft.Build.Tasks.Git/8.0.0": {
         "type": "package",
         "build": {
@@ -212,121 +174,6 @@
         "buildMultiTargeting": {
           "buildMultiTargeting/Microsoft.Build.Tasks.Git.props": {},
           "buildMultiTargeting/Microsoft.Build.Tasks.Git.targets": {}
-        }
-      },
-      "Microsoft.CodeAnalysis.Common/4.12.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "3.3.4"
-        },
-        "compile": {
-          "lib/net8.0/Microsoft.CodeAnalysis.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/Microsoft.CodeAnalysis.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "resource": {
-          "lib/net8.0/cs/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "cs"
-          },
-          "lib/net8.0/de/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net8.0/es/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "es"
-          },
-          "lib/net8.0/fr/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "fr"
-          },
-          "lib/net8.0/it/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "it"
-          },
-          "lib/net8.0/ja/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net8.0/ko/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "ko"
-          },
-          "lib/net8.0/pl/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "pl"
-          },
-          "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "pt-BR"
-          },
-          "lib/net8.0/ru/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "ru"
-          },
-          "lib/net8.0/tr/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "tr"
-          },
-          "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "zh-Hans"
-          },
-          "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll": {
-            "locale": "zh-Hant"
-          }
-        }
-      },
-      "Microsoft.CodeAnalysis.CSharp/4.12.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "3.3.4",
-          "Microsoft.CodeAnalysis.Common": "[4.12.0]"
-        },
-        "compile": {
-          "lib/net8.0/Microsoft.CodeAnalysis.CSharp.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/Microsoft.CodeAnalysis.CSharp.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "resource": {
-          "lib/net8.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "cs"
-          },
-          "lib/net8.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net8.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "es"
-          },
-          "lib/net8.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "fr"
-          },
-          "lib/net8.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "it"
-          },
-          "lib/net8.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net8.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "ko"
-          },
-          "lib/net8.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "pl"
-          },
-          "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "pt-BR"
-          },
-          "lib/net8.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "ru"
-          },
-          "lib/net8.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "tr"
-          },
-          "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "zh-Hans"
-          },
-          "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll": {
-            "locale": "zh-Hant"
-          }
         }
       },
       "Microsoft.SourceLink.Common/8.0.0": {
@@ -366,6 +213,83 @@
           "buildCrossTargeting/Nerdbank.GitVersioning.targets": {}
         }
       },
+      "Spectre.Console/0.55.0": {
+        "type": "package",
+        "dependencies": {
+          "Spectre.Console.Ansi": "0.55.0"
+        },
+        "compile": {
+          "lib/net8.0/Spectre.Console.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Spectre.Console.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Spectre.Console.Ansi/0.55.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Spectre.Console.Ansi.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Spectre.Console.Ansi.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Spectre.Console.Cli/0.55.0": {
+        "type": "package",
+        "dependencies": {
+          "Spectre.Console": "0.55.0"
+        },
+        "compile": {
+          "lib/net8.0/Spectre.Console.Cli.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Spectre.Console.Cli.dll": {
+            "related": ".xml"
+          }
+        },
+        "resource": {
+          "lib/net8.0/de/Spectre.Console.Cli.resources.dll": {
+            "locale": "de"
+          },
+          "lib/net8.0/es/Spectre.Console.Cli.resources.dll": {
+            "locale": "es"
+          },
+          "lib/net8.0/fr/Spectre.Console.Cli.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/net8.0/it/Spectre.Console.Cli.resources.dll": {
+            "locale": "it"
+          },
+          "lib/net8.0/ja/Spectre.Console.Cli.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/net8.0/ko/Spectre.Console.Cli.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/net8.0/pt/Spectre.Console.Cli.resources.dll": {
+            "locale": "pt"
+          },
+          "lib/net8.0/ru/Spectre.Console.Cli.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/net8.0/sv/Spectre.Console.Cli.resources.dll": {
+            "locale": "sv"
+          },
+          "lib/net8.0/zh-Hans/Spectre.Console.Cli.resources.dll": {
+            "locale": "zh-Hans"
+          }
+        }
+      },
       "Inshiminator.Abstractions/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -374,37 +298,30 @@
         },
         "runtime": {
           "bin/placeholder/Inshiminator.Abstractions.dll": {}
-        }
-      },
-      "Inshiminator.Analyzers/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "dependencies": {
-          "Microsoft.CodeAnalysis.CSharp": "4.12.0"
-        },
-        "compile": {
-          "bin/placeholder/Inshiminator.Analyzers.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Inshiminator.Analyzers.dll": {}
-        }
-      },
-      "Inshiminator.Generators/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "dependencies": {
-          "Microsoft.CodeAnalysis.CSharp": "4.12.0"
-        },
-        "compile": {
-          "bin/placeholder/Inshiminator.Generators.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Inshiminator.Generators.dll": {}
         }
       }
     }
   },
   "libraries": {
+    "Microsoft.Build.Locator/1.11.2": {
+      "sha512": "tY+/S54G29CGsbL3slVu4vqtpciwVnb3fKOmrhgzEQmu/VziFaWmD/E1e/2KH7cDucuycGSkWsSXndBs5Uawow==",
+      "type": "package",
+      "path": "microsoft.build.locator/1.11.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "MSBuild-NuGet-Icon.png",
+        "README.md",
+        "build/Microsoft.Build.Locator.props",
+        "build/Microsoft.Build.Locator.targets",
+        "buildTransitive/Microsoft.Build.Locator.props",
+        "buildTransitive/Microsoft.Build.Locator.targets",
+        "lib/net46/Microsoft.Build.Locator.dll",
+        "lib/net8.0/Microsoft.Build.Locator.dll",
+        "microsoft.build.locator.1.11.2.nupkg.sha512",
+        "microsoft.build.locator.nuspec"
+      ]
+    },
     "Microsoft.Build.Tasks.Git/8.0.0": {
       "sha512": "bZKfSIKJRXLTuSzLudMFte/8CempWjVamNUR5eHJizsy+iuOuO/k2gnh7W0dHJmYY0tBf+gUErfluCv5mySAOQ==",
       "type": "package",
@@ -449,128 +366,6 @@
         "tools/net472/tr/Microsoft.Build.Tasks.Git.resources.dll",
         "tools/net472/zh-Hans/Microsoft.Build.Tasks.Git.resources.dll",
         "tools/net472/zh-Hant/Microsoft.Build.Tasks.Git.resources.dll"
-      ]
-    },
-    "Microsoft.CodeAnalysis.Common/4.12.0": {
-      "sha512": "c1kNYihL2gdcuU1dqm8R8YeA4YkB43TpU3pa2r66Uooh6AAhRtENzj9A4Kj0a+H8JDDyuTjNZql9XlVUzV+UjA==",
-      "type": "package",
-      "path": "microsoft.codeanalysis.common/4.12.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "ThirdPartyNotices.rtf",
-        "lib/net7.0/Microsoft.CodeAnalysis.dll",
-        "lib/net7.0/Microsoft.CodeAnalysis.pdb",
-        "lib/net7.0/Microsoft.CodeAnalysis.xml",
-        "lib/net7.0/cs/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net7.0/de/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net7.0/es/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net7.0/fr/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net7.0/it/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net7.0/ja/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net7.0/ko/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net7.0/pl/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net7.0/pt-BR/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net7.0/ru/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net7.0/tr/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net7.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net7.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.pdb",
-        "lib/net8.0/Microsoft.CodeAnalysis.xml",
-        "lib/net8.0/cs/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/de/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/es/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/fr/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/it/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/ja/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/ko/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/pl/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/ru/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/tr/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll",
-        "lib/netstandard2.0/Microsoft.CodeAnalysis.dll",
-        "lib/netstandard2.0/Microsoft.CodeAnalysis.pdb",
-        "lib/netstandard2.0/Microsoft.CodeAnalysis.xml",
-        "lib/netstandard2.0/cs/Microsoft.CodeAnalysis.resources.dll",
-        "lib/netstandard2.0/de/Microsoft.CodeAnalysis.resources.dll",
-        "lib/netstandard2.0/es/Microsoft.CodeAnalysis.resources.dll",
-        "lib/netstandard2.0/fr/Microsoft.CodeAnalysis.resources.dll",
-        "lib/netstandard2.0/it/Microsoft.CodeAnalysis.resources.dll",
-        "lib/netstandard2.0/ja/Microsoft.CodeAnalysis.resources.dll",
-        "lib/netstandard2.0/ko/Microsoft.CodeAnalysis.resources.dll",
-        "lib/netstandard2.0/pl/Microsoft.CodeAnalysis.resources.dll",
-        "lib/netstandard2.0/pt-BR/Microsoft.CodeAnalysis.resources.dll",
-        "lib/netstandard2.0/ru/Microsoft.CodeAnalysis.resources.dll",
-        "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.resources.dll",
-        "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll",
-        "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll",
-        "microsoft.codeanalysis.common.4.12.0.nupkg.sha512",
-        "microsoft.codeanalysis.common.nuspec"
-      ]
-    },
-    "Microsoft.CodeAnalysis.CSharp/4.12.0": {
-      "sha512": "30vVQ1MizeC22iEdEvI2w0eTIYG43/L20yBzuQH01xKzJgHAoWehzI2F8u07o4mXh4DGMOjQF7aEm0zzvsG3Mg==",
-      "type": "package",
-      "path": "microsoft.codeanalysis.csharp/4.12.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "ThirdPartyNotices.rtf",
-        "lib/net7.0/Microsoft.CodeAnalysis.CSharp.dll",
-        "lib/net7.0/Microsoft.CodeAnalysis.CSharp.pdb",
-        "lib/net7.0/Microsoft.CodeAnalysis.CSharp.xml",
-        "lib/net7.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net7.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net7.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net7.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net7.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net7.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net7.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net7.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net7.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net7.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net7.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net7.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net7.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.CSharp.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.CSharp.pdb",
-        "lib/net8.0/Microsoft.CodeAnalysis.CSharp.xml",
-        "lib/net8.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.dll",
-        "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.pdb",
-        "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.xml",
-        "lib/netstandard2.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/netstandard2.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/netstandard2.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/netstandard2.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/netstandard2.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/netstandard2.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/netstandard2.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/netstandard2.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/netstandard2.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/netstandard2.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "microsoft.codeanalysis.csharp.4.12.0.nupkg.sha512",
-        "microsoft.codeanalysis.csharp.nuspec"
       ]
     },
     "Microsoft.SourceLink.Common/8.0.0": {
@@ -718,36 +513,129 @@
         "readme.txt"
       ]
     },
+    "Spectre.Console/0.55.0": {
+      "sha512": "2TVhUHFsDux0Z+y2Hv4bFsOMuON4SuotEEKkMparFkp5Rm259naaaEQrN4Sv6C1cbsiGKPjfkJDGgUp+hZPjTw==",
+      "type": "package",
+      "path": "spectre.console/0.55.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/Spectre.Console.dll",
+        "lib/net10.0/Spectre.Console.xml",
+        "lib/net8.0/Spectre.Console.dll",
+        "lib/net8.0/Spectre.Console.xml",
+        "lib/net9.0/Spectre.Console.dll",
+        "lib/net9.0/Spectre.Console.xml",
+        "lib/netstandard2.0/Spectre.Console.dll",
+        "lib/netstandard2.0/Spectre.Console.xml",
+        "logo.png",
+        "spectre.console.0.55.0.nupkg.sha512",
+        "spectre.console.nuspec"
+      ]
+    },
+    "Spectre.Console.Ansi/0.55.0": {
+      "sha512": "GIfgOvuF8MpU52bprhwtDEtx0gmVIGOepM8bw0lH/TSMD0rg1Xp+5Y53kPG8rFVdcpbNANlhDQ5mEVVPO3/2Tg==",
+      "type": "package",
+      "path": "spectre.console.ansi/0.55.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/Spectre.Console.Ansi.dll",
+        "lib/net10.0/Spectre.Console.Ansi.xml",
+        "lib/net8.0/Spectre.Console.Ansi.dll",
+        "lib/net8.0/Spectre.Console.Ansi.xml",
+        "lib/net9.0/Spectre.Console.Ansi.dll",
+        "lib/net9.0/Spectre.Console.Ansi.xml",
+        "lib/netstandard2.0/Spectre.Console.Ansi.dll",
+        "lib/netstandard2.0/Spectre.Console.Ansi.xml",
+        "logo.png",
+        "spectre.console.ansi.0.55.0.nupkg.sha512",
+        "spectre.console.ansi.nuspec"
+      ]
+    },
+    "Spectre.Console.Cli/0.55.0": {
+      "sha512": "cFJTB1te4eaAICd4Zp+8T/kiRn1ikQxgGqmoNarb1qoQ/7LzHAvVQ62x5U9GW3E0QI7sZLcXIIoq4CpqgTx42Q==",
+      "type": "package",
+      "path": "spectre.console.cli/0.55.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/Spectre.Console.Cli.dll",
+        "lib/net10.0/Spectre.Console.Cli.xml",
+        "lib/net10.0/de/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/es/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/fr/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/it/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/ja/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/ko/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/pt/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/ru/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/sv/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/zh-Hans/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/Spectre.Console.Cli.dll",
+        "lib/net8.0/Spectre.Console.Cli.xml",
+        "lib/net8.0/de/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/es/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/fr/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/it/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/ja/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/ko/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/pt/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/ru/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/sv/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/zh-Hans/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/Spectre.Console.Cli.dll",
+        "lib/net9.0/Spectre.Console.Cli.xml",
+        "lib/net9.0/de/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/es/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/fr/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/it/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/ja/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/ko/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/pt/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/ru/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/sv/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/zh-Hans/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/Spectre.Console.Cli.dll",
+        "lib/netstandard2.0/Spectre.Console.Cli.xml",
+        "lib/netstandard2.0/de/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/es/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/fr/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/it/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/ja/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/ko/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/pt/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/ru/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/sv/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/zh-Hans/Spectre.Console.Cli.resources.dll",
+        "logo.png",
+        "spectre.console.cli.0.55.0.nupkg.sha512",
+        "spectre.console.cli.nuspec"
+      ]
+    },
     "Inshiminator.Abstractions/1.0.0": {
       "type": "project",
       "path": "../Inshiminator.Abstractions/Inshiminator.Abstractions.csproj",
       "msbuildProject": "../Inshiminator.Abstractions/Inshiminator.Abstractions.csproj"
-    },
-    "Inshiminator.Analyzers/1.0.0": {
-      "type": "project",
-      "path": "../Inshiminator.Analyzers/Inshiminator.Analyzers.csproj",
-      "msbuildProject": "../Inshiminator.Analyzers/Inshiminator.Analyzers.csproj"
-    },
-    "Inshiminator.Generators/1.0.0": {
-      "type": "project",
-      "path": "../Inshiminator.Generators/Inshiminator.Generators.csproj",
-      "msbuildProject": "../Inshiminator.Generators/Inshiminator.Generators.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
       "Inshiminator.Abstractions >= 1.0.0",
-      "Inshiminator.Analyzers >= 1.0.0",
-      "Inshiminator.Generators >= 1.0.0",
+      "Microsoft.Build.Locator >= 1.11.2",
       "Microsoft.SourceLink.GitHub >= 8.0.0",
-      "Nerdbank.GitVersioning >= 3.7.115"
+      "Nerdbank.GitVersioning >= 3.7.115",
+      "Spectre.Console.Cli >= 0.55.0"
     ],
     "net8.0": [
       "Inshiminator.Abstractions >= 1.0.0",
-      "Inshiminator.Analyzers >= 1.0.0",
-      "Inshiminator.Generators >= 1.0.0",
+      "Microsoft.Build.Locator >= 1.11.2",
       "Microsoft.SourceLink.GitHub >= 8.0.0",
-      "Nerdbank.GitVersioning >= 3.7.115"
+      "Nerdbank.GitVersioning >= 3.7.115",
+      "Spectre.Console.Cli >= 0.55.0"
     ]
   },
   "packageFolders": {
@@ -769,6 +657,7 @@
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
+        "C:\\git\\InShimInator\\NuGet.Config",
         "C:\\Users\\jd\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -778,12 +667,7 @@
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
-        "C:\\git\\Flawright\\artifacts": {},
-        "C:\\git\\JD.MSBuild.Fluent\\pkg": {},
-        "C:\\git\\JD.SemanticKernel.Extensions\\artifacts": {},
-        "C:\\git\\OpenAICodexAuthenticationProvider\\artifacts": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -792,12 +676,6 @@
           "projectReferences": {
             "C:\\git\\InShimInator\\src\\Inshiminator.Abstractions\\Inshiminator.Abstractions.csproj": {
               "projectPath": "C:\\git\\InShimInator\\src\\Inshiminator.Abstractions\\Inshiminator.Abstractions.csproj"
-            },
-            "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\Inshiminator.Analyzers.csproj": {
-              "projectPath": "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\Inshiminator.Analyzers.csproj"
-            },
-            "C:\\git\\InShimInator\\src\\Inshiminator.Generators\\Inshiminator.Generators.csproj": {
-              "projectPath": "C:\\git\\InShimInator\\src\\Inshiminator.Generators\\Inshiminator.Generators.csproj"
             }
           }
         },
@@ -806,12 +684,6 @@
           "projectReferences": {
             "C:\\git\\InShimInator\\src\\Inshiminator.Abstractions\\Inshiminator.Abstractions.csproj": {
               "projectPath": "C:\\git\\InShimInator\\src\\Inshiminator.Abstractions\\Inshiminator.Abstractions.csproj"
-            },
-            "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\Inshiminator.Analyzers.csproj": {
-              "projectPath": "C:\\git\\InShimInator\\src\\Inshiminator.Analyzers\\Inshiminator.Analyzers.csproj"
-            },
-            "C:\\git\\InShimInator\\src\\Inshiminator.Generators\\Inshiminator.Generators.csproj": {
-              "projectPath": "C:\\git\\InShimInator\\src\\Inshiminator.Generators\\Inshiminator.Generators.csproj"
             }
           }
         }
@@ -832,6 +704,11 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "Microsoft.Build.Locator": {
+            "target": "Package",
+            "version": "[1.11.2, )",
+            "versionCentrallyManaged": true
+          },
           "Microsoft.SourceLink.GitHub": {
             "suppressParent": "All",
             "target": "Package",
@@ -843,10 +720,16 @@
             "target": "Package",
             "version": "[3.7.115, )",
             "versionCentrallyManaged": true
+          },
+          "Spectre.Console.Cli": {
+            "target": "Package",
+            "version": "[0.55.0, )",
+            "versionCentrallyManaged": true
           }
         },
         "centralPackageVersions": {
           "coverlet.collector": "6.0.4",
+          "Microsoft.Build.Locator": "1.11.2",
           "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
           "Microsoft.CodeAnalysis.CSharp": "4.12.0",
           "Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit": "1.1.2",
@@ -860,6 +743,7 @@
           "Microsoft.NET.Test.Sdk": "17.13.0",
           "Microsoft.SourceLink.GitHub": "8.0.0",
           "Nerdbank.GitVersioning": "3.7.115",
+          "Spectre.Console.Cli": "0.55.0",
           "xunit": "2.9.3",
           "xunit.runner.visualstudio": "3.0.2"
         },
@@ -1166,6 +1050,11 @@
       "net10.0": {
         "targetAlias": "net10.0",
         "dependencies": {
+          "Microsoft.Build.Locator": {
+            "target": "Package",
+            "version": "[1.11.2, )",
+            "versionCentrallyManaged": true
+          },
           "Microsoft.SourceLink.GitHub": {
             "suppressParent": "All",
             "target": "Package",
@@ -1177,10 +1066,16 @@
             "target": "Package",
             "version": "[3.7.115, )",
             "versionCentrallyManaged": true
+          },
+          "Spectre.Console.Cli": {
+            "target": "Package",
+            "version": "[0.55.0, )",
+            "versionCentrallyManaged": true
           }
         },
         "centralPackageVersions": {
           "coverlet.collector": "6.0.4",
+          "Microsoft.Build.Locator": "1.11.2",
           "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
           "Microsoft.CodeAnalysis.CSharp": "4.12.0",
           "Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit": "1.1.2",
@@ -1194,6 +1089,7 @@
           "Microsoft.NET.Test.Sdk": "17.13.0",
           "Microsoft.SourceLink.GitHub": "8.0.0",
           "Nerdbank.GitVersioning": "3.7.115",
+          "Spectre.Console.Cli": "0.55.0",
           "xunit": "2.9.3",
           "xunit.runner.visualstudio": "3.0.2"
         },

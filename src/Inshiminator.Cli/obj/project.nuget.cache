@@ -1,15 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "5Qh+ubSkPpk=",
+  "dgSpecHash": "DrfKEtXrF+M=",
   "success": true,
   "projectFilePath": "C:\\git\\InShimInator\\src\\Inshiminator.Cli\\Inshiminator.Cli.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\jd\\.nuget\\packages\\microsoft.build.locator\\1.11.2\\microsoft.build.locator.1.11.2.nupkg.sha512",
     "C:\\Users\\jd\\.nuget\\packages\\microsoft.build.tasks.git\\8.0.0\\microsoft.build.tasks.git.8.0.0.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\microsoft.codeanalysis.common\\4.12.0\\microsoft.codeanalysis.common.4.12.0.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\microsoft.codeanalysis.csharp\\4.12.0\\microsoft.codeanalysis.csharp.4.12.0.nupkg.sha512",
     "C:\\Users\\jd\\.nuget\\packages\\microsoft.sourcelink.common\\8.0.0\\microsoft.sourcelink.common.8.0.0.nupkg.sha512",
     "C:\\Users\\jd\\.nuget\\packages\\microsoft.sourcelink.github\\8.0.0\\microsoft.sourcelink.github.8.0.0.nupkg.sha512",
-    "C:\\Users\\jd\\.nuget\\packages\\nerdbank.gitversioning\\3.7.115\\nerdbank.gitversioning.3.7.115.nupkg.sha512"
+    "C:\\Users\\jd\\.nuget\\packages\\nerdbank.gitversioning\\3.7.115\\nerdbank.gitversioning.3.7.115.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\spectre.console\\0.55.0\\spectre.console.0.55.0.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\spectre.console.ansi\\0.55.0\\spectre.console.ansi.0.55.0.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\spectre.console.cli\\0.55.0\\spectre.console.cli.0.55.0.nupkg.sha512"
   ],
   "logs": []
 }

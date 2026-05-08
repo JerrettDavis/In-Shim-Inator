@@ -221,3 +221,5 @@ C:\git\InShimInator\tests\Inshiminator.Analyzers.Tests\bin\Debug\net10.0\zh-Hans
 C:\git\InShimInator\tests\Inshiminator.Analyzers.Tests\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\git\InShimInator\tests\Inshiminator.Analyzers.Tests\bin\Debug\net10.0\Inshiminator.CodeFixes.dll
 C:\git\InShimInator\tests\Inshiminator.Analyzers.Tests\bin\Debug\net10.0\Inshiminator.CodeFixes.pdb
+C:\git\InShimInator\tests\Inshiminator.Analyzers.Tests\bin\Debug\net10.0\testhost.exe
+C:\git\InShimInator\tests\Inshiminator.Analyzers.Tests\bin\Debug\net10.0\xunit.runner.visualstudio.testadapter.dll

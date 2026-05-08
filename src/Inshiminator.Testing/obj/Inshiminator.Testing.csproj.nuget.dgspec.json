@@ -19,6 +19,7 @@
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
+          "C:\\git\\InShimInator\\NuGet.Config",
           "C:\\Users\\jd\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -29,12 +30,7 @@
           "netstandard2.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "C:\\git\\Flawright\\artifacts": {},
-          "C:\\git\\JD.MSBuild.Fluent\\pkg": {},
-          "C:\\git\\JD.SemanticKernel.Extensions\\artifacts": {},
-          "C:\\git\\OpenAICodexAuthenticationProvider\\artifacts": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -82,6 +78,7 @@
           },
           "centralPackageVersions": {
             "coverlet.collector": "6.0.4",
+            "Microsoft.Build.Locator": "1.11.2",
             "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
             "Microsoft.CodeAnalysis.CSharp": "4.12.0",
             "Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit": "1.1.2",
@@ -95,6 +92,7 @@
             "Microsoft.NET.Test.Sdk": "17.13.0",
             "Microsoft.SourceLink.GitHub": "8.0.0",
             "Nerdbank.GitVersioning": "3.7.115",
+            "Spectre.Console.Cli": "0.55.0",
             "xunit": "2.9.3",
             "xunit.runner.visualstudio": "3.0.2"
           },
@@ -416,6 +414,7 @@
           },
           "centralPackageVersions": {
             "coverlet.collector": "6.0.4",
+            "Microsoft.Build.Locator": "1.11.2",
             "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
             "Microsoft.CodeAnalysis.CSharp": "4.12.0",
             "Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit": "1.1.2",
@@ -429,6 +428,7 @@
             "Microsoft.NET.Test.Sdk": "17.13.0",
             "Microsoft.SourceLink.GitHub": "8.0.0",
             "Nerdbank.GitVersioning": "3.7.115",
+            "Spectre.Console.Cli": "0.55.0",
             "xunit": "2.9.3",
             "xunit.runner.visualstudio": "3.0.2"
           },
@@ -748,6 +748,7 @@
           },
           "centralPackageVersions": {
             "coverlet.collector": "6.0.4",
+            "Microsoft.Build.Locator": "1.11.2",
             "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
             "Microsoft.CodeAnalysis.CSharp": "4.12.0",
             "Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit": "1.1.2",
@@ -761,6 +762,7 @@
             "Microsoft.NET.Test.Sdk": "17.13.0",
             "Microsoft.SourceLink.GitHub": "8.0.0",
             "Nerdbank.GitVersioning": "3.7.115",
+            "Spectre.Console.Cli": "0.55.0",
             "xunit": "2.9.3",
             "xunit.runner.visualstudio": "3.0.2"
           },
@@ -888,6 +890,7 @@
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
+          "C:\\git\\InShimInator\\NuGet.Config",
           "C:\\Users\\jd\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -898,12 +901,7 @@
           "netstandard2.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "C:\\git\\Flawright\\artifacts": {},
-          "C:\\git\\JD.MSBuild.Fluent\\pkg": {},
-          "C:\\git\\JD.SemanticKernel.Extensions\\artifacts": {},
-          "C:\\git\\OpenAICodexAuthenticationProvider\\artifacts": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -963,6 +961,7 @@
           },
           "centralPackageVersions": {
             "coverlet.collector": "6.0.4",
+            "Microsoft.Build.Locator": "1.11.2",
             "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
             "Microsoft.CodeAnalysis.CSharp": "4.12.0",
             "Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit": "1.1.2",
@@ -976,6 +975,7 @@
             "Microsoft.NET.Test.Sdk": "17.13.0",
             "Microsoft.SourceLink.GitHub": "8.0.0",
             "Nerdbank.GitVersioning": "3.7.115",
+            "Spectre.Console.Cli": "0.55.0",
             "xunit": "2.9.3",
             "xunit.runner.visualstudio": "3.0.2"
           },
@@ -1297,6 +1297,7 @@
           },
           "centralPackageVersions": {
             "coverlet.collector": "6.0.4",
+            "Microsoft.Build.Locator": "1.11.2",
             "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
             "Microsoft.CodeAnalysis.CSharp": "4.12.0",
             "Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit": "1.1.2",
@@ -1310,6 +1311,7 @@
             "Microsoft.NET.Test.Sdk": "17.13.0",
             "Microsoft.SourceLink.GitHub": "8.0.0",
             "Nerdbank.GitVersioning": "3.7.115",
+            "Spectre.Console.Cli": "0.55.0",
             "xunit": "2.9.3",
             "xunit.runner.visualstudio": "3.0.2"
           },
@@ -1629,6 +1631,7 @@
           },
           "centralPackageVersions": {
             "coverlet.collector": "6.0.4",
+            "Microsoft.Build.Locator": "1.11.2",
             "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
             "Microsoft.CodeAnalysis.CSharp": "4.12.0",
             "Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit": "1.1.2",
@@ -1642,6 +1645,7 @@
             "Microsoft.NET.Test.Sdk": "17.13.0",
             "Microsoft.SourceLink.GitHub": "8.0.0",
             "Nerdbank.GitVersioning": "3.7.115",
+            "Spectre.Console.Cli": "0.55.0",
             "xunit": "2.9.3",
             "xunit.runner.visualstudio": "3.0.2"
           },

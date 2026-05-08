@@ -1,0 +1,23 @@
+# .NET
+[Bb]in/
+[Oo]bj/
+*.user
+*.userosscache
+*.sln.doccache
+*.suo
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# DocFX
+_site/
+obj/
+
+# Artifacts
+artifacts/
+
+# Test results
+TestResults/

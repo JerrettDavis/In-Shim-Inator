@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "Inshiminator.Abstractions/0.1.0-g": {
+      "Inshiminator.Abstractions/0.1.1-gabc60648c2": {
         "runtime": {
           "Inshiminator.Abstractions.dll": {}
         }
@@ -15,7 +15,7 @@
     }
   },
   "libraries": {
-    "Inshiminator.Abstractions/0.1.0-g": {
+    "Inshiminator.Abstractions/0.1.1-gabc60648c2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

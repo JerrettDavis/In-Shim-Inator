@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "Inshiminator.DependencyInjection/0.1.0-g": {
+      "Inshiminator.DependencyInjection/0.1.1-gabc60648c2": {
         "dependencies": {
           "Inshiminator.Abstractions": "1.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2"
@@ -62,14 +62,14 @@
         "runtime": {
           "Inshiminator.Abstractions.dll": {
             "assemblyVersion": "0.1.0.0",
-            "fileVersion": "0.1.0.0"
+            "fileVersion": "0.1.1.43974"
           }
         }
       }
     }
   },
   "libraries": {
-    "Inshiminator.DependencyInjection/0.1.0-g": {
+    "Inshiminator.DependencyInjection/0.1.1-gabc60648c2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
