@@ -116,7 +116,7 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         // 1. Add TimeProvider field if it doesn't exist
         var timeProviderField = classDeclaration.Members.OfType<FieldDeclarationSyntax>()
-            .FirstOrDefault(f => f.Declaration.Type.ToString() is "TimeProvider" or "global::System.TimeProvider");
+            .FirstOrDefault(f => IsTimeProviderType(f.Declaration.Type));
 
         string fieldName = "_timeProvider";
         if (timeProviderField is null)
@@ -145,7 +145,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         if (constructor is not null)
         {
             var hasTimeProviderParam = constructor.ParameterList.Parameters.Any(
-                p => p.Type?.ToString() is "TimeProvider" or "global::System.TimeProvider");
+                p => IsTimeProviderType(p.Type));
 
             if (!hasTimeProviderParam)
             {
@@ -180,4 +180,13 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         return editor.GetChangedDocument();
     }
+
+    private static bool IsTimeProviderType(TypeSyntax? typeSyntax) =>
+        typeSyntax switch
+        {
+            IdentifierNameSyntax identifier => identifier.Identifier.ValueText == "TimeProvider",
+            QualifiedNameSyntax qualified => qualified.Right.Identifier.ValueText == "TimeProvider",
+            AliasQualifiedNameSyntax aliasQualified => aliasQualified.Name.Identifier.ValueText == "TimeProvider",
+            _ => false,
+        };
 }
