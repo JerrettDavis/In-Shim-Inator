@@ -252,9 +252,8 @@ public class ClockCodeFixProvider : CodeFixProvider
 
     private static string GetUniqueParameterName(ConstructorDeclarationSyntax constructor, string baseName)
     {
-        var usedNames = constructor.ParameterList.Parameters
-            .Select(parameter => parameter.Identifier.ValueText);
-        var usedNameSet = new HashSet<string>(usedNames);
+        var usedNameSet = new HashSet<string>(constructor.ParameterList.Parameters
+            .Select(parameter => parameter.Identifier.ValueText));
         if (!usedNameSet.Contains(baseName))
         {
             return baseName;
