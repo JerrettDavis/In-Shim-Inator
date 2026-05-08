@@ -82,4 +82,45 @@ class Test
 
         await VerifyCS.VerifyCodeFixAsync(test, fixedCode);
     }
+
+    [Fact]
+    public async Task DateTimeUtcNow_AppliesTimeProviderCodeFix()
+    {
+        var test = @"
+using System;
+
+class Test
+{
+    public Test() {}
+    void Method()
+    {
+        var now = [|DateTime.UtcNow|];
+    }
+}";
+
+        var fixedCode = @"
+using System;
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(global::System.TimeProvider timeProvider) {
+        _timeProvider = timeProvider;
+    }
+    void Method()
+    {
+        var now = _timeProvider.GetUtcNow();
+    }
+}";
+
+        var testCase = new VerifyCS.Test
+        {
+            TestCode = test,
+            FixedCode = fixedCode,
+            CodeActionIndex = 1,
+        };
+
+        await testCase.RunAsync();
+    }
 }

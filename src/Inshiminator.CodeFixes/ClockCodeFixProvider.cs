@@ -36,6 +36,13 @@ public class ClockCodeFixProvider : CodeFixProvider
                 createChangedDocument: c => UseInjectedClockAsync(context.Document, memberAccess, c),
                 equivalenceKey: nameof(ClockCodeFixProvider)),
             diagnostic);
+
+        context.RegisterCodeFix(
+            CodeAction.Create(
+                title: "Use injected TimeProvider",
+                createChangedDocument: c => UseInjectedTimeProviderAsync(context.Document, memberAccess, c),
+                equivalenceKey: $"{nameof(ClockCodeFixProvider)}_TimeProvider"),
+            diagnostic);
     }
 
     private async Task<Document> UseInjectedClockAsync(Document document, MemberAccessExpressionSyntax memberAccess, CancellationToken cancellationToken)
@@ -94,6 +101,73 @@ public class ClockCodeFixProvider : CodeFixProvider
         var replacement = editor.Generator.MemberAccessExpression(
             editor.Generator.IdentifierName(fieldName),
             memberName);
+
+        editor.ReplaceNode(memberAccess, replacement);
+
+        return editor.GetChangedDocument();
+    }
+
+    private async Task<Document> UseInjectedTimeProviderAsync(Document document, MemberAccessExpressionSyntax memberAccess, CancellationToken cancellationToken)
+    {
+        var editor = await DocumentEditor.CreateAsync(document, cancellationToken).ConfigureAwait(false);
+
+        var classDeclaration = memberAccess.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().FirstOrDefault();
+        if (classDeclaration is null) return document;
+
+        // 1. Add TimeProvider field if it doesn't exist
+        var timeProviderField = classDeclaration.Members.OfType<FieldDeclarationSyntax>()
+            .FirstOrDefault(f => f.Declaration.Type.ToString() is "TimeProvider" or "global::System.TimeProvider");
+
+        string fieldName = "_timeProvider";
+        if (timeProviderField is null)
+        {
+            var field = SyntaxFactory.FieldDeclaration(
+                    SyntaxFactory.VariableDeclaration(
+                        SyntaxFactory.ParseTypeName("global::System.TimeProvider"),
+                        SyntaxFactory.SingletonSeparatedList(SyntaxFactory.VariableDeclarator(fieldName))))
+                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PrivateKeyword), SyntaxFactory.Token(SyntaxKind.ReadOnlyKeyword));
+            editor.InsertBefore(classDeclaration.Members.First(), field);
+        }
+        else
+        {
+            fieldName = timeProviderField.Declaration.Variables.First().Identifier.Text;
+        }
+
+        // 2. Update constructor
+        var constructor = classDeclaration.Members.OfType<ConstructorDeclarationSyntax>().FirstOrDefault();
+        if (constructor is not null)
+        {
+            var hasTimeProviderParam = constructor.ParameterList.Parameters.Any(
+                p => p.Type?.ToString() is "TimeProvider" or "global::System.TimeProvider");
+
+            if (!hasTimeProviderParam)
+            {
+                var parameter = (ParameterSyntax)editor.Generator.ParameterDeclaration(
+                    "timeProvider",
+                    SyntaxFactory.ParseTypeName("global::System.TimeProvider"));
+
+                var assignment = (ExpressionStatementSyntax)editor.Generator.ExpressionStatement(
+                    editor.Generator.AssignmentStatement(
+                        editor.Generator.IdentifierName(fieldName),
+                        editor.Generator.IdentifierName("timeProvider")));
+
+                var newConstructor = constructor
+                    .AddParameterListParameters(parameter)
+                    .AddBodyStatements(assignment);
+
+                editor.ReplaceNode(constructor, newConstructor);
+            }
+        }
+
+        // 3. Replace usage
+        var replacement = memberAccess.Name.Identifier.Text switch
+        {
+            "UtcNow" => editor.Generator.InvocationExpression(
+                editor.Generator.MemberAccessExpression(editor.Generator.IdentifierName(fieldName), "GetUtcNow")),
+            "Now" => editor.Generator.InvocationExpression(
+                editor.Generator.MemberAccessExpression(editor.Generator.IdentifierName(fieldName), "GetLocalNow")),
+            _ => editor.Generator.IdentifierName(fieldName),
+        };
 
         editor.ReplaceNode(memberAccess, replacement);
 
