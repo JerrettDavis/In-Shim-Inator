@@ -262,6 +262,115 @@ class Test
         await VerifyTimeProviderCodeFixAsync(test, fixedCode);
     }
 
+    [Fact]
+    public async Task TimeProviderCodeFix_DoesNotRewriteThisInitializerForOtherPartialDeclaration()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+partial class Test
+{
+    public Test() : this(1)
+    {
+    }
+
+    void Method()
+    {
+        DateTime now = [|DateTime.UtcNow|];
+    }
+}
+
+partial class Test
+{
+    public Test(int value)
+    {
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+partial class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(global::System.TimeProvider timeProvider) : this(1)
+    {
+        _timeProvider = timeProvider;
+    }
+
+    void Method()
+    {
+        DateTime now = _timeProvider.GetUtcNow().UtcDateTime;
+    }
+}
+
+partial class Test
+{
+    public Test(int value)
+    {
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
+    public async Task TimeProviderCodeFix_ReplacesExistingFieldAssignmentWithInjectedParameter()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(string timeProvider)
+    {
+        global::System.TimeProvider assignedProvider = null;
+        _timeProvider = assignedProvider;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(string timeProvider, global::System.TimeProvider timeProvider1)
+    {
+        global::System.TimeProvider assignedProvider = null;
+        _timeProvider = timeProvider1;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
     private static async Task VerifyTimeProviderFixAsync(string targetTypeName, string sourceTypeName, string memberName, string replacement)
     {
         var test = $$"""

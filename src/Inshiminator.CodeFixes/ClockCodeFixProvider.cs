@@ -34,7 +34,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         var diagnostic = context.Diagnostics.First();
         var diagnosticSpan = diagnostic.Location.SourceSpan;
 
-        var memberAccess = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<MemberAccessExpressionSyntax>().First();
+        var memberAccess = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<MemberAccessExpressionSyntax>().FirstOrDefault();
         if (memberAccess is null) return;
 
         context.RegisterCodeFix(
@@ -177,6 +177,16 @@ public class ClockCodeFixProvider : CodeFixProvider
         }
         else
         {
+            var constructorSymbols = new HashSet<IMethodSymbol>(SymbolEqualityComparer.Default);
+            foreach (var constructor in constructors)
+            {
+                var constructorSymbol = semanticModel.GetDeclaredSymbol(constructor, cancellationToken);
+                if (constructorSymbol is not null)
+                {
+                    constructorSymbols.Add(constructorSymbol);
+                }
+            }
+
             foreach (var constructor in constructors)
             {
                 var updatedConstructor = constructor;
@@ -193,7 +203,9 @@ public class ClockCodeFixProvider : CodeFixProvider
                     updatedConstructor = updatedConstructor.AddParameterListParameters(parameter);
                 }
 
-                updatedConstructor = EnsureThisInitializerHasArgument(updatedConstructor, parameterName);
+                var canPassToThisInitializer = CanPassToThisInitializerArgument(constructor, semanticModel, constructorSymbols, cancellationToken);
+                var initializerResult = EnsureThisInitializerHasArgument(updatedConstructor, parameterName, canPassToThisInitializer);
+                updatedConstructor = initializerResult.UpdatedConstructor;
 
                 if (updatedConstructor.Body is null)
                 {
@@ -206,11 +218,9 @@ public class ClockCodeFixProvider : CodeFixProvider
                         .WithBody(body);
                 }
 
-                var delegatesToThisConstructor = updatedConstructor.Initializer?.IsKind(SyntaxKind.ThisConstructorInitializer) == true;
-                if (!delegatesToThisConstructor && !HasFieldAssignment(updatedConstructor, fieldName))
+                if (!initializerResult.PassesParameterToThisInitializer)
                 {
-                    var assignment = CreateFieldAssignmentStatement(editor, fieldName, parameterName);
-                    updatedConstructor = updatedConstructor.AddBodyStatements(assignment);
+                    updatedConstructor = EnsureFieldAssignmentFromParameter(editor, updatedConstructor, fieldName, parameterName);
                 }
 
                 editor.ReplaceNode(constructor, updatedConstructor.WithAdditionalAnnotations(Formatter.Annotation));
@@ -268,12 +278,36 @@ public class ClockCodeFixProvider : CodeFixProvider
         return $"{baseName}{suffix}";
     }
 
-    private static ConstructorDeclarationSyntax EnsureThisInitializerHasArgument(ConstructorDeclarationSyntax constructor, string parameterName)
+    private static bool CanPassToThisInitializerArgument(
+        ConstructorDeclarationSyntax constructor,
+        SemanticModel semanticModel,
+        ISet<IMethodSymbol> constructorSymbols,
+        CancellationToken cancellationToken)
     {
         var initializer = constructor.Initializer;
         if (initializer is null || !initializer.IsKind(SyntaxKind.ThisConstructorInitializer))
         {
-            return constructor;
+            return false;
+        }
+
+        var targetConstructorSymbol = semanticModel.GetSymbolInfo(initializer, cancellationToken).Symbol as IMethodSymbol;
+        if (targetConstructorSymbol is null || !constructorSymbols.Contains(targetConstructorSymbol))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private static (ConstructorDeclarationSyntax UpdatedConstructor, bool PassesParameterToThisInitializer) EnsureThisInitializerHasArgument(
+        ConstructorDeclarationSyntax constructor,
+        string parameterName,
+        bool canPassToThisInitializer)
+    {
+        var initializer = constructor.Initializer;
+        if (!canPassToThisInitializer || initializer is null || !initializer.IsKind(SyntaxKind.ThisConstructorInitializer))
+        {
+            return (constructor, false);
         }
 
         var alreadyPassed = initializer.ArgumentList.Arguments.Any(
@@ -281,12 +315,14 @@ public class ClockCodeFixProvider : CodeFixProvider
                 && identifier.Identifier.ValueText == parameterName);
         if (alreadyPassed)
         {
-            return constructor;
+            return (constructor, true);
         }
 
-        return constructor.WithInitializer(
-            initializer.WithArgumentList(
-                initializer.ArgumentList.AddArguments(SyntaxFactory.Argument(SyntaxFactory.IdentifierName(parameterName)))));
+        return (
+            constructor.WithInitializer(
+                initializer.WithArgumentList(
+                    initializer.ArgumentList.AddArguments(SyntaxFactory.Argument(SyntaxFactory.IdentifierName(parameterName))))),
+            true);
     }
 
     private static StatementSyntax ExpressionToStatement(ExpressionSyntax expression) =>
@@ -307,17 +343,34 @@ public class ClockCodeFixProvider : CodeFixProvider
                 editor.Generator.IdentifierName(parameterName)));
     }
 
-    private static bool HasFieldAssignment(ConstructorDeclarationSyntax constructor, string fieldName)
+    private static ConstructorDeclarationSyntax EnsureFieldAssignmentFromParameter(
+        DocumentEditor editor,
+        ConstructorDeclarationSyntax constructor,
+        string fieldName,
+        string parameterName)
     {
         if (constructor.Body is null)
         {
-            return false;
+            return constructor;
         }
 
-        return constructor.Body.Statements.OfType<ExpressionStatementSyntax>()
-            .Select(statement => statement.Expression)
-            .OfType<AssignmentExpressionSyntax>()
-            .Any(assignment => IsFieldAssignmentTarget(assignment.Left, fieldName) && assignment.Right is IdentifierNameSyntax);
+        var fieldAssignmentStatement = constructor.Body.Statements
+            .OfType<ExpressionStatementSyntax>()
+            .FirstOrDefault(statement => statement.Expression is AssignmentExpressionSyntax assignment && IsFieldAssignmentTarget(assignment.Left, fieldName));
+        if (fieldAssignmentStatement is null)
+        {
+            var assignment = CreateFieldAssignmentStatement(editor, fieldName, parameterName);
+            return constructor.AddBodyStatements(assignment);
+        }
+
+        var fieldAssignment = (AssignmentExpressionSyntax)fieldAssignmentStatement.Expression;
+        if (fieldAssignment.Right is IdentifierNameSyntax identifier && identifier.Identifier.ValueText == parameterName)
+        {
+            return constructor;
+        }
+
+        var updatedStatement = fieldAssignmentStatement.WithExpression(fieldAssignment.WithRight(SyntaxFactory.IdentifierName(parameterName)));
+        return constructor.ReplaceNode(fieldAssignmentStatement, updatedStatement);
     }
 
     private static bool IsFieldAssignmentTarget(ExpressionSyntax expression, string fieldName) =>
