@@ -203,8 +203,8 @@ class Test
     private int _value;
     public Test(global::System.TimeProvider timeProvider)
     {
-        _value = 1;
         _timeProvider = timeProvider;
+        _value = 1;
     }
 
     void Method()
@@ -359,6 +359,159 @@ class Test
     {
         global::System.TimeProvider assignedProvider = null;
         _timeProvider = timeProvider1;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
+    public async Task TimeProviderCodeFix_UsesUniqueFieldNameWhenDefaultNameTaken()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly string _timeProvider;
+
+    public Test()
+    {
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider1;
+    private readonly string _timeProvider;
+
+    public Test(global::System.TimeProvider timeProvider)
+    {
+        _timeProvider1 = timeProvider;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider1.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
+    public async Task TimeProviderCodeFix_ReusesDerivedTimeProviderFieldAndParameter()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class CustomTimeProvider : TimeProvider
+{
+    public override DateTimeOffset GetUtcNow() => DateTimeOffset.MinValue;
+}
+
+class Test
+{
+    private readonly CustomTimeProvider _timeProvider;
+
+    public Test(CustomTimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class CustomTimeProvider : TimeProvider
+{
+    public override DateTimeOffset GetUtcNow() => DateTimeOffset.MinValue;
+}
+
+class Test
+{
+    private readonly CustomTimeProvider _timeProvider;
+
+    public Test(CustomTimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
+    public async Task TimeProviderCodeFix_InsertsAssignmentBeforeConstructorReturn()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    public Test()
+    {
+        return;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(global::System.TimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+        return;
     }
 
     void Method()

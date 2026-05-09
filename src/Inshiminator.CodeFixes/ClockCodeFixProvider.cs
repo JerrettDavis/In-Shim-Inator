@@ -132,11 +132,12 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         // 1. Add TimeProvider field if it doesn't exist
         var timeProviderField = classDeclaration.Members.OfType<FieldDeclarationSyntax>().FirstOrDefault(
-            fieldDeclaration => IsSystemTimeProviderType(semanticModel.GetTypeInfo(fieldDeclaration.Declaration.Type, cancellationToken).Type, timeProviderType));
+            fieldDeclaration => IsCompatibleTimeProviderType(semanticModel.GetTypeInfo(fieldDeclaration.Declaration.Type, cancellationToken).Type, timeProviderType));
 
-        string fieldName = "_timeProvider";
+        var fieldName = "_timeProvider";
         if (timeProviderField is null)
         {
+            fieldName = GetUniqueFieldName(classDeclaration, fieldName);
             var field = (FieldDeclarationSyntax)editor.Generator.FieldDeclaration(
                 fieldName,
                 SyntaxFactory.ParseTypeName("global::System.TimeProvider"),
@@ -192,7 +193,7 @@ public class ClockCodeFixProvider : CodeFixProvider
                 var updatedConstructor = constructor;
 
                 var existingParameter = constructor.ParameterList.Parameters.FirstOrDefault(
-                    p => p.Type is not null && IsSystemTimeProviderType(semanticModel.GetTypeInfo(p.Type, cancellationToken).Type, timeProviderType));
+                    p => p.Type is not null && IsCompatibleTimeProviderType(semanticModel.GetTypeInfo(p.Type, cancellationToken).Type, timeProviderType));
 
                 var parameterName = existingParameter?.Identifier.ValueText ?? GetUniqueParameterName(constructor, "timeProvider");
                 if (existingParameter is null)
@@ -257,8 +258,44 @@ public class ClockCodeFixProvider : CodeFixProvider
         return editor.GetChangedDocument();
     }
 
-    private static bool IsSystemTimeProviderType(ITypeSymbol? typeSymbol, INamedTypeSymbol timeProviderType) =>
-        typeSymbol is not null && SymbolEqualityComparer.Default.Equals(typeSymbol, timeProviderType);
+    private static bool IsCompatibleTimeProviderType(ITypeSymbol? typeSymbol, INamedTypeSymbol timeProviderType)
+    {
+        if (typeSymbol is null)
+        {
+            return false;
+        }
+
+        for (var currentType = typeSymbol; currentType is not null; currentType = currentType.BaseType)
+        {
+            if (SymbolEqualityComparer.Default.Equals(currentType, timeProviderType))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static string GetUniqueFieldName(ClassDeclarationSyntax classDeclaration, string baseName)
+    {
+        var usedNameSet = new HashSet<string>(
+            classDeclaration.Members
+                .OfType<FieldDeclarationSyntax>()
+                .SelectMany(field => field.Declaration.Variables)
+                .Select(variable => variable.Identifier.ValueText));
+        if (!usedNameSet.Contains(baseName))
+        {
+            return baseName;
+        }
+
+        var suffix = 1;
+        while (usedNameSet.Contains($"{baseName}{suffix}"))
+        {
+            suffix++;
+        }
+
+        return $"{baseName}{suffix}";
+    }
 
     private static string GetUniqueParameterName(ConstructorDeclarationSyntax constructor, string baseName)
     {
@@ -360,7 +397,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         if (fieldAssignmentStatement is null)
         {
             var assignment = CreateFieldAssignmentStatement(editor, fieldName, parameterName);
-            return constructor.AddBodyStatements(assignment);
+            return constructor.WithBody(constructor.Body.WithStatements(constructor.Body.Statements.Insert(0, assignment)));
         }
 
         var fieldAssignment = (AssignmentExpressionSyntax)fieldAssignmentStatement.Expression;
