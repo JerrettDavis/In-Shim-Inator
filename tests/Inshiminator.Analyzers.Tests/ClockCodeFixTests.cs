@@ -203,8 +203,8 @@ class Test
     private int _value;
     public Test(global::System.TimeProvider timeProvider)
     {
-        _timeProvider = timeProvider;
         _value = 1;
+        _timeProvider = timeProvider;
     }
 
     void Method()
