@@ -397,15 +397,17 @@ public class ClockCodeFixProvider : CodeFixProvider
         if (fieldAssignmentStatement is null)
         {
             var assignment = CreateFieldAssignmentStatement(editor, fieldName, parameterName);
-            var insertionIndex = constructor.Body.Statements
-                .Select((statement, index) => (statement, index))
-                .FirstOrDefault(tuple => tuple.statement is ReturnStatementSyntax or ThrowStatementSyntax)
-                .index;
-            if (insertionIndex == 0 && constructor.Body.Statements.Count > 0 && constructor.Body.Statements[0] is not ReturnStatementSyntax and not ThrowStatementSyntax)
+            int? terminalStatementIndex = null;
+            for (var index = 0; index < constructor.Body.Statements.Count; index++)
             {
-                insertionIndex = constructor.Body.Statements.Count;
+                if (constructor.Body.Statements[index] is ReturnStatementSyntax or ThrowStatementSyntax)
+                {
+                    terminalStatementIndex = index;
+                    break;
+                }
             }
 
+            var insertionIndex = terminalStatementIndex ?? constructor.Body.Statements.Count;
             return constructor.WithBody(constructor.Body.WithStatements(constructor.Body.Statements.Insert(insertionIndex, assignment)));
         }
 
