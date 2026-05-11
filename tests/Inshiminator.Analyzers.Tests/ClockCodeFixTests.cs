@@ -203,8 +203,8 @@ class Test
     private int _value;
     public Test(global::System.TimeProvider timeProvider)
     {
-        _value = 1;
         _timeProvider = timeProvider;
+        _value = 1;
     }
 
     void Method()
@@ -569,6 +569,106 @@ class Test
     {
         _timeProvider = timeProvider;
         return;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
+    public async Task TimeProviderCodeFix_InsertsAssignmentBeforeNestedReturnPaths()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    public Test(bool shouldReturn)
+    {
+        if (shouldReturn)
+        {
+            return;
+        }
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(bool shouldReturn, global::System.TimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+        if (shouldReturn)
+        {
+            return;
+        }
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
+    public async Task TimeProviderCodeFix_UsesUniqueParameterNameWhenConstructorBodyDeclaresTimeProviderLocal()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    public Test()
+    {
+        var timeProvider = string.Empty;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(global::System.TimeProvider timeProvider1)
+    {
+        _timeProvider = timeProvider1;
+        var timeProvider = string.Empty;
     }
 
     void Method()

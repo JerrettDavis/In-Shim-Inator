@@ -348,6 +348,11 @@ public class ClockCodeFixProvider : CodeFixProvider
     {
         var usedNameSet = new HashSet<string>(constructor.ParameterList.Parameters
             .Select(parameter => parameter.Identifier.ValueText));
+        foreach (var bodyIdentifier in GetDeclaredBodyIdentifiers(constructor))
+        {
+            usedNameSet.Add(bodyIdentifier);
+        }
+
         if (!usedNameSet.Contains(baseName))
         {
             return baseName;
@@ -360,6 +365,37 @@ public class ClockCodeFixProvider : CodeFixProvider
         }
 
         return $"{baseName}{suffix}";
+    }
+
+    private static IEnumerable<string> GetDeclaredBodyIdentifiers(ConstructorDeclarationSyntax constructor)
+    {
+        if (constructor.Body is null)
+        {
+            yield break;
+        }
+
+        foreach (var variable in constructor.Body.DescendantNodes().OfType<VariableDeclaratorSyntax>())
+        {
+            yield return variable.Identifier.ValueText;
+        }
+
+        foreach (var @foreach in constructor.Body.DescendantNodes().OfType<ForEachStatementSyntax>())
+        {
+            yield return @foreach.Identifier.ValueText;
+        }
+
+        foreach (var @catch in constructor.Body.DescendantNodes().OfType<CatchDeclarationSyntax>())
+        {
+            if (@catch.Identifier != default)
+            {
+                yield return @catch.Identifier.ValueText;
+            }
+        }
+
+        foreach (var designation in constructor.Body.DescendantNodes().OfType<SingleVariableDesignationSyntax>())
+        {
+            yield return designation.Identifier.ValueText;
+        }
     }
 
     private static bool CanPassToThisInitializerArgument(
@@ -444,18 +480,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         if (fieldAssignmentStatement is null)
         {
             var assignment = CreateFieldAssignmentStatement(editor, fieldName, parameterName);
-            int? terminalStatementIndex = null;
-            for (var index = 0; index < constructor.Body.Statements.Count; index++)
-            {
-                if (constructor.Body.Statements[index] is ReturnStatementSyntax or ThrowStatementSyntax)
-                {
-                    terminalStatementIndex = index;
-                    break;
-                }
-            }
-
-            var insertionIndex = terminalStatementIndex ?? constructor.Body.Statements.Count;
-            return constructor.WithBody(constructor.Body.WithStatements(constructor.Body.Statements.Insert(insertionIndex, assignment)));
+            return constructor.WithBody(constructor.Body.WithStatements(constructor.Body.Statements.Insert(0, assignment)));
         }
 
         var fieldAssignment = (AssignmentExpressionSyntax)fieldAssignmentStatement.Expression;
