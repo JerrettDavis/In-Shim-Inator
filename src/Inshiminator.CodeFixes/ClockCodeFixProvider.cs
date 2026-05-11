@@ -514,6 +514,11 @@ public class ClockCodeFixProvider : CodeFixProvider
             return constructor;
         }
 
+        if (fieldAssignment.Right is not IdentifierNameSyntax)
+        {
+            return constructor;
+        }
+
         var updatedStatement = fieldAssignmentStatement.WithExpression(fieldAssignment.WithRight(SyntaxFactory.IdentifierName(parameterName)));
         return constructor.ReplaceNode(fieldAssignmentStatement, updatedStatement);
     }
