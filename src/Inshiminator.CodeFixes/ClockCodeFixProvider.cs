@@ -403,7 +403,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         ParameterSyntax parameter)
     {
         var parameters = constructor.ParameterList.Parameters;
-        var insertionIndex = -1;
+        int? insertionIndex = null;
         for (var index = 0; index < parameters.Count; index++)
         {
             if (parameters[index].Default is not null
@@ -414,13 +414,13 @@ public class ClockCodeFixProvider : CodeFixProvider
             }
         }
 
-        if (insertionIndex < 0)
+        if (!insertionIndex.HasValue)
         {
             return constructor.AddParameterListParameters(parameter);
         }
 
         return constructor.WithParameterList(
-            constructor.ParameterList.WithParameters(parameters.Insert(insertionIndex, parameter)));
+            constructor.ParameterList.WithParameters(parameters.Insert(insertionIndex.Value, parameter)));
     }
 
     private static bool CanPassToThisInitializerArgument(
