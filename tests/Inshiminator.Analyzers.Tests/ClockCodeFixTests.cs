@@ -104,7 +104,7 @@ class Test
     [Fact]
     public async Task DateTimeNow_AppliesTimeProviderCodeFix()
     {
-        await VerifyTimeProviderFixAsync("DateTime", "DateTime", "Now", "_timeProvider.GetLocalNow().LocalDateTime");
+        await VerifyTimeProviderFixAsync("DateTime", "DateTime", "Now", "DateTime.SpecifyKind(_timeProvider.GetLocalNow().LocalDateTime, DateTimeKind.Local)");
     }
 
     [Fact]

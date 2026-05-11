@@ -262,7 +262,10 @@ public class ClockCodeFixProvider : CodeFixProvider
             replacement = memberName switch
             {
                 "UtcNow" => editor.Generator.MemberAccessExpression(replacement, "UtcDateTime"),
-                "Now" => editor.Generator.MemberAccessExpression(replacement, "LocalDateTime"),
+                "Now" => editor.Generator.InvocationExpression(
+                    editor.Generator.MemberAccessExpression(editor.Generator.IdentifierName("DateTime"), "SpecifyKind"),
+                    editor.Generator.MemberAccessExpression(replacement, "LocalDateTime"),
+                    editor.Generator.MemberAccessExpression(editor.Generator.IdentifierName("DateTimeKind"), "Local")),
                 _ => replacement,
             };
         }
