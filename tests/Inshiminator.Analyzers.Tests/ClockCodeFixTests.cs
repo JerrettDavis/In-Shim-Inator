@@ -478,6 +478,63 @@ class Test
     }
 
     [Fact]
+    public async Task TimeProviderCodeFix_UsesDerivedFieldTypeWhenAddingConstructorParameter()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class CustomTimeProvider : TimeProvider
+{
+    public override DateTimeOffset GetUtcNow() => DateTimeOffset.MinValue;
+}
+
+class Test
+{
+    private readonly CustomTimeProvider _timeProvider;
+
+    public Test(string name)
+    {
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class CustomTimeProvider : TimeProvider
+{
+    public override DateTimeOffset GetUtcNow() => DateTimeOffset.MinValue;
+}
+
+class Test
+{
+    private readonly CustomTimeProvider _timeProvider;
+
+    public Test(string name, CustomTimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
     public async Task TimeProviderCodeFix_InsertsAssignmentBeforeConstructorReturn()
     {
         var test = $$"""

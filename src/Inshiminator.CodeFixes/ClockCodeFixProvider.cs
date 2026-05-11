@@ -135,12 +135,14 @@ public class ClockCodeFixProvider : CodeFixProvider
             fieldDeclaration => IsCompatibleTimeProviderType(semanticModel.GetTypeInfo(fieldDeclaration.Declaration.Type, cancellationToken).Type, timeProviderType));
 
         var fieldName = "_timeProvider";
+        TypeSyntax fieldTypeSyntax = SyntaxFactory.ParseTypeName("global::System.TimeProvider");
+        ITypeSymbol fieldTypeSymbol = timeProviderType;
         if (timeProviderField is null)
         {
             fieldName = GetUniqueFieldName(classDeclaration, fieldName);
             var field = (FieldDeclarationSyntax)editor.Generator.FieldDeclaration(
                 fieldName,
-                SyntaxFactory.ParseTypeName("global::System.TimeProvider"),
+                fieldTypeSyntax,
                 Accessibility.Private,
                 DeclarationModifiers.ReadOnly);
             field = field.WithAdditionalAnnotations(Formatter.Annotation);
@@ -156,6 +158,8 @@ public class ClockCodeFixProvider : CodeFixProvider
         else
         {
             fieldName = timeProviderField.Declaration.Variables.First().Identifier.Text;
+            fieldTypeSyntax = timeProviderField.Declaration.Type;
+            fieldTypeSymbol = semanticModel.GetTypeInfo(fieldTypeSyntax, cancellationToken).Type ?? timeProviderType;
         }
 
         // 2. Update constructors (or create one)
@@ -164,7 +168,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         {
             var parameter = (ParameterSyntax)editor.Generator.ParameterDeclaration(
                 "timeProvider",
-                SyntaxFactory.ParseTypeName("global::System.TimeProvider"));
+                fieldTypeSyntax);
             var assignment = CreateFieldAssignmentStatement(editor, fieldName, "timeProvider");
 
             var newConstructor = (ConstructorDeclarationSyntax)editor.Generator.ConstructorDeclaration(
@@ -193,14 +197,24 @@ public class ClockCodeFixProvider : CodeFixProvider
                 var updatedConstructor = constructor;
 
                 var existingParameter = constructor.ParameterList.Parameters.FirstOrDefault(
-                    p => p.Type is not null && IsCompatibleTimeProviderType(semanticModel.GetTypeInfo(p.Type, cancellationToken).Type, timeProviderType));
+                    p =>
+                    {
+                        if (p.Type is null)
+                        {
+                            return false;
+                        }
+
+                        var parameterType = semanticModel.GetTypeInfo(p.Type, cancellationToken).Type;
+                        return IsCompatibleTimeProviderType(parameterType, timeProviderType)
+                            && CanAssignType(parameterType, fieldTypeSymbol, semanticModel.Compilation);
+                    });
 
                 var parameterName = existingParameter?.Identifier.ValueText ?? GetUniqueParameterName(constructor, "timeProvider");
                 if (existingParameter is null)
                 {
                     var parameter = (ParameterSyntax)editor.Generator.ParameterDeclaration(
                         parameterName,
-                        SyntaxFactory.ParseTypeName("global::System.TimeProvider"));
+                        fieldTypeSyntax);
                     updatedConstructor = updatedConstructor.AddParameterListParameters(parameter);
                 }
 
@@ -278,11 +292,41 @@ public class ClockCodeFixProvider : CodeFixProvider
 
     private static string GetUniqueFieldName(ClassDeclarationSyntax classDeclaration, string baseName)
     {
-        var usedNameSet = new HashSet<string>(
-            classDeclaration.Members
-                .OfType<FieldDeclarationSyntax>()
-                .SelectMany(field => field.Declaration.Variables)
-                .Select(variable => variable.Identifier.ValueText));
+        var usedNameSet = new HashSet<string>();
+        foreach (var member in classDeclaration.Members)
+        {
+            switch (member)
+            {
+                case FieldDeclarationSyntax field:
+                    foreach (var variable in field.Declaration.Variables)
+                    {
+                        usedNameSet.Add(variable.Identifier.ValueText);
+                    }
+                    break;
+                case EventFieldDeclarationSyntax eventField:
+                    foreach (var variable in eventField.Declaration.Variables)
+                    {
+                        usedNameSet.Add(variable.Identifier.ValueText);
+                    }
+                    break;
+                case PropertyDeclarationSyntax property:
+                    usedNameSet.Add(property.Identifier.ValueText);
+                    break;
+                case MethodDeclarationSyntax method:
+                    usedNameSet.Add(method.Identifier.ValueText);
+                    break;
+                case EventDeclarationSyntax @event:
+                    usedNameSet.Add(@event.Identifier.ValueText);
+                    break;
+                case BaseTypeDeclarationSyntax nestedType:
+                    usedNameSet.Add(nestedType.Identifier.ValueText);
+                    break;
+                case DelegateDeclarationSyntax @delegate:
+                    usedNameSet.Add(@delegate.Identifier.ValueText);
+                    break;
+            }
+        }
+
         if (!usedNameSet.Contains(baseName))
         {
             return baseName;
@@ -296,6 +340,9 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         return $"{baseName}{suffix}";
     }
+
+    private static bool CanAssignType(ITypeSymbol? sourceType, ITypeSymbol destinationType, Compilation compilation) =>
+        sourceType is not null && compilation.ClassifyConversion(sourceType, destinationType).IsImplicit;
 
     private static string GetUniqueParameterName(ConstructorDeclarationSyntax constructor, string baseName)
     {
