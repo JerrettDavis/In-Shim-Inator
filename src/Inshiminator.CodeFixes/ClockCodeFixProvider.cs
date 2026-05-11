@@ -215,7 +215,7 @@ public class ClockCodeFixProvider : CodeFixProvider
                     var parameter = (ParameterSyntax)editor.Generator.ParameterDeclaration(
                         parameterName,
                         fieldTypeSyntax);
-                    updatedConstructor = updatedConstructor.AddParameterListParameters(parameter);
+                    updatedConstructor = InsertRequiredParameter(updatedConstructor, parameter);
                 }
 
                 var canPassToThisInitializer = CanPassToThisInitializerArgument(constructor, semanticModel, constructorSymbols, cancellationToken);
@@ -396,6 +396,31 @@ public class ClockCodeFixProvider : CodeFixProvider
         {
             yield return designation.Identifier.ValueText;
         }
+    }
+
+    private static ConstructorDeclarationSyntax InsertRequiredParameter(
+        ConstructorDeclarationSyntax constructor,
+        ParameterSyntax parameter)
+    {
+        var parameters = constructor.ParameterList.Parameters;
+        var insertionIndex = -1;
+        for (var index = 0; index < parameters.Count; index++)
+        {
+            if (parameters[index].Default is not null
+                || parameters[index].Modifiers.Any(SyntaxKind.ParamsKeyword))
+            {
+                insertionIndex = index;
+                break;
+            }
+        }
+
+        if (insertionIndex < 0)
+        {
+            return constructor.AddParameterListParameters(parameter);
+        }
+
+        return constructor.WithParameterList(
+            constructor.ParameterList.WithParameters(parameters.Insert(insertionIndex, parameter)));
     }
 
     private static bool CanPassToThisInitializerArgument(
