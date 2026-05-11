@@ -403,24 +403,24 @@ public class ClockCodeFixProvider : CodeFixProvider
         ParameterSyntax parameter)
     {
         var parameters = constructor.ParameterList.Parameters;
-        int? insertionIndex = null;
+        int? firstOptionalOrParamsIndex = null;
         for (var index = 0; index < parameters.Count; index++)
         {
             if (parameters[index].Default is not null
                 || parameters[index].Modifiers.Any(SyntaxKind.ParamsKeyword))
             {
-                insertionIndex = index;
+                firstOptionalOrParamsIndex = index;
                 break;
             }
         }
 
-        if (!insertionIndex.HasValue)
+        if (!firstOptionalOrParamsIndex.HasValue)
         {
             return constructor.AddParameterListParameters(parameter);
         }
 
         return constructor.WithParameterList(
-            constructor.ParameterList.WithParameters(parameters.Insert(insertionIndex.Value, parameter)));
+            constructor.ParameterList.WithParameters(parameters.Insert(firstOptionalOrParamsIndex.Value, parameter)));
     }
 
     private static bool CanPassToThisInitializerArgument(
