@@ -267,6 +267,59 @@ class Test
     }
 
     [Fact]
+    public async Task TimeProviderCodeFix_UsesNamedArgumentWhenThisInitializerUsesNamedArguments()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    public Test() : this(value: 1, name: "name")
+    {
+    }
+
+    public Test(int value, string name = "default")
+    {
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(global::System.TimeProvider timeProvider) : this(value: 1, name: "name", timeProvider: timeProvider)
+    {
+    }
+
+    public Test(int value, global::System.TimeProvider timeProvider, string name = "default")
+    {
+        _timeProvider = timeProvider;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
     public async Task TimeProviderCodeFix_ConvertsExpressionBodiedConstructorToBlock()
     {
         var test = $$"""
@@ -454,6 +507,59 @@ partial class Test
     public Test(int value)
     {
     }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
+    public async Task TimeProviderCodeFix_ReusesTimeProviderFieldFromOtherPartialDeclaration()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+partial class Test
+{
+    public Test()
+    {
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+
+partial class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+partial class Test
+{
+    public Test(global::System.TimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+
+partial class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
 }
 """;
 
@@ -706,7 +812,7 @@ class Test
 {
     private readonly CustomTimeProvider _timeProvider;
 
-    public Test(string name, CustomTimeProvider timeProvider)
+    public Test(string name, global::CustomTimeProvider timeProvider)
     {
         _timeProvider = timeProvider;
     }
@@ -814,6 +920,55 @@ class Test
     void Method()
     {
         DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
+    public async Task TimeProviderCodeFix_DoesNotModifyStaticConstructors()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    static Test()
+    {
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    static Test()
+    {
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+
+    public Test(global::System.TimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
     }
 }
 """;

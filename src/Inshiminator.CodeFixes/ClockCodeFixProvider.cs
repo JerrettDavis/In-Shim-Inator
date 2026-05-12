@@ -170,17 +170,19 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         var classDeclaration = memberAccess.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().FirstOrDefault();
         if (classDeclaration is null) return document;
+        var classSymbol = semanticModel.GetDeclaredSymbol(classDeclaration, cancellationToken);
 
         // 1. Add TimeProvider field if it doesn't exist
-        var timeProviderField = classDeclaration.Members.OfType<FieldDeclarationSyntax>().FirstOrDefault(
-            fieldDeclaration => IsCompatibleTimeProviderType(semanticModel.GetTypeInfo(fieldDeclaration.Declaration.Type, cancellationToken).Type, timeProviderType));
+        var timeProviderField = classSymbol?.GetMembers()
+            .OfType<IFieldSymbol>()
+            .FirstOrDefault(fieldSymbol => !fieldSymbol.IsImplicitlyDeclared && IsCompatibleTimeProviderType(fieldSymbol.Type, timeProviderType));
 
         var fieldName = "_timeProvider";
         TypeSyntax fieldTypeSyntax = SyntaxFactory.ParseTypeName("global::System.TimeProvider");
         ITypeSymbol fieldTypeSymbol = timeProviderType;
         if (timeProviderField is null)
         {
-            fieldName = GetUniqueFieldName(classDeclaration, fieldName);
+            fieldName = GetUniqueFieldName(classDeclaration, classSymbol, fieldName);
             var field = (FieldDeclarationSyntax)editor.Generator.FieldDeclaration(
                 fieldName,
                 fieldTypeSyntax,
@@ -198,14 +200,17 @@ public class ClockCodeFixProvider : CodeFixProvider
         }
         else
         {
-            fieldName = timeProviderField.Declaration.Variables.First().Identifier.Text;
-            fieldTypeSyntax = timeProviderField.Declaration.Type;
-            fieldTypeSymbol = semanticModel.GetTypeInfo(fieldTypeSyntax, cancellationToken).Type ?? timeProviderType;
+            fieldName = timeProviderField.Name;
+            fieldTypeSymbol = timeProviderField.Type;
+            fieldTypeSyntax = SyntaxFactory.ParseTypeName(fieldTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
         }
 
         // 2. Update constructors (or create one)
-        var constructors = classDeclaration.Members.OfType<ConstructorDeclarationSyntax>().ToList();
-        if (constructors.Count == 0)
+        var instanceConstructors = classDeclaration.Members
+            .OfType<ConstructorDeclarationSyntax>()
+            .Where(constructor => !constructor.Modifiers.Any(SyntaxKind.StaticKeyword))
+            .ToList();
+        if (instanceConstructors.Count == 0)
         {
             var parameter = (ParameterSyntax)editor.Generator.ParameterDeclaration(
                 "timeProvider",
@@ -224,16 +229,36 @@ public class ClockCodeFixProvider : CodeFixProvider
         else
         {
             var constructorSymbols = new HashSet<IMethodSymbol>(SymbolEqualityComparer.Default);
-            foreach (var constructor in constructors)
+            var parameterNamesByConstructorSymbol = new Dictionary<IMethodSymbol, string>(SymbolEqualityComparer.Default);
+            foreach (var constructor in instanceConstructors)
             {
                 var constructorSymbol = semanticModel.GetDeclaredSymbol(constructor, cancellationToken);
                 if (constructorSymbol is not null)
                 {
                     constructorSymbols.Add(constructorSymbol);
                 }
+
+                var existingParameter = constructor.ParameterList.Parameters.FirstOrDefault(
+                    p =>
+                    {
+                        if (p.Type is null)
+                        {
+                            return false;
+                        }
+
+                        var parameterType = semanticModel.GetTypeInfo(p.Type, cancellationToken).Type;
+                        return IsCompatibleTimeProviderType(parameterType, timeProviderType)
+                            && CanAssignType(parameterType, fieldTypeSymbol, semanticModel.Compilation);
+                    });
+
+                var parameterName = existingParameter?.Identifier.ValueText ?? GetUniqueParameterName(constructor, "timeProvider");
+                if (constructorSymbol is not null)
+                {
+                    parameterNamesByConstructorSymbol[constructorSymbol] = parameterName;
+                }
             }
 
-            foreach (var constructor in constructors)
+            foreach (var constructor in instanceConstructors)
             {
                 var updatedConstructor = constructor;
 
@@ -259,7 +284,13 @@ public class ClockCodeFixProvider : CodeFixProvider
                     updatedConstructor = InsertRequiredParameter(updatedConstructor, parameter);
                 }
 
-                var thisInitializerArgumentInfo = GetThisInitializerArgumentInfo(constructor, semanticModel, constructorSymbols, timeProviderType, cancellationToken);
+                var thisInitializerArgumentInfo = GetThisInitializerArgumentInfo(
+                    constructor,
+                    semanticModel,
+                    constructorSymbols,
+                    parameterNamesByConstructorSymbol,
+                    timeProviderType,
+                    cancellationToken);
                 var initializerResult = EnsureThisInitializerHasArgument(updatedConstructor, parameterName, thisInitializerArgumentInfo);
                 updatedConstructor = initializerResult.UpdatedConstructor;
 
@@ -334,40 +365,53 @@ public class ClockCodeFixProvider : CodeFixProvider
         return false;
     }
 
-    private static string GetUniqueFieldName(ClassDeclarationSyntax classDeclaration, string baseName)
+    private static string GetUniqueFieldName(ClassDeclarationSyntax classDeclaration, INamedTypeSymbol? classSymbol, string baseName)
     {
         var usedNameSet = new HashSet<string>();
-        foreach (var member in classDeclaration.Members)
+        if (classSymbol is not null)
         {
-            switch (member)
+            foreach (var member in classSymbol.GetMembers())
             {
-                case FieldDeclarationSyntax field:
-                    foreach (var variable in field.Declaration.Variables)
-                    {
-                        usedNameSet.Add(variable.Identifier.ValueText);
-                    }
-                    break;
-                case EventFieldDeclarationSyntax eventField:
-                    foreach (var variable in eventField.Declaration.Variables)
-                    {
-                        usedNameSet.Add(variable.Identifier.ValueText);
-                    }
-                    break;
-                case PropertyDeclarationSyntax property:
-                    usedNameSet.Add(property.Identifier.ValueText);
-                    break;
-                case MethodDeclarationSyntax method:
-                    usedNameSet.Add(method.Identifier.ValueText);
-                    break;
-                case EventDeclarationSyntax @event:
-                    usedNameSet.Add(@event.Identifier.ValueText);
-                    break;
-                case BaseTypeDeclarationSyntax nestedType:
-                    usedNameSet.Add(nestedType.Identifier.ValueText);
-                    break;
-                case DelegateDeclarationSyntax @delegate:
-                    usedNameSet.Add(@delegate.Identifier.ValueText);
-                    break;
+                if (!member.IsImplicitlyDeclared && !string.IsNullOrWhiteSpace(member.Name))
+                {
+                    usedNameSet.Add(member.Name);
+                }
+            }
+        }
+        else
+        {
+            foreach (var member in classDeclaration.Members)
+            {
+                switch (member)
+                {
+                    case FieldDeclarationSyntax field:
+                        foreach (var variable in field.Declaration.Variables)
+                        {
+                            usedNameSet.Add(variable.Identifier.ValueText);
+                        }
+                        break;
+                    case EventFieldDeclarationSyntax eventField:
+                        foreach (var variable in eventField.Declaration.Variables)
+                        {
+                            usedNameSet.Add(variable.Identifier.ValueText);
+                        }
+                        break;
+                    case PropertyDeclarationSyntax property:
+                        usedNameSet.Add(property.Identifier.ValueText);
+                        break;
+                    case MethodDeclarationSyntax method:
+                        usedNameSet.Add(method.Identifier.ValueText);
+                        break;
+                    case EventDeclarationSyntax @event:
+                        usedNameSet.Add(@event.Identifier.ValueText);
+                        break;
+                    case BaseTypeDeclarationSyntax nestedType:
+                        usedNameSet.Add(nestedType.Identifier.ValueText);
+                        break;
+                    case DelegateDeclarationSyntax @delegate:
+                        usedNameSet.Add(@delegate.Identifier.ValueText);
+                        break;
+                }
             }
         }
 
@@ -467,38 +511,41 @@ public class ClockCodeFixProvider : CodeFixProvider
             constructor.ParameterList.WithParameters(parameters.Insert(firstOptionalOrParamsIndex.Value, parameter)));
     }
 
-    private static (bool CanPassToThisInitializer, int ArgumentIndex) GetThisInitializerArgumentInfo(
+    private static (bool CanPassToThisInitializer, int ArgumentIndex, string? TargetParameterName, bool UseNamedArgument) GetThisInitializerArgumentInfo(
         ConstructorDeclarationSyntax constructor,
         SemanticModel semanticModel,
         ISet<IMethodSymbol> constructorSymbols,
+        IReadOnlyDictionary<IMethodSymbol, string> parameterNamesByConstructorSymbol,
         INamedTypeSymbol timeProviderType,
         CancellationToken cancellationToken)
     {
         var initializer = constructor.Initializer;
         if (initializer is null || !initializer.IsKind(SyntaxKind.ThisConstructorInitializer))
         {
-            return (false, -1);
+            return (false, -1, null, false);
         }
 
         var targetConstructorSymbol = semanticModel.GetSymbolInfo(initializer, cancellationToken).Symbol as IMethodSymbol;
         if (targetConstructorSymbol is null || !constructorSymbols.Contains(targetConstructorSymbol))
         {
-            return (false, -1);
+            return (false, -1, null, false);
         }
 
         var targetTimeProviderParameterIndex = -1;
+        string? targetTimeProviderParameterName = null;
         for (var index = 0; index < targetConstructorSymbol.Parameters.Length; index++)
         {
             if (IsCompatibleTimeProviderType(targetConstructorSymbol.Parameters[index].Type, timeProviderType))
             {
                 targetTimeProviderParameterIndex = index;
+                targetTimeProviderParameterName = targetConstructorSymbol.Parameters[index].Name;
                 break;
             }
         }
 
         if (targetTimeProviderParameterIndex >= 0)
         {
-            return (true, targetTimeProviderParameterIndex);
+            return (true, targetTimeProviderParameterIndex, targetTimeProviderParameterName, false);
         }
 
         var firstOptionalOrParamsIndex = -1;
@@ -511,17 +558,17 @@ public class ClockCodeFixProvider : CodeFixProvider
             }
         }
 
-        var argumentIndex = firstOptionalOrParamsIndex >= 0
-            ? firstOptionalOrParamsIndex
-            : -1;
+        var argumentIndex = firstOptionalOrParamsIndex >= 0 ? firstOptionalOrParamsIndex : -1;
+        var useNamedArgument = initializer.ArgumentList.Arguments.Any(argument => argument.NameColon is not null);
+        parameterNamesByConstructorSymbol.TryGetValue(targetConstructorSymbol, out targetTimeProviderParameterName);
 
-        return (true, argumentIndex);
+        return (true, argumentIndex, targetTimeProviderParameterName, useNamedArgument);
     }
 
     private static (ConstructorDeclarationSyntax UpdatedConstructor, bool PassesParameterToThisInitializer) EnsureThisInitializerHasArgument(
         ConstructorDeclarationSyntax constructor,
         string parameterName,
-        (bool CanPassToThisInitializer, int ArgumentIndex) thisInitializerArgumentInfo)
+        (bool CanPassToThisInitializer, int ArgumentIndex, string? TargetParameterName, bool UseNamedArgument) thisInitializerArgumentInfo)
     {
         var initializer = constructor.Initializer;
         if (!thisInitializerArgumentInfo.CanPassToThisInitializer
@@ -540,6 +587,18 @@ public class ClockCodeFixProvider : CodeFixProvider
         }
 
         var newArgument = SyntaxFactory.Argument(SyntaxFactory.IdentifierName(parameterName));
+        var targetParameterName = thisInitializerArgumentInfo.TargetParameterName;
+        if (thisInitializerArgumentInfo.UseNamedArgument && targetParameterName is { Length: > 0 })
+        {
+            newArgument = newArgument.WithNameColon(
+                SyntaxFactory.NameColon(SyntaxFactory.IdentifierName(targetParameterName)));
+            return (
+                constructor.WithInitializer(
+                    initializer.WithArgumentList(
+                        initializer.ArgumentList.WithArguments(initializer.ArgumentList.Arguments.Add(newArgument)))),
+                true);
+        }
+
         var argumentIndex = thisInitializerArgumentInfo.ArgumentIndex;
         var updatedArguments = argumentIndex >= 0 && argumentIndex < initializer.ArgumentList.Arguments.Count
             ? initializer.ArgumentList.Arguments.Insert(argumentIndex, newArgument)
