@@ -1,24 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "1f+67A6qFe4=",
+  "dgSpecHash": "pgxkJ6jkZ4Y=",
   "success": true,
-  "projectFilePath": "/home/runner/work/In-Shim-Inator/In-Shim-Inator/src/Inshiminator.Cli/Inshiminator.Cli.csproj",
+  "projectFilePath": "C:\\git\\InShimInator\\src\\Inshiminator.Cli\\Inshiminator.Cli.csproj",
   "expectedPackageFiles": [
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/microsoft.build.locator/1.11.2/microsoft.build.locator.1.11.2.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/microsoft.build.tasks.git/10.0.203/microsoft.build.tasks.git.10.0.203.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/microsoft.sourcelink.common/10.0.203/microsoft.sourcelink.common.10.0.203.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/microsoft.sourcelink.github/10.0.203/microsoft.sourcelink.github.10.0.203.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/nerdbank.gitversioning/3.9.50/nerdbank.gitversioning.3.9.50.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/spectre.console/0.55.0/spectre.console.0.55.0.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/spectre.console.ansi/0.55.0/spectre.console.ansi.0.55.0.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/spectre.console.cli/0.55.0/spectre.console.cli.0.55.0.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/system.io.hashing/10.0.7/system.io.hashing.10.0.7.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/microsoft.netcore.app.ref/8.0.22/microsoft.netcore.app.ref.8.0.22.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/microsoft.aspnetcore.app.ref/8.0.22/microsoft.aspnetcore.app.ref.8.0.22.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/microsoft.netcore.app.host.linux-x64/8.0.22/microsoft.netcore.app.host.linux-x64.8.0.22.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/microsoft.netcore.app.ref/10.0.0/microsoft.netcore.app.ref.10.0.0.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/microsoft.aspnetcore.app.ref/10.0.0/microsoft.aspnetcore.app.ref.10.0.0.nupkg.sha512",
-    "/tmp/codeql-scratch-779c1b942c104239/dbs/csharp/working/packages/microsoft.netcore.app.host.linux-x64/10.0.0/microsoft.netcore.app.host.linux-x64.10.0.0.nupkg.sha512"
+    "C:\\Users\\jd\\.nuget\\packages\\microsoft.build.locator\\1.11.2\\microsoft.build.locator.1.11.2.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\microsoft.build.tasks.git\\10.0.203\\microsoft.build.tasks.git.10.0.203.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\microsoft.sourcelink.common\\10.0.203\\microsoft.sourcelink.common.10.0.203.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\microsoft.sourcelink.github\\10.0.203\\microsoft.sourcelink.github.10.0.203.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\nerdbank.gitversioning\\3.9.50\\nerdbank.gitversioning.3.9.50.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\spectre.console\\0.55.0\\spectre.console.0.55.0.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\spectre.console.ansi\\0.55.0\\spectre.console.ansi.0.55.0.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\spectre.console.cli\\0.55.0\\spectre.console.cli.0.55.0.nupkg.sha512",
+    "C:\\Users\\jd\\.nuget\\packages\\system.io.hashing\\10.0.7\\system.io.hashing.10.0.7.nupkg.sha512"
   ],
   "logs": []
 }
