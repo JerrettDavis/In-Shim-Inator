@@ -34,7 +34,9 @@ public class ClockCodeFixProvider : CodeFixProvider
         var diagnostic = context.Diagnostics.First();
         var diagnosticSpan = diagnostic.Location.SourceSpan;
 
-        var memberAccess = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<MemberAccessExpressionSyntax>().FirstOrDefault();
+        var memberAccessCandidates = root.FindToken(diagnosticSpan.Start).Parent?.AncestorsAndSelf().OfType<MemberAccessExpressionSyntax>();
+        var memberAccess = memberAccessCandidates?.FirstOrDefault(m => m.Name.Identifier.ValueText is "Now" or "UtcNow")
+            ?? memberAccessCandidates?.FirstOrDefault();
         if (memberAccess is null) return;
 
         context.RegisterCodeFix(
@@ -44,7 +46,7 @@ public class ClockCodeFixProvider : CodeFixProvider
                 equivalenceKey: nameof(ClockCodeFixProvider)),
             diagnostic);
 
-        if (timeProviderType is not null)
+        if (timeProviderType is not null && !IsStaticContext(memberAccess))
         {
             context.RegisterCodeFix(
                 CodeAction.Create(
@@ -115,6 +117,24 @@ public class ClockCodeFixProvider : CodeFixProvider
         editor.ReplaceNode(memberAccess, replacement);
 
         return editor.GetChangedDocument();
+    }
+
+    private static bool IsStaticContext(MemberAccessExpressionSyntax memberAccess)
+    {
+        var classDeclaration = memberAccess.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().FirstOrDefault();
+        if (classDeclaration?.Modifiers.Any(SyntaxKind.StaticKeyword) == true)
+        {
+            return true;
+        }
+
+        var containingMember = memberAccess.AncestorsAndSelf().OfType<MemberDeclarationSyntax>().FirstOrDefault(
+            m => m is BaseMethodDeclarationSyntax
+                or BasePropertyDeclarationSyntax
+                or FieldDeclarationSyntax
+                or EventFieldDeclarationSyntax
+                or EventDeclarationSyntax);
+
+        return containingMember?.Modifiers.Any(SyntaxKind.StaticKeyword) == true;
     }
 
     private async Task<Document> UseInjectedTimeProviderAsync(Document document, MemberAccessExpressionSyntax memberAccess, CancellationToken cancellationToken)
@@ -263,9 +283,9 @@ public class ClockCodeFixProvider : CodeFixProvider
             {
                 "UtcNow" => editor.Generator.MemberAccessExpression(replacement, "UtcDateTime"),
                 "Now" => editor.Generator.InvocationExpression(
-                    editor.Generator.MemberAccessExpression(editor.Generator.IdentifierName("DateTime"), "SpecifyKind"),
+                    editor.Generator.MemberAccessExpression(SyntaxFactory.ParseExpression("global::System.DateTime"), "SpecifyKind"),
                     editor.Generator.MemberAccessExpression(replacement, "LocalDateTime"),
-                    editor.Generator.MemberAccessExpression(editor.Generator.IdentifierName("DateTimeKind"), "Local")),
+                    editor.Generator.MemberAccessExpression(SyntaxFactory.ParseExpression("global::System.DateTimeKind"), "Local")),
                 _ => replacement,
             };
         }

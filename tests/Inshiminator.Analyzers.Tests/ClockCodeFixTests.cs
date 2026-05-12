@@ -120,6 +120,47 @@ class Test
     }
 
     [Fact]
+    public async Task FullyQualifiedDateTimeNow_WithoutUsingSystem_AppliesTimeProviderCodeFix()
+    {
+        var test = $$"""
+{{TimeProviderStub}}
+
+class Test
+{
+    public Test()
+    {
+    }
+
+    void Method()
+    {
+        System.DateTime now = [|System.DateTime.Now|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(global::System.TimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+    }
+
+    void Method()
+    {
+        System.DateTime now = System.DateTime.SpecifyKind(_timeProvider.GetLocalNow().LocalDateTime, System.DateTimeKind.Local);
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
     public async Task TimeProviderCodeFix_UpdatesThisConstructorInitializer()
     {
         var test = $$"""
