@@ -232,6 +232,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         if (timeProviderField is null)
         {
             fieldName = GetUniqueFieldName(classDeclaration, classSymbol, fieldName);
+            // Safe to keep readonly because we already return when constructors outside this document cannot be updated.
             var field = (FieldDeclarationSyntax)editor.Generator.FieldDeclaration(
                 fieldName,
                 fieldTypeSyntax,
