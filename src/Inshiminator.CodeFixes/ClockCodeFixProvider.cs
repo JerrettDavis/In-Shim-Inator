@@ -403,7 +403,7 @@ public class ClockCodeFixProvider : CodeFixProvider
 
                 if (!initializerResult.PassesParameterToThisInitializer)
                 {
-                    updatedConstructor = EnsureFieldAssignmentFromParameter(editor, updatedConstructor, fieldName, parameterName);
+                    updatedConstructor = EnsureFieldAssignmentFromParameter(editor, updatedConstructor, fieldName, parameterName, existingParameter is null);
                 }
 
                 editor.ReplaceNode(constructor, updatedConstructor.WithAdditionalAnnotations(Formatter.Annotation));
@@ -607,7 +607,7 @@ public class ClockCodeFixProvider : CodeFixProvider
             constructor.ParameterList.WithParameters(parameters.Insert(firstOptionalOrParamsIndex.Value, parameter)));
     }
 
-    private static (bool CanPassToThisInitializer, int ArgumentIndex, string? TargetParameterName, bool UseNamedArgument) GetThisInitializerArgumentInfo(
+    private static (bool CanPassToThisInitializer, int ArgumentIndex, string? TargetParameterName, bool UseNamedArgument, bool HasExistingTargetParameter) GetThisInitializerArgumentInfo(
         ConstructorDeclarationSyntax constructor,
         SemanticModel semanticModel,
         ISet<IMethodSymbol> constructorSymbols,
@@ -619,13 +619,13 @@ public class ClockCodeFixProvider : CodeFixProvider
         var initializer = constructor.Initializer;
         if (initializer is null || !initializer.IsKind(SyntaxKind.ThisConstructorInitializer))
         {
-            return (false, -1, null, false);
+            return (false, -1, null, false, false);
         }
 
         var targetConstructorSymbol = semanticModel.GetSymbolInfo(initializer, cancellationToken).Symbol as IMethodSymbol;
         if (targetConstructorSymbol is null || !constructorSymbols.Contains(targetConstructorSymbol))
         {
-            return (false, -1, null, false);
+            return (false, -1, null, false, false);
         }
 
         var targetTimeProviderParameterIndex = -1;
@@ -644,7 +644,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         if (targetTimeProviderParameterIndex >= 0)
         {
             var shouldUseNamedArgument = initializer.ArgumentList.Arguments.Any(argument => argument.NameColon is not null);
-            return (true, targetTimeProviderParameterIndex, targetTimeProviderParameterName, shouldUseNamedArgument);
+            return (true, targetTimeProviderParameterIndex, targetTimeProviderParameterName, shouldUseNamedArgument, true);
         }
 
         var firstOptionalOrParamsIndex = -1;
@@ -661,13 +661,13 @@ public class ClockCodeFixProvider : CodeFixProvider
         var useNamedArgument = initializer.ArgumentList.Arguments.Any(argument => argument.NameColon is not null);
         parameterNamesByConstructorSymbol.TryGetValue(targetConstructorSymbol, out targetTimeProviderParameterName);
 
-        return (true, argumentIndex, targetTimeProviderParameterName, useNamedArgument);
+        return (true, argumentIndex, targetTimeProviderParameterName, useNamedArgument, false);
     }
 
     private static (ConstructorDeclarationSyntax UpdatedConstructor, bool PassesParameterToThisInitializer) EnsureThisInitializerHasArgument(
         ConstructorDeclarationSyntax constructor,
         string parameterName,
-        (bool CanPassToThisInitializer, int ArgumentIndex, string? TargetParameterName, bool UseNamedArgument) thisInitializerArgumentInfo)
+        (bool CanPassToThisInitializer, int ArgumentIndex, string? TargetParameterName, bool UseNamedArgument, bool HasExistingTargetParameter) thisInitializerArgumentInfo)
     {
         var initializer = constructor.Initializer;
         if (!thisInitializerArgumentInfo.CanPassToThisInitializer
@@ -680,13 +680,28 @@ public class ClockCodeFixProvider : CodeFixProvider
         var alreadyPassed = initializer.ArgumentList.Arguments.Any(
             argument => argument.Expression is IdentifierNameSyntax identifier
                 && identifier.Identifier.ValueText == parameterName);
+        var targetParameterName = thisInitializerArgumentInfo.TargetParameterName;
+        if (!alreadyPassed && targetParameterName is not null)
+        {
+            alreadyPassed = initializer.ArgumentList.Arguments.Any(
+                argument => argument.NameColon?.Name is IdentifierNameSyntax name
+                    && name.Identifier.ValueText == targetParameterName);
+        }
+
+        if (!alreadyPassed
+            && thisInitializerArgumentInfo.HasExistingTargetParameter
+            && thisInitializerArgumentInfo.ArgumentIndex >= 0
+            && thisInitializerArgumentInfo.ArgumentIndex < initializer.ArgumentList.Arguments.Count)
+        {
+            alreadyPassed = true;
+        }
+
         if (alreadyPassed)
         {
             return (constructor, true);
         }
 
         var newArgument = SyntaxFactory.Argument(SyntaxFactory.IdentifierName(parameterName));
-        var targetParameterName = thisInitializerArgumentInfo.TargetParameterName;
         if (thisInitializerArgumentInfo.UseNamedArgument && targetParameterName is not null)
         {
             newArgument = newArgument.WithNameColon(
@@ -732,7 +747,8 @@ public class ClockCodeFixProvider : CodeFixProvider
         DocumentEditor editor,
         ConstructorDeclarationSyntax constructor,
         string fieldName,
-        string parameterName)
+        string parameterName,
+        bool parameterWasAdded)
     {
         if (constructor.Body is null)
         {
@@ -756,7 +772,13 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         if (fieldAssignment.Right is not IdentifierNameSyntax)
         {
-            return constructor;
+            if (!parameterWasAdded)
+            {
+                return constructor;
+            }
+
+            var updatedNonIdentifierStatement = fieldAssignmentStatement.WithExpression(fieldAssignment.WithRight(SyntaxFactory.IdentifierName(parameterName)));
+            return constructor.ReplaceNode(fieldAssignmentStatement, updatedNonIdentifierStatement);
         }
 
         var updatedStatement = fieldAssignmentStatement.WithExpression(fieldAssignment.WithRight(SyntaxFactory.IdentifierName(parameterName)));

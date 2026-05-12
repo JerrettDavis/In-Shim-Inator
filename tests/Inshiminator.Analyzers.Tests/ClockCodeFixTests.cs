@@ -373,6 +373,59 @@ class Test
     }
 
     [Fact]
+    public async Task TimeProviderCodeFix_DoesNotAddDuplicateThisInitializerArgumentWhenAlreadyProvided()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    public Test() : this(value: 1, timeProvider: null)
+    {
+    }
+
+    public Test(int value, global::System.TimeProvider timeProvider = null)
+    {
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(global::System.TimeProvider timeProvider) : this(value: 1, timeProvider: null)
+    {
+    }
+
+    public Test(int value, global::System.TimeProvider timeProvider = null)
+    {
+        _timeProvider = timeProvider;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
     public async Task TimeProviderCodeFix_ConvertsExpressionBodiedConstructorToBlock()
     {
         var test = $$"""
@@ -665,6 +718,54 @@ class Test
     public Test(string timeProvider, global::System.TimeProvider timeProvider1)
     {
         global::System.TimeProvider assignedProvider = null;
+        _timeProvider = timeProvider1;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
+    public async Task TimeProviderCodeFix_ReplacesNonIdentifierFieldAssignmentWhenInjectedParameterAdded()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(string timeProvider)
+    {
+        _timeProvider = null;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(string timeProvider, global::System.TimeProvider timeProvider1)
+    {
         _timeProvider = timeProvider1;
     }
 
