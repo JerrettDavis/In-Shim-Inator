@@ -430,9 +430,9 @@ public class ClockCodeFixProvider : CodeFixProvider
             {
                 "UtcNow" => editor.Generator.MemberAccessExpression(replacement, "UtcDateTime"),
                 "Now" => editor.Generator.InvocationExpression(
-                    editor.Generator.MemberAccessExpression(SyntaxFactory.ParseExpression("global::System.DateTime"), "SpecifyKind"),
+                    editor.Generator.MemberAccessExpression(SyntaxFactory.ParseExpression("System.DateTime"), "SpecifyKind"),
                     editor.Generator.MemberAccessExpression(replacement, "LocalDateTime"),
-                    editor.Generator.MemberAccessExpression(SyntaxFactory.ParseExpression("global::System.DateTimeKind"), "Local")),
+                    editor.Generator.MemberAccessExpression(SyntaxFactory.ParseExpression("System.DateTimeKind"), "Local")),
                 _ => replacement,
             };
         }
