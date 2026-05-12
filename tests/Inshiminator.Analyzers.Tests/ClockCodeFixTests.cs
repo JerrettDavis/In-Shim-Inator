@@ -373,7 +373,7 @@ class Test
     }
 
     [Fact]
-    public async Task TimeProviderCodeFix_DoesNotAddDuplicateThisInitializerArgumentWhenAlreadyProvided()
+    public async Task TimeProviderCodeFix_ReplacesExistingThisInitializerArgumentWithInjectedParameter()
     {
         var test = $$"""
 using System;
@@ -406,7 +406,7 @@ class Test
 {
     private readonly global::System.TimeProvider _timeProvider;
 
-    public Test(global::System.TimeProvider timeProvider) : this(value: 1, timeProvider: null)
+    public Test(global::System.TimeProvider timeProvider) : this(value: 1, timeProvider: timeProvider)
     {
     }
 

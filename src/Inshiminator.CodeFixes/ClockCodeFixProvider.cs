@@ -683,29 +683,50 @@ public class ClockCodeFixProvider : CodeFixProvider
             return (constructor, false);
         }
 
-        var alreadyPassed = initializer.ArgumentList.Arguments.Any(
-            argument => argument.Expression is IdentifierNameSyntax identifier
-                && identifier.Identifier.ValueText == parameterName);
         var targetParameterName = thisInitializerArgumentInfo.TargetParameterName;
-        if (!alreadyPassed && targetParameterName is not null)
+        ArgumentSyntax? namedTargetArgument = null;
+        if (targetParameterName is not null)
         {
-            alreadyPassed = initializer.ArgumentList.Arguments.Any(
+            namedTargetArgument = initializer.ArgumentList.Arguments.FirstOrDefault(
                 argument => argument.NameColon?.Name is IdentifierNameSyntax name
                     && name.Identifier.ValueText == targetParameterName);
         }
+        if (namedTargetArgument is not null)
+        {
+            if (namedTargetArgument.Expression is IdentifierNameSyntax namedTargetIdentifier
+                && namedTargetIdentifier.Identifier.ValueText == parameterName)
+            {
+                return (constructor, true);
+            }
 
-        if (!alreadyPassed
-            && thisInitializerArgumentInfo.HasExistingTargetParameter
+            var updatedNamedArgument = namedTargetArgument.WithExpression(SyntaxFactory.IdentifierName(parameterName));
+            return (
+                constructor.WithInitializer(
+                    initializer.WithArgumentList(
+                        initializer.ArgumentList.WithArguments(
+                            initializer.ArgumentList.Arguments.Replace(namedTargetArgument, updatedNamedArgument)))),
+                true);
+        }
+
+        if (thisInitializerArgumentInfo.HasExistingTargetParameter
             && !initializer.ArgumentList.Arguments.Any(argument => argument.NameColon is not null)
             && thisInitializerArgumentInfo.ArgumentIndex >= 0
             && thisInitializerArgumentInfo.ArgumentIndex < initializer.ArgumentList.Arguments.Count)
         {
-            alreadyPassed = true;
-        }
+            var targetArgument = initializer.ArgumentList.Arguments[thisInitializerArgumentInfo.ArgumentIndex];
+            if (targetArgument.Expression is IdentifierNameSyntax positionalTargetIdentifier
+                && positionalTargetIdentifier.Identifier.ValueText == parameterName)
+            {
+                return (constructor, true);
+            }
 
-        if (alreadyPassed)
-        {
-            return (constructor, true);
+            var updatedTargetArgument = targetArgument.WithExpression(SyntaxFactory.IdentifierName(parameterName));
+            return (
+                constructor.WithInitializer(
+                    initializer.WithArgumentList(
+                        initializer.ArgumentList.WithArguments(
+                            initializer.ArgumentList.Arguments.Replace(targetArgument, updatedTargetArgument)))),
+                true);
         }
 
         var newArgument = SyntaxFactory.Argument(SyntaxFactory.IdentifierName(parameterName));
