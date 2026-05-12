@@ -202,7 +202,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         {
             fieldName = timeProviderField.Name;
             fieldTypeSymbol = timeProviderField.Type;
-            fieldTypeSyntax = SyntaxFactory.ParseTypeName(fieldTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
+            fieldTypeSyntax = SyntaxFactory.ParseTypeName(fieldTypeSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
         }
 
         // 2. Update constructors (or create one)
@@ -588,7 +588,7 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         var newArgument = SyntaxFactory.Argument(SyntaxFactory.IdentifierName(parameterName));
         var targetParameterName = thisInitializerArgumentInfo.TargetParameterName;
-        if (thisInitializerArgumentInfo.UseNamedArgument && targetParameterName is { Length: > 0 })
+        if (thisInitializerArgumentInfo.UseNamedArgument && targetParameterName is not null)
         {
             newArgument = newArgument.WithNameColon(
                 SyntaxFactory.NameColon(SyntaxFactory.IdentifierName(targetParameterName)));
