@@ -158,6 +158,27 @@ public class ClockCodeFixProvider : CodeFixProvider
         return false;
     }
 
+    private static bool IsUnsafeInjectedTimeProviderUsageContext(MemberAccessExpressionSyntax memberAccess)
+    {
+        if (memberAccess.Ancestors().OfType<ConstructorInitializerSyntax>().Any())
+        {
+            return true;
+        }
+
+        var equalsValueClause = memberAccess.Ancestors().OfType<EqualsValueClauseSyntax>().FirstOrDefault();
+        if (equalsValueClause is null)
+        {
+            return false;
+        }
+
+        return equalsValueClause.Parent switch
+        {
+            VariableDeclaratorSyntax variableDeclarator => variableDeclarator.Parent?.Parent is FieldDeclarationSyntax or EventFieldDeclarationSyntax,
+            PropertyDeclarationSyntax => true,
+            _ => false,
+        };
+    }
+
     private async Task<Document> UseInjectedTimeProviderAsync(Document document, MemberAccessExpressionSyntax memberAccess, CancellationToken cancellationToken)
     {
         var editor = await DocumentEditor.CreateAsync(document, cancellationToken).ConfigureAwait(false);
@@ -170,6 +191,11 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         var classDeclaration = memberAccess.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().FirstOrDefault();
         if (classDeclaration is null) return document;
+        if (IsUnsafeInjectedTimeProviderUsageContext(memberAccess))
+        {
+            return document;
+        }
+
         var classSymbol = semanticModel.GetDeclaredSymbol(classDeclaration, cancellationToken);
         var currentSyntaxTree = semanticModel.SyntaxTree;
         var allInstanceConstructorSymbols = classSymbol?.InstanceConstructors
@@ -198,17 +224,19 @@ public class ClockCodeFixProvider : CodeFixProvider
         var fieldName = "_timeProvider";
         TypeSyntax fieldTypeSyntax = SyntaxFactory.ParseTypeName("global::System.TimeProvider");
         ITypeSymbol fieldTypeSymbol = timeProviderType;
+        if (timeProviderField is null && hasInstanceConstructorsOutsideCurrentDocument)
+        {
+            return document;
+        }
+
         if (timeProviderField is null)
         {
             fieldName = GetUniqueFieldName(classDeclaration, classSymbol, fieldName);
-            var fieldModifiers = hasInstanceConstructorsOutsideCurrentDocument
-                ? DeclarationModifiers.None
-                : DeclarationModifiers.ReadOnly;
             var field = (FieldDeclarationSyntax)editor.Generator.FieldDeclaration(
                 fieldName,
                 fieldTypeSyntax,
                 Accessibility.Private,
-                fieldModifiers);
+                DeclarationModifiers.ReadOnly);
             field = field.WithAdditionalAnnotations(Formatter.Annotation);
             if (classDeclaration.Members.Count > 0)
             {
