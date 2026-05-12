@@ -182,7 +182,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         var classSymbol = semanticModel.GetDeclaredSymbol(classDeclaration, cancellationToken);
         if (classSymbol is null)
         {
-            return true;
+            return false;
         }
 
         var hasReusableTimeProviderField = classSymbol.GetMembers()
