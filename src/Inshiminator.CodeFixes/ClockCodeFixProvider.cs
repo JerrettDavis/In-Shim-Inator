@@ -28,6 +28,8 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         var compilation = await context.Document.Project.GetCompilationAsync(context.CancellationToken).ConfigureAwait(false);
         if (compilation is null) return;
+        var semanticModel = await context.Document.GetSemanticModelAsync(context.CancellationToken).ConfigureAwait(false);
+        if (semanticModel is null) return;
 
         var timeProviderType = compilation.GetTypeByMetadataName("System.TimeProvider");
 
@@ -46,7 +48,7 @@ public class ClockCodeFixProvider : CodeFixProvider
                 equivalenceKey: nameof(ClockCodeFixProvider)),
             diagnostic);
 
-        if (timeProviderType is not null && !IsStaticContext(memberAccess))
+        if (timeProviderType is not null && !IsStaticContext(memberAccess, semanticModel, context.CancellationToken))
         {
             context.RegisterCodeFix(
                 CodeAction.Create(
@@ -119,7 +121,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         return editor.GetChangedDocument();
     }
 
-    private static bool IsStaticContext(MemberAccessExpressionSyntax memberAccess)
+    private static bool IsStaticContext(MemberAccessExpressionSyntax memberAccess, SemanticModel semanticModel, CancellationToken cancellationToken)
     {
         var classDeclaration = memberAccess.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().FirstOrDefault();
         if (classDeclaration?.Modifiers.Any(SyntaxKind.StaticKeyword) == true)
@@ -134,7 +136,26 @@ public class ClockCodeFixProvider : CodeFixProvider
                 or EventFieldDeclarationSyntax
                 or EventDeclarationSyntax);
 
-        return containingMember?.Modifiers.Any(SyntaxKind.StaticKeyword) == true;
+        if (containingMember?.Modifiers.Any(SyntaxKind.StaticKeyword) == true)
+        {
+            return true;
+        }
+
+        var enclosingSymbol = semanticModel.GetEnclosingSymbol(memberAccess.SpanStart, cancellationToken);
+        for (var current = enclosingSymbol; current is not null; current = current.ContainingSymbol)
+        {
+            if (current is INamedTypeSymbol namedType && namedType.IsStatic)
+            {
+                return true;
+            }
+
+            if (current is IMethodSymbol method && method.IsStatic)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private async Task<Document> UseInjectedTimeProviderAsync(Document document, MemberAccessExpressionSyntax memberAccess, CancellationToken cancellationToken)
@@ -238,8 +259,8 @@ public class ClockCodeFixProvider : CodeFixProvider
                     updatedConstructor = InsertRequiredParameter(updatedConstructor, parameter);
                 }
 
-                var canPassToThisInitializer = CanPassToThisInitializerArgument(constructor, semanticModel, constructorSymbols, cancellationToken);
-                var initializerResult = EnsureThisInitializerHasArgument(updatedConstructor, parameterName, canPassToThisInitializer);
+                var thisInitializerArgumentInfo = GetThisInitializerArgumentInfo(constructor, semanticModel, constructorSymbols, timeProviderType, cancellationToken);
+                var initializerResult = EnsureThisInitializerHasArgument(updatedConstructor, parameterName, thisInitializerArgumentInfo);
                 updatedConstructor = initializerResult.UpdatedConstructor;
 
                 if (updatedConstructor.Body is null)
@@ -283,9 +304,9 @@ public class ClockCodeFixProvider : CodeFixProvider
             {
                 "UtcNow" => editor.Generator.MemberAccessExpression(replacement, "UtcDateTime"),
                 "Now" => editor.Generator.InvocationExpression(
-                    editor.Generator.MemberAccessExpression(SyntaxFactory.ParseExpression("global::System.DateTime"), "SpecifyKind"),
+                    editor.Generator.MemberAccessExpression(SyntaxFactory.ParseExpression("System.DateTime"), "SpecifyKind"),
                     editor.Generator.MemberAccessExpression(replacement, "LocalDateTime"),
-                    editor.Generator.MemberAccessExpression(SyntaxFactory.ParseExpression("global::System.DateTimeKind"), "Local")),
+                    editor.Generator.MemberAccessExpression(SyntaxFactory.ParseExpression("System.DateTimeKind"), "Local")),
                 _ => replacement,
             };
         }
@@ -446,34 +467,66 @@ public class ClockCodeFixProvider : CodeFixProvider
             constructor.ParameterList.WithParameters(parameters.Insert(firstOptionalOrParamsIndex.Value, parameter)));
     }
 
-    private static bool CanPassToThisInitializerArgument(
+    private static (bool CanPassToThisInitializer, int ArgumentIndex) GetThisInitializerArgumentInfo(
         ConstructorDeclarationSyntax constructor,
         SemanticModel semanticModel,
         ISet<IMethodSymbol> constructorSymbols,
+        INamedTypeSymbol timeProviderType,
         CancellationToken cancellationToken)
     {
         var initializer = constructor.Initializer;
         if (initializer is null || !initializer.IsKind(SyntaxKind.ThisConstructorInitializer))
         {
-            return false;
+            return (false, -1);
         }
 
         var targetConstructorSymbol = semanticModel.GetSymbolInfo(initializer, cancellationToken).Symbol as IMethodSymbol;
         if (targetConstructorSymbol is null || !constructorSymbols.Contains(targetConstructorSymbol))
         {
-            return false;
+            return (false, -1);
         }
 
-        return true;
+        var targetTimeProviderParameterIndex = -1;
+        for (var index = 0; index < targetConstructorSymbol.Parameters.Length; index++)
+        {
+            if (IsCompatibleTimeProviderType(targetConstructorSymbol.Parameters[index].Type, timeProviderType))
+            {
+                targetTimeProviderParameterIndex = index;
+                break;
+            }
+        }
+
+        if (targetTimeProviderParameterIndex >= 0)
+        {
+            return (true, targetTimeProviderParameterIndex);
+        }
+
+        var firstOptionalOrParamsIndex = -1;
+        for (var index = 0; index < targetConstructorSymbol.Parameters.Length; index++)
+        {
+            if (targetConstructorSymbol.Parameters[index].IsOptional || targetConstructorSymbol.Parameters[index].IsParams)
+            {
+                firstOptionalOrParamsIndex = index;
+                break;
+            }
+        }
+
+        var argumentIndex = firstOptionalOrParamsIndex >= 0
+            ? firstOptionalOrParamsIndex
+            : targetConstructorSymbol.Parameters.Length;
+
+        return (true, argumentIndex);
     }
 
     private static (ConstructorDeclarationSyntax UpdatedConstructor, bool PassesParameterToThisInitializer) EnsureThisInitializerHasArgument(
         ConstructorDeclarationSyntax constructor,
         string parameterName,
-        bool canPassToThisInitializer)
+        (bool CanPassToThisInitializer, int ArgumentIndex) thisInitializerArgumentInfo)
     {
         var initializer = constructor.Initializer;
-        if (!canPassToThisInitializer || initializer is null || !initializer.IsKind(SyntaxKind.ThisConstructorInitializer))
+        if (!thisInitializerArgumentInfo.CanPassToThisInitializer
+            || initializer is null
+            || !initializer.IsKind(SyntaxKind.ThisConstructorInitializer))
         {
             return (constructor, false);
         }
@@ -486,10 +539,16 @@ public class ClockCodeFixProvider : CodeFixProvider
             return (constructor, true);
         }
 
+        var newArgument = SyntaxFactory.Argument(SyntaxFactory.IdentifierName(parameterName));
+        var argumentIndex = thisInitializerArgumentInfo.ArgumentIndex;
+        var updatedArguments = argumentIndex >= 0 && argumentIndex <= initializer.ArgumentList.Arguments.Count
+            ? initializer.ArgumentList.Arguments.Insert(argumentIndex, newArgument)
+            : initializer.ArgumentList.Arguments.Add(newArgument);
+
         return (
             constructor.WithInitializer(
                 initializer.WithArgumentList(
-                    initializer.ArgumentList.AddArguments(SyntaxFactory.Argument(SyntaxFactory.IdentifierName(parameterName))))),
+                    initializer.ArgumentList.WithArguments(updatedArguments))),
             true);
     }
 

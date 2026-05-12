@@ -214,6 +214,59 @@ class Test
     }
 
     [Fact]
+    public async Task TimeProviderCodeFix_InsertsThisInitializerArgumentBeforeOptionalArguments()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    public Test() : this(1, "name")
+    {
+    }
+
+    public Test(int value, string name = "default")
+    {
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(global::System.TimeProvider timeProvider) : this(1, timeProvider, "name")
+    {
+    }
+
+    public Test(int value, global::System.TimeProvider timeProvider, string name = "default")
+    {
+        _timeProvider = timeProvider;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
     public async Task TimeProviderCodeFix_ConvertsExpressionBodiedConstructorToBlock()
     {
         var test = $$"""
