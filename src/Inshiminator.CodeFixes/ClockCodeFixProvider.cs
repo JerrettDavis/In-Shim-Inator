@@ -173,7 +173,6 @@ public class ClockCodeFixProvider : CodeFixProvider
         var classSymbol = semanticModel.GetDeclaredSymbol(classDeclaration, cancellationToken);
         var currentSyntaxTree = semanticModel.SyntaxTree;
         var allInstanceConstructorSymbols = classSymbol?.InstanceConstructors
-            .Where(ctor => !ctor.IsStatic)
             .ToList()
             ?? [];
         var allInstanceConstructorsInCurrentDocument = allInstanceConstructorSymbols
