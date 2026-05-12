@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "Inshiminator.CodeFixes/0.1.2-g2e58a4565a": {
+      "Inshiminator.CodeFixes/0.1.0-geb83d61a38": {
         "dependencies": {
           "Inshiminator.Analyzers": "1.0.0",
           "Microsoft.CodeAnalysis.CSharp.Workspaces": "4.12.0",
@@ -479,14 +479,14 @@
         "runtime": {
           "Inshiminator.Analyzers.dll": {
             "assemblyVersion": "0.1.0.0",
-            "fileVersion": "0.1.2.11864"
+            "fileVersion": "0.1.0.0"
           }
         }
       }
     }
   },
   "libraries": {
-    "Inshiminator.CodeFixes/0.1.2-g2e58a4565a": {
+    "Inshiminator.CodeFixes/0.1.0-geb83d61a38": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
