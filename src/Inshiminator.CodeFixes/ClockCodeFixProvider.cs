@@ -690,6 +690,7 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         if (!alreadyPassed
             && thisInitializerArgumentInfo.HasExistingTargetParameter
+            && !initializer.ArgumentList.Arguments.Any(argument => argument.NameColon is not null)
             && thisInitializerArgumentInfo.ArgumentIndex >= 0
             && thisInitializerArgumentInfo.ArgumentIndex < initializer.ArgumentList.Arguments.Count)
         {
