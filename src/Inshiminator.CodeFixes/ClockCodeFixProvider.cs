@@ -202,7 +202,9 @@ public class ClockCodeFixProvider : CodeFixProvider
         {
             fieldName = timeProviderField.Name;
             fieldTypeSymbol = timeProviderField.Type;
-            fieldTypeSyntax = SyntaxFactory.ParseTypeName(fieldTypeSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
+            fieldTypeSyntax = SymbolEqualityComparer.Default.Equals(fieldTypeSymbol, timeProviderType)
+                ? SyntaxFactory.ParseTypeName("global::System.TimeProvider")
+                : SyntaxFactory.ParseTypeName(fieldTypeSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
         }
 
         // 2. Update constructors (or create one)

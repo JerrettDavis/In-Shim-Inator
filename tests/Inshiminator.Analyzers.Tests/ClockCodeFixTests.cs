@@ -546,7 +546,7 @@ using System;
 
 partial class Test
 {
-    public Test(TimeProvider timeProvider)
+    public Test(global::System.TimeProvider timeProvider)
     {
         _timeProvider = timeProvider;
     }
@@ -600,7 +600,7 @@ class Test
 {
     private readonly global::System.TimeProvider _timeProvider;
 
-    public Test(string timeProvider, TimeProvider timeProvider1)
+    public Test(string timeProvider, global::System.TimeProvider timeProvider1)
     {
         global::System.TimeProvider assignedProvider = null;
         _timeProvider = timeProvider1;
