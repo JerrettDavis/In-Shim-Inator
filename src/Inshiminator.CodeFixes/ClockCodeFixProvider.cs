@@ -513,7 +513,7 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         var argumentIndex = firstOptionalOrParamsIndex >= 0
             ? firstOptionalOrParamsIndex
-            : targetConstructorSymbol.Parameters.Length;
+            : -1;
 
         return (true, argumentIndex);
     }
@@ -541,7 +541,7 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         var newArgument = SyntaxFactory.Argument(SyntaxFactory.IdentifierName(parameterName));
         var argumentIndex = thisInitializerArgumentInfo.ArgumentIndex;
-        var updatedArguments = argumentIndex >= 0 && argumentIndex <= initializer.ArgumentList.Arguments.Count
+        var updatedArguments = argumentIndex >= 0 && argumentIndex < initializer.ArgumentList.Arguments.Count
             ? initializer.ArgumentList.Arguments.Insert(argumentIndex, newArgument)
             : initializer.ArgumentList.Arguments.Add(newArgument);
 
