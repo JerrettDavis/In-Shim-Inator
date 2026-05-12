@@ -41,7 +41,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         var isStaticContext = IsStaticContext(memberAccess, semanticModel, context.CancellationToken);
 
         if (!isStaticContext
-            && !IsUnsafeInjectedTimeProviderUsageContext(memberAccess))
+            && !IsUnsafeInjectedDependencyUsageContext(memberAccess))
         {
             context.RegisterCodeFix(
                 CodeAction.Create(
@@ -66,7 +66,7 @@ public class ClockCodeFixProvider : CodeFixProvider
 
     private async Task<Document> UseInjectedClockAsync(Document document, MemberAccessExpressionSyntax memberAccess, CancellationToken cancellationToken)
     {
-        if (IsUnsafeInjectedTimeProviderUsageContext(memberAccess))
+        if (IsUnsafeInjectedDependencyUsageContext(memberAccess))
         {
             return document;
         }
@@ -174,7 +174,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         INamedTypeSymbol timeProviderType,
         CancellationToken cancellationToken)
     {
-        if (IsUnsafeInjectedTimeProviderUsageContext(memberAccess))
+        if (IsUnsafeInjectedDependencyUsageContext(memberAccess))
         {
             return false;
         }
@@ -210,7 +210,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         return !hasInstanceConstructorsOutsideCurrentDocument;
     }
 
-    private static bool IsUnsafeInjectedTimeProviderUsageContext(MemberAccessExpressionSyntax memberAccess)
+    private static bool IsUnsafeInjectedDependencyUsageContext(MemberAccessExpressionSyntax memberAccess)
     {
         if (memberAccess.Ancestors().OfType<ConstructorInitializerSyntax>().Any())
         {
@@ -243,7 +243,7 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         var classDeclaration = memberAccess.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().FirstOrDefault();
         if (classDeclaration is null) return document;
-        if (IsUnsafeInjectedTimeProviderUsageContext(memberAccess))
+        if (IsUnsafeInjectedDependencyUsageContext(memberAccess))
         {
             return document;
         }

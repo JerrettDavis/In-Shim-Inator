@@ -12,7 +12,7 @@ public class ClockAnalyzer : DiagnosticAnalyzer
     public const string DiagnosticId = "INSHIM001";
 
     private static readonly LocalizableString Title = "Direct system clock usage detected";
-    private static readonly LocalizableString MessageFormat = "Use IClock (or TimeProvider on .NET 8+) instead of {0} so time can be controlled in tests";
+    private static readonly LocalizableString MessageFormat = "Use IClock (or TimeProvider on .NET 7+) instead of {0} so time can be controlled in tests";
     private static readonly LocalizableString Description = "Direct usage of system clock makes code difficult to test.";
     private const string Category = "Design";
 
