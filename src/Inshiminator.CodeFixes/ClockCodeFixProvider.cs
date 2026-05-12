@@ -171,11 +171,30 @@ public class ClockCodeFixProvider : CodeFixProvider
         var classDeclaration = memberAccess.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().FirstOrDefault();
         if (classDeclaration is null) return document;
         var classSymbol = semanticModel.GetDeclaredSymbol(classDeclaration, cancellationToken);
+        var currentSyntaxTree = semanticModel.SyntaxTree;
+        var allInstanceConstructorSymbols = classSymbol?.InstanceConstructors
+            .Where(ctor => !ctor.IsStatic)
+            .ToList()
+            ?? [];
+        var allInstanceConstructorsInCurrentDocument = allInstanceConstructorSymbols
+            .SelectMany(ctor => ctor.DeclaringSyntaxReferences)
+            .Select(reference => reference.GetSyntax(cancellationToken))
+            .OfType<ConstructorDeclarationSyntax>()
+            .Where(constructor => constructor.SyntaxTree == currentSyntaxTree)
+            .Distinct()
+            .ToList();
+        var hasInstanceConstructorsOutsideCurrentDocument = allInstanceConstructorSymbols
+            .SelectMany(ctor => ctor.DeclaringSyntaxReferences)
+            .Any(reference => reference.SyntaxTree != currentSyntaxTree);
 
         // 1. Add TimeProvider field if it doesn't exist
         var timeProviderField = classSymbol?.GetMembers()
             .OfType<IFieldSymbol>()
-            .FirstOrDefault(fieldSymbol => !fieldSymbol.IsImplicitlyDeclared && IsCompatibleTimeProviderType(fieldSymbol.Type, timeProviderType));
+            .FirstOrDefault(fieldSymbol =>
+                !fieldSymbol.IsImplicitlyDeclared
+                && !fieldSymbol.IsStatic
+                && !fieldSymbol.IsConst
+                && IsCompatibleTimeProviderType(fieldSymbol.Type, timeProviderType));
 
         var fieldName = "_timeProvider";
         TypeSyntax fieldTypeSyntax = SyntaxFactory.ParseTypeName("global::System.TimeProvider");
@@ -183,11 +202,14 @@ public class ClockCodeFixProvider : CodeFixProvider
         if (timeProviderField is null)
         {
             fieldName = GetUniqueFieldName(classDeclaration, classSymbol, fieldName);
+            var fieldModifiers = hasInstanceConstructorsOutsideCurrentDocument
+                ? DeclarationModifiers.None
+                : DeclarationModifiers.ReadOnly;
             var field = (FieldDeclarationSyntax)editor.Generator.FieldDeclaration(
                 fieldName,
                 fieldTypeSyntax,
                 Accessibility.Private,
-                DeclarationModifiers.ReadOnly);
+                fieldModifiers);
             field = field.WithAdditionalAnnotations(Formatter.Annotation);
             if (classDeclaration.Members.Count > 0)
             {
@@ -204,14 +226,11 @@ public class ClockCodeFixProvider : CodeFixProvider
             fieldTypeSymbol = timeProviderField.Type;
             fieldTypeSyntax = SymbolEqualityComparer.Default.Equals(fieldTypeSymbol, timeProviderType)
                 ? SyntaxFactory.ParseTypeName("global::System.TimeProvider")
-                : SyntaxFactory.ParseTypeName(fieldTypeSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
+                : SyntaxFactory.ParseTypeName(fieldTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
         }
 
         // 2. Update constructors (or create one)
-        var instanceConstructors = classDeclaration.Members
-            .OfType<ConstructorDeclarationSyntax>()
-            .Where(constructor => !constructor.Modifiers.Any(SyntaxKind.StaticKeyword))
-            .ToList();
+        var instanceConstructors = allInstanceConstructorsInCurrentDocument;
         if (instanceConstructors.Count == 0)
         {
             var parameter = (ParameterSyntax)editor.Generator.ParameterDeclaration(
