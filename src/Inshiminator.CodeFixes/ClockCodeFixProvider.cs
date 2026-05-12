@@ -384,6 +384,7 @@ public class ClockCodeFixProvider : CodeFixProvider
                     semanticModel,
                     constructorSymbols,
                     parameterNamesByConstructorSymbol,
+                    fieldTypeSymbol,
                     timeProviderType,
                     cancellationToken);
                 var initializerResult = EnsureThisInitializerHasArgument(updatedConstructor, parameterName, thisInitializerArgumentInfo);
@@ -611,6 +612,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         SemanticModel semanticModel,
         ISet<IMethodSymbol> constructorSymbols,
         IReadOnlyDictionary<IMethodSymbol, string> parameterNamesByConstructorSymbol,
+        ITypeSymbol fieldTypeSymbol,
         INamedTypeSymbol timeProviderType,
         CancellationToken cancellationToken)
     {
@@ -630,7 +632,8 @@ public class ClockCodeFixProvider : CodeFixProvider
         string? targetTimeProviderParameterName = null;
         for (var index = 0; index < targetConstructorSymbol.Parameters.Length; index++)
         {
-            if (IsCompatibleTimeProviderType(targetConstructorSymbol.Parameters[index].Type, timeProviderType))
+            if (IsCompatibleTimeProviderType(targetConstructorSymbol.Parameters[index].Type, timeProviderType)
+                && CanAssignType(targetConstructorSymbol.Parameters[index].Type, fieldTypeSymbol, semanticModel.Compilation))
             {
                 targetTimeProviderParameterIndex = index;
                 targetTimeProviderParameterName = targetConstructorSymbol.Parameters[index].Name;
