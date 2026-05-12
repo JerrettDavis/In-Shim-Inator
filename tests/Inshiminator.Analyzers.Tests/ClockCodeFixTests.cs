@@ -455,7 +455,7 @@ class Test
     }
 
     [Fact]
-    public async Task TimeProviderCodeFix_RewritesThisInitializerForSameDocumentPartialDeclaration()
+    public async Task TimeProviderCodeFix_RewritesConstructorChainForSameDocumentPartialDeclaration()
     {
         var test = $$"""
 using System;
