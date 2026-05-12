@@ -26,12 +26,10 @@ public class ClockCodeFixProvider : CodeFixProvider
         var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
         if (root is null) return;
 
-        var compilation = await context.Document.Project.GetCompilationAsync(context.CancellationToken).ConfigureAwait(false);
-        if (compilation is null) return;
         var semanticModel = await context.Document.GetSemanticModelAsync(context.CancellationToken).ConfigureAwait(false);
         if (semanticModel is null) return;
 
-        var timeProviderType = compilation.GetTypeByMetadataName("System.TimeProvider");
+        var timeProviderType = semanticModel.Compilation.GetTypeByMetadataName("System.TimeProvider");
 
         var diagnostic = context.Diagnostics.First();
         var diagnosticSpan = diagnostic.Location.SourceSpan;
@@ -40,15 +38,21 @@ public class ClockCodeFixProvider : CodeFixProvider
         var memberAccess = memberAccessCandidates?.FirstOrDefault(m => m.Name.Identifier.ValueText is "Now" or "UtcNow")
             ?? memberAccessCandidates?.FirstOrDefault();
         if (memberAccess is null) return;
+        var isStaticContext = IsStaticContext(memberAccess, semanticModel, context.CancellationToken);
 
-        context.RegisterCodeFix(
-            CodeAction.Create(
-                title: "Use injected IClock",
-                createChangedDocument: c => UseInjectedClockAsync(context.Document, memberAccess, c),
-                equivalenceKey: nameof(ClockCodeFixProvider)),
-            diagnostic);
+        if (!isStaticContext)
+        {
+            context.RegisterCodeFix(
+                CodeAction.Create(
+                    title: "Use injected IClock",
+                    createChangedDocument: c => UseInjectedClockAsync(context.Document, memberAccess, c),
+                    equivalenceKey: nameof(ClockCodeFixProvider)),
+                diagnostic);
+        }
 
-        if (timeProviderType is not null && !IsStaticContext(memberAccess, semanticModel, context.CancellationToken))
+        if (timeProviderType is not null
+            && !isStaticContext
+            && CanOfferInjectedTimeProviderCodeFix(memberAccess, semanticModel, timeProviderType, context.CancellationToken))
         {
             context.RegisterCodeFix(
                 CodeAction.Create(
@@ -156,6 +160,48 @@ public class ClockCodeFixProvider : CodeFixProvider
         }
 
         return false;
+    }
+
+    private static bool CanOfferInjectedTimeProviderCodeFix(
+        MemberAccessExpressionSyntax memberAccess,
+        SemanticModel semanticModel,
+        INamedTypeSymbol timeProviderType,
+        CancellationToken cancellationToken)
+    {
+        if (IsUnsafeInjectedTimeProviderUsageContext(memberAccess))
+        {
+            return false;
+        }
+
+        var classDeclaration = memberAccess.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().FirstOrDefault();
+        if (classDeclaration is null)
+        {
+            return false;
+        }
+
+        var classSymbol = semanticModel.GetDeclaredSymbol(classDeclaration, cancellationToken);
+        if (classSymbol is null)
+        {
+            return true;
+        }
+
+        var hasReusableTimeProviderField = classSymbol.GetMembers()
+            .OfType<IFieldSymbol>()
+            .Any(fieldSymbol =>
+                !fieldSymbol.IsImplicitlyDeclared
+                && !fieldSymbol.IsStatic
+                && !fieldSymbol.IsConst
+                && IsCompatibleTimeProviderType(fieldSymbol.Type, timeProviderType));
+        if (hasReusableTimeProviderField)
+        {
+            return true;
+        }
+
+        var currentSyntaxTree = semanticModel.SyntaxTree;
+        var hasInstanceConstructorsOutsideCurrentDocument = classSymbol.InstanceConstructors
+            .SelectMany(ctor => ctor.DeclaringSyntaxReferences)
+            .Any(reference => reference.SyntaxTree != currentSyntaxTree);
+        return !hasInstanceConstructorsOutsideCurrentDocument;
     }
 
     private static bool IsUnsafeInjectedTimeProviderUsageContext(MemberAccessExpressionSyntax memberAccess)
@@ -594,7 +640,8 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         if (targetTimeProviderParameterIndex >= 0)
         {
-            return (true, targetTimeProviderParameterIndex, targetTimeProviderParameterName, false);
+            var shouldUseNamedArgument = initializer.ArgumentList.Arguments.Any(argument => argument.NameColon is not null);
+            return (true, targetTimeProviderParameterIndex, targetTimeProviderParameterName, shouldUseNamedArgument);
         }
 
         var firstOptionalOrParamsIndex = -1;

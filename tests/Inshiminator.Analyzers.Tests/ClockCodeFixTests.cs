@@ -320,6 +320,59 @@ class Test
     }
 
     [Fact]
+    public async Task TimeProviderCodeFix_UsesNamedArgumentWhenTargetConstructorAlreadyHasTimeProviderParameter()
+    {
+        var test = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    public Test() : this(value: 1)
+    {
+    }
+
+    public Test(int value, global::System.TimeProvider timeProvider = null)
+    {
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = [|DateTimeOffset.UtcNow|];
+    }
+}
+""";
+
+        var fixedCode = $$"""
+using System;
+
+{{TimeProviderStub}}
+
+class Test
+{
+    private readonly global::System.TimeProvider _timeProvider;
+
+    public Test(global::System.TimeProvider timeProvider) : this(value: 1, timeProvider: timeProvider)
+    {
+    }
+
+    public Test(int value, global::System.TimeProvider timeProvider = null)
+    {
+        _timeProvider = timeProvider;
+    }
+
+    void Method()
+    {
+        DateTimeOffset now = _timeProvider.GetUtcNow();
+    }
+}
+""";
+
+        await VerifyTimeProviderCodeFixAsync(test, fixedCode);
+    }
+
+    [Fact]
     public async Task TimeProviderCodeFix_ConvertsExpressionBodiedConstructorToBlock()
     {
         var test = $$"""
