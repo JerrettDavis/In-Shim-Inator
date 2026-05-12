@@ -40,7 +40,8 @@ public class ClockCodeFixProvider : CodeFixProvider
         if (memberAccess is null) return;
         var isStaticContext = IsStaticContext(memberAccess, semanticModel, context.CancellationToken);
 
-        if (!isStaticContext)
+        if (!isStaticContext
+            && !IsUnsafeInjectedTimeProviderUsageContext(memberAccess))
         {
             context.RegisterCodeFix(
                 CodeAction.Create(
@@ -65,6 +66,11 @@ public class ClockCodeFixProvider : CodeFixProvider
 
     private async Task<Document> UseInjectedClockAsync(Document document, MemberAccessExpressionSyntax memberAccess, CancellationToken cancellationToken)
     {
+        if (IsUnsafeInjectedTimeProviderUsageContext(memberAccess))
+        {
+            return document;
+        }
+
         var editor = await DocumentEditor.CreateAsync(document, cancellationToken).ConfigureAwait(false);
         var root = editor.OriginalRoot;
 
