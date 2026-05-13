@@ -201,9 +201,26 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         var currentSyntaxTree = semanticModel.SyntaxTree;
         var hasInstanceConstructorsOutsideCurrentDocument = classSymbol.InstanceConstructors
+            .Where(ctor => !ctor.IsImplicitlyDeclared)
             .SelectMany(ctor => ctor.DeclaringSyntaxReferences)
             .Any(reference => reference.SyntaxTree != currentSyntaxTree);
-        return hasReusableTimeProviderField || !hasInstanceConstructorsOutsideCurrentDocument;
+
+        if (!hasInstanceConstructorsOutsideCurrentDocument)
+        {
+            return true;
+        }
+
+        return hasReusableTimeProviderField
+            && AllExplicitInstanceConstructorsHaveCompatibleTimeProviderParameter(classSymbol, timeProviderType);
+    }
+
+    private static bool AllExplicitInstanceConstructorsHaveCompatibleTimeProviderParameter(
+        INamedTypeSymbol classSymbol,
+        INamedTypeSymbol timeProviderType)
+    {
+        return classSymbol.InstanceConstructors
+            .Where(ctor => !ctor.IsImplicitlyDeclared)
+            .All(ctor => ctor.Parameters.Any(parameter => IsCompatibleTimeProviderType(parameter.Type, timeProviderType)));
     }
 
     private static bool IsUnsafeInjectedDependencyUsageContext(MemberAccessExpressionSyntax memberAccess)
