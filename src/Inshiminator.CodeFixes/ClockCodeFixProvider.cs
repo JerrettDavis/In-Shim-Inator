@@ -326,19 +326,26 @@ public class ClockCodeFixProvider : CodeFixProvider
         var instanceConstructors = allInstanceConstructorsInCurrentDocument;
         if (instanceConstructors.Count == 0)
         {
-            var parameter = (ParameterSyntax)editor.Generator.ParameterDeclaration(
-                "timeProvider",
-                fieldTypeSyntax);
-            var assignment = CreateFieldAssignmentStatement(editor, fieldName, "timeProvider");
+            var allExplicitInstanceConstructors = classSymbol.InstanceConstructors
+                .Where(static constructor => !constructor.IsImplicitlyDeclared)
+                .ToImmutableArray();
 
-            var newConstructor = (ConstructorDeclarationSyntax)editor.Generator.ConstructorDeclaration(
-                classDeclaration.Identifier.ValueText,
-                accessibility: Accessibility.Public,
-                parameters: [parameter],
-                statements: [assignment]);
-            newConstructor = newConstructor.WithAdditionalAnnotations(Formatter.Annotation);
+            if (allExplicitInstanceConstructors.Length == 0)
+            {
+                var parameter = (ParameterSyntax)editor.Generator.ParameterDeclaration(
+                    "timeProvider",
+                    fieldTypeSyntax);
+                var assignment = CreateFieldAssignmentStatement(editor, fieldName, "timeProvider");
 
-            editor.AddMember(classDeclaration, newConstructor);
+                var newConstructor = (ConstructorDeclarationSyntax)editor.Generator.ConstructorDeclaration(
+                    classDeclaration.Identifier.ValueText,
+                    accessibility: Accessibility.Public,
+                    parameters: [parameter],
+                    statements: [assignment]);
+                newConstructor = newConstructor.WithAdditionalAnnotations(Formatter.Annotation);
+
+                editor.AddMember(classDeclaration, newConstructor);
+            }
         }
         else
         {
