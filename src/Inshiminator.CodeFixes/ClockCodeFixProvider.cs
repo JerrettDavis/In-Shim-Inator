@@ -198,16 +198,12 @@ public class ClockCodeFixProvider : CodeFixProvider
                 && !fieldSymbol.IsStatic
                 && !fieldSymbol.IsConst
                 && IsCompatibleTimeProviderType(fieldSymbol.Type, timeProviderType));
-        if (hasReusableTimeProviderField)
-        {
-            return true;
-        }
 
         var currentSyntaxTree = semanticModel.SyntaxTree;
         var hasInstanceConstructorsOutsideCurrentDocument = classSymbol.InstanceConstructors
             .SelectMany(ctor => ctor.DeclaringSyntaxReferences)
             .Any(reference => reference.SyntaxTree != currentSyntaxTree);
-        return !hasInstanceConstructorsOutsideCurrentDocument;
+        return hasReusableTimeProviderField || !hasInstanceConstructorsOutsideCurrentDocument;
     }
 
     private static bool IsUnsafeInjectedDependencyUsageContext(MemberAccessExpressionSyntax memberAccess)
