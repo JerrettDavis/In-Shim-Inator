@@ -737,6 +737,7 @@ partial class Test
 {
     public Test()
     {
+        _timeProvider = null!;
     }
 
     void Method()
@@ -751,6 +752,7 @@ partial class Test
 
     public Test(string name)
     {
+        _timeProvider = null!;
     }
 }
 """;
@@ -1058,6 +1060,7 @@ class Test
 
     public Test(string name)
     {
+        _timeProvider = null!;
     }
 
     void Method()
@@ -1118,6 +1121,7 @@ class Test
 
     public Test(string name)
     {
+        _timeProvider = null!;
     }
 
     void Method()
