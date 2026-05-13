@@ -7,7 +7,7 @@ Inshiminator is a .NET-first developer toolkit that uses **Roslyn analyzers, inc
 ### 🚀 Key Features
 
 - **Detect:** Automatically finds direct usage of `DateTime.UtcNow`, `Guid.NewGuid()`, `File.ReadAllText`, and more.
-- **Generate:** Emits strongly typed abstractions (`IClock`, `IGuidGenerator`) and implementations (`SystemClock`, `SystemGuidGenerator`) at compile time.
+- **Generate:** Emits strongly typed abstractions (`IClock`, `IGuidGenerator`) and implementations (`SystemClock`, `SystemGuidGenerator`) at compile time, while also supporting framework abstractions like `TimeProvider`.
 - **Guide:** Provides IDE code fixes to automatically inject shims into your classes.
 - **Govern:** Enforce boundary rules through analyzer severity and baselines.
 
