@@ -326,7 +326,7 @@ public class ClockCodeFixProvider : CodeFixProvider
         var instanceConstructors = allInstanceConstructorsInCurrentDocument;
         if (instanceConstructors.Count == 0)
         {
-            var allExplicitInstanceConstructors = classSymbol.InstanceConstructors
+            var allExplicitInstanceConstructors = (classSymbol?.InstanceConstructors ?? ImmutableArray<IMethodSymbol>.Empty)
                 .Where(static constructor => !constructor.IsImplicitlyDeclared)
                 .ToImmutableArray();
 
