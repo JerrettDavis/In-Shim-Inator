@@ -645,7 +645,9 @@ public class ClockCodeFixProvider : CodeFixProvider
 
         if (targetTimeProviderParameterIndex >= 0)
         {
-            var shouldUseNamedArgument = initializer.ArgumentList.Arguments.Any(argument => argument.NameColon is not null);
+            var shouldUseNamedArgument =
+                initializer.ArgumentList.Arguments.Any(argument => argument.NameColon is not null)
+                || targetTimeProviderParameterIndex >= initializer.ArgumentList.Arguments.Count;
             return (true, targetTimeProviderParameterIndex, targetTimeProviderParameterName, shouldUseNamedArgument, true);
         }
 
