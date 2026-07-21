@@ -55,6 +55,16 @@ public static class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>
     {
         public Test()
         {
+            // Pin the formatter's end-of-line style via .editorconfig. Without this, the
+            // CodeAnalysis formatter's newline choice for Formatter.Annotation-marked
+            // (freshly synthesized) spans - e.g. a newly generated constructor - is an
+            // internal detail that has changed across CodeAnalysis versions (observed:
+            // CRLF under 5.3.0, LF under 5.6.0), which made golden-output comparisons in
+            // these tests flaky across Roslyn upgrades even though the generated code was
+            // semantically identical. Forcing end_of_line = crlf keeps generated spans
+            // consistent with the CRLF line endings the test source literals use.
+            TestState.AnalyzerConfigFiles.Add(("/.editorconfig", "root = true\n[*.cs]\nend_of_line = crlf\n"));
+
             SolutionTransforms.Add((solution, projectId) =>
             {
                 var compilationOptions = solution.GetProject(projectId).CompilationOptions;
