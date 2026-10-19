@@ -41,7 +41,7 @@ internal sealed class AnalyzeCommand : AsyncCommand<AnalyzeCommand.Settings>
         public string? SarifPath { get; init; }
     }
 
-    protected override async Task<int> ExecuteAsync([NotNull] CommandContext context, [NotNull] Settings settings, CancellationToken cancellationToken)
+    public override async Task<int> ExecuteAsync([NotNull] CommandContext context, [NotNull] Settings settings, CancellationToken cancellationToken)
     {
         var path = settings.ProjectPath ?? ".";
         AnsiConsole.MarkupLine($"[blue]Analyzing:[/] {path}");
@@ -66,7 +66,7 @@ internal sealed class AnalyzeCommand : AsyncCommand<AnalyzeCommand.Settings>
 
 internal sealed class DoctorCommand : Command
 {
-    protected override int Execute([NotNull] CommandContext context, CancellationToken cancellationToken)
+    public override int Execute([NotNull] CommandContext context, CancellationToken cancellationToken)
     {
         AnsiConsole.MarkupLine("[blue]Inshiminator Doctor[/]");
         AnsiConsole.MarkupLine("  .NET SDK: [green]Found[/]");
